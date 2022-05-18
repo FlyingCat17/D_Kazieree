@@ -2,8 +2,12 @@ package DataProduk;
 
 
 import Beranda.*;
+import java.sql.Connection;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
-
+import javax.swing.table.DefaultTableModel;
+import db.konekdb;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,7 +19,9 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  * @author LenataHoma
  */
 public class form_DataProduk extends javax.swing.JInternalFrame {
-
+Main.MainFrame no = new Main.MainFrame();
+String kategor_jasa = null;
+String id_produk = null;
     /**
      * Creates new form Beranda
      */
@@ -24,6 +30,7 @@ public class form_DataProduk extends javax.swing.JInternalFrame {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI gui = (BasicInternalFrameUI)this.getUI();
         gui.setNorthPane(null);
+        loadTableProduk();
     }
 
     /**
@@ -35,6 +42,21 @@ public class form_DataProduk extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        txt_searchProduk = new javax.swing.JTextField();
+        bgt_serachBox = new javax.swing.JLabel();
+        btn_tambahProduk = new javax.swing.JLabel();
+        btn_tamabahJasaProduk = new javax.swing.JLabel();
+        btn_ubahProduk = new javax.swing.JLabel();
+        btn_hapusProduk = new javax.swing.JLabel();
+        tb_produk = new javax.swing.JScrollPane();
+        TabelProduk = new javax.swing.JTable(){
+
+            public boolean isCellEditable(int rowIndex, int colIndex)
+            {
+                return false; //Disallow the editing of any cell
+            }
+
+        };
         jLabel1 = new javax.swing.JLabel();
 
         setBorder(null);
@@ -42,14 +64,277 @@ public class form_DataProduk extends javax.swing.JInternalFrame {
         setMinimumSize(new java.awt.Dimension(960, 710));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        txt_searchProduk.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
+        txt_searchProduk.setBorder(null);
+        txt_searchProduk.setOpaque(false);
+        getContentPane().add(txt_searchProduk, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 125, 290, 30));
+
+        bgt_serachBox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataProduk/searchBox.png"))); // NOI18N
+        getContentPane().add(bgt_serachBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 360, 60));
+
+        btn_tambahProduk.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btn_tambahProduk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataProduk/btn_tambahBarang.png"))); // NOI18N
+        btn_tambahProduk.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_tambahProduk.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_tambahProdukMouseClicked(evt);
+            }
+        });
+        getContentPane().add(btn_tambahProduk, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 124, 90, 30));
+
+        btn_tamabahJasaProduk.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btn_tamabahJasaProduk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataProduk/btn_tambahJasaProduk.png"))); // NOI18N
+        btn_tamabahJasaProduk.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_tamabahJasaProduk.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_tamabahJasaProdukMouseClicked(evt);
+            }
+        });
+        getContentPane().add(btn_tamabahJasaProduk, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 124, 90, 30));
+
+        btn_ubahProduk.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btn_ubahProduk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataProduk/btn_ubahProduk.png"))); // NOI18N
+        btn_ubahProduk.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_ubahProduk.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_ubahProdukMouseClicked(evt);
+            }
+        });
+        getContentPane().add(btn_ubahProduk, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 124, 90, 30));
+
+        btn_hapusProduk.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btn_hapusProduk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataProduk/btn_hapusProduk.png"))); // NOI18N
+        btn_hapusProduk.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_hapusProduk.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_hapusProdukMouseClicked(evt);
+            }
+        });
+        getContentPane().add(btn_hapusProduk, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 124, 90, 30));
+
+        tb_produk.setBorder(null);
+
+        TabelProduk.setFont(new java.awt.Font("Quicksand Medium", 0, 15)); // NOI18N
+        TabelProduk.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Kode Barang", "Nama Barang", "Satuan", "Harga Beli", "Harga Jual"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TabelProduk.setRowHeight(40);
+        TabelProduk.getTableHeader().setResizingAllowed(false);
+        TabelProduk.getTableHeader().setReorderingAllowed(false);
+        TabelProduk.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelProdukMouseClicked(evt);
+            }
+        });
+        tb_produk.setViewportView(TabelProduk);
+
+        getContentPane().add(tb_produk, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 177, 860, 470));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataProduk/form_dataProduk.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 680));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void loadTableProduk(){
+    DefaultTableModel tbl = new DefaultTableModel();
+            TabelProduk.setBorder(null);
+            tb_produk.setBorder(null);
+            tbl.addColumn("ID Produk");
+            tbl.addColumn("Nama Produk");
+            tbl.addColumn("Satuan");
+            tbl.addColumn("Harga Dasar");
+            tbl.addColumn("Harga Jual");
+            TabelProduk.setModel(tbl);
+            try {
+                String sql = "SELECT * FROM tb_produk";
+                java.sql.Connection conn = (Connection)konekdb.GetConnection();
+                java.sql.Statement stm = conn.createStatement();
+                java.sql.ResultSet res = stm.executeQuery(sql);
+                while(res.next())
+                {
+                    tbl.addRow(new Object[]{
+                        res.getString("id_produk"),
+                        res.getString("nama_produk"),
+                        res.getString("satuan"),
+                        res.getString("harga_beli"),
+                        res.getString("harga_jual")
+            });
+                    
+                TabelProduk.setModel(tbl);
+            }
+         } catch (Exception e) {
+                System.out.println("Gagal mendapatkan Data!");
+         }
+    
+    }
+    private void btn_tambahProdukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_tambahProdukMouseClicked
+        // TODO add your handling code here:
+        //         TabelProduk.setVisible(false);
+        //         jScrollPane1.setVisible(false);
+        //         panel_tambahProdukBarang.setVisible(true);
+        //         panel_notifBerhasilProdukBarang.setVisible(false);
+        //         blocksidebar();
+        //         txt_searchProduk.setEnabled(false);
+        //         panel_notifwarnkodeprodukBarang.setVisible(false);
+        //         panel_notifwarnnamaprodukBarang.setVisible(false);
+        //         panel_notifwarnsatuanprodukbarang.setVisible(false);
+        //         panel_notifwarnhargabeliprodukbarang.setVisible(false);
+        //         panel_notifwarnhargajualprodukbarang.setVisible(false);
+        //         DataProdukBarang.form_tambahProdukBarang brg = new form_tambahProdukBarang();
+        //         brg.setVisible(true);
+//        DataProdukBarang.formTambahProdukBarang brg = new DataProdukBarang.formTambahProdukBarang(this, true);
+//        brg.setVisible(true);
+//        txt_searchProduk.setEnabled(false);
+        form_TambahProdukBarang mn = new form_TambahProdukBarang(no, true);
+        mn.setVisible(true);
+        loadTableProduk();
+
+    }//GEN-LAST:event_btn_tambahProdukMouseClicked
+
+    private void btn_tamabahJasaProdukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_tamabahJasaProdukMouseClicked
+        // TODO add your handling code here:
+
+        //        TabelProduk.setVisible(false);
+        //        jScrollPane1.setVisible(false);
+        //        panel_tambahProdukJasa.setVisible(true);
+//        txt_searchProduk.setEnabled(false);
+        //        panel_notifBerhasilProdukJasa.setVisible(false);
+//        DataProdukJasa.formTambahJasa tj = new DataProdukJasa.formTambahJasa(this, true);
+//        tj.setVisible(true);
+    }//GEN-LAST:event_btn_tamabahJasaProdukMouseClicked
+
+    private void btn_ubahProdukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ubahProdukMouseClicked
+        // TODO add your handling code here:
+        if(kategor_jasa==null){
+            JOptionPane.showMessageDialog(this, "Harap Pilih data Produk!");
+        } else if(kategor_jasa.equals("jasa")){
+//            DataProdukJasa.formUbahJasa tj = new DataProdukJasa.formUbahJasa(this, true);
+            DataProduk.formUbahJasa jj = new DataProduk.formUbahJasa(no, true);
+            jj.setVisible(true);
+            loadTableProduk();
+//            tj.txt_kodeProdukJasa.setText(getId_produk());
+//            tj.setVisible(true);
+
+            System.out.println("btn ubah : " + getIdProduk());
+        } else {
+
+//            DataProdukBarang.formUbahProdukBarang ub = new DataProdukBarang.formUbahProdukBarang(this, true);
+////            ub.txt_kodeProdukBarang.setText(getId_produk());
+//            ub.setVisible(true);
+            DataProduk.formUbahProdukBarang ub = new DataProduk.formUbahProdukBarang(no, true);
+            ub.txt_kodeProdukBarang.setText(getIdProduk());
+            ub.setVisible(true);
+
+            System.out.println("btn ubah = "+ getIdProduk());
+        }
+    }//GEN-LAST:event_btn_ubahProdukMouseClicked
+    public void setKategorinull(String catJasa){
+        this.kategor_jasa = catJasa;
+    }
+    public void setIdProdukJasanull(String id_produk){
+        this.id_produk = id_produk;
+    }
+    private void btn_hapusProdukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_hapusProdukMouseClicked
+        // TODO add your handling code here:
+        if (id_produk==null) {
+            JOptionPane.showMessageDialog(this, "Harap Pilih data Produk!");
+        } else if(kategor_jasa.equals("jasa")){
+            try {
+            int jawab = JOptionPane.showConfirmDialog(this, "Yakin ingin Menghapus Produk Jasa ini?");
+            switch (jawab){
+                case JOptionPane.YES_OPTION:
+                    String sql = "DELETE FROM tb_produk where id_produk='" +id_produk+ "'";
+                    java.sql.Connection conn = (Connection) konekdb.GetConnection();
+                    java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+                    pst.execute();
+                    JOptionPane.showMessageDialog(this, "Data Berhasil di Hapus", "DELETE", JOptionPane.INFORMATION_MESSAGE);
+                    loadTableProduk();
+                    break;
+            case JOptionPane.NO_OPTION:
+                    break;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Data Gagal di Hapus");
+        }
+        } else {
+//            DataProdukBarang.notif_warningHapusProdukBarang pb = new DataProdukBarang.notif_warningHapusProdukBarang(this, true);
+//            pb.setVisible(true);
+            try {
+            int jawab = JOptionPane.showConfirmDialog(this, "Yakin ingin Menghapus Produk Barang ini?");
+            switch (jawab){
+                case JOptionPane.YES_OPTION:
+                    String sql = "DELETE FROM tb_produk where id_produk='" +id_produk+ "'";
+                    java.sql.Connection conn = (Connection) konekdb.GetConnection();
+                    java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+                    pst.execute();
+                    JOptionPane.showMessageDialog(this, "Data Berhasil di Hapus", "Hapus", JOptionPane.INFORMATION_MESSAGE);
+                    loadTableProduk();
+                    break;
+            case JOptionPane.NO_OPTION:
+                    break;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Data Gagal di Hapus");
+        }
+        }
+    }//GEN-LAST:event_btn_hapusProdukMouseClicked
+
+    public String getIdProduk(){
+        return id_produk;
+    }
+    private void TabelProdukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelProdukMouseClicked
+        // TODO add your handling code here:
+        int baris= TabelProduk.rowAtPoint(evt.getPoint());
+        kategor_jasa = TabelProduk.getValueAt(baris, 2).toString();
+        id_produk = TabelProduk.getValueAt(baris, 0).toString();
+        System.out.println("ID PRODUK = "+id_produk);
+        System.out.println("Kategori "+ kategor_jasa);
+//        lbl_id.setText(id_produk);
+        //        int i = TabelProduk.getSelectedRow();
+        //        TableModel tm = TabelProduk.getModel();
+        //        DataProdukJasa.formUbahJasa mn = new DataProdukJasa.formUbahJasa(this, true);
+        //        id_produk= tm.getValueAt(i, 0).toString();
+        //        mn.txt_kodeProdukJasa.setText(id_produk);
+    }//GEN-LAST:event_TabelProdukMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static javax.swing.JTable TabelProduk;
+    private javax.swing.JLabel bgt_serachBox;
+    private javax.swing.JLabel btn_hapusProduk;
+    private javax.swing.JLabel btn_tamabahJasaProduk;
+    private javax.swing.JLabel btn_tambahProduk;
+    public static javax.swing.JLabel btn_ubahProduk;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane tb_produk;
+    private javax.swing.JTextField txt_searchProduk;
     // End of variables declaration//GEN-END:variables
 }
