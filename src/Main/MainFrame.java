@@ -151,40 +151,68 @@ public class MainFrame extends javax.swing.JFrame {
     private void btn_dataProdukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dataProdukMouseClicked
         ImageIcon a = new ImageIcon("src/Sidebar/sidebar_dataProduk.png");
         sidebarr.setIcon(a);
+        dpanee.removeAll();
+        DataProduk.form_DataProduk home = new DataProduk.form_DataProduk();
+        dpanee.add(home);
+        home.setVisible(true);
     }//GEN-LAST:event_btn_dataProdukMouseClicked
 
     private void btn_dataStokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dataStokMouseClicked
         // TODO add your handling code here:
+        dpanee.removeAll();
+        DataStok.form_DataStok home = new DataStok.form_DataStok();
+        dpanee.add(home);
+        home.setVisible(true);
         ImageIcon a = new ImageIcon("src/Sidebar/sidebar_dataStok.png");
         sidebarr.setIcon(a);
     }//GEN-LAST:event_btn_dataStokMouseClicked
 
     private void btn_TransaBeliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_TransaBeliMouseClicked
         // TODO add your handling code here:
+        dpanee.removeAll();
+        TransaksiBeli.form_TransaksiBeli home = new TransaksiBeli.form_TransaksiBeli();
+        dpanee.add(home);
+        home.setVisible(true);
         ImageIcon a = new ImageIcon("src/Sidebar/sidebar_transbeli.png");
         sidebarr.setIcon(a);
     }//GEN-LAST:event_btn_TransaBeliMouseClicked
 
     private void btn_transJualMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_transJualMouseClicked
         // TODO add your handling code here:
+        dpanee.removeAll();
+        TransaksiJual.form_TransaksiJual home = new TransaksiJual.form_TransaksiJual();
+        dpanee.add(home);
+        home.setVisible(true);
         ImageIcon a = new ImageIcon("src/Sidebar/sidebar_transjual.png");
         sidebarr.setIcon(a);
     }//GEN-LAST:event_btn_transJualMouseClicked
 
     private void btn_dataPemasokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dataPemasokMouseClicked
         // TODO add your handling code here:
+        dpanee.removeAll();
+        DataPemasok.form_dataPemasok home = new DataPemasok.form_dataPemasok();
+        dpanee.add(home);
+        home.setVisible(true);
         ImageIcon a = new ImageIcon("src/Sidebar/side_dataPemasok.png");
         sidebarr.setIcon(a);
     }//GEN-LAST:event_btn_dataPemasokMouseClicked
 
     private void btn_laporanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_laporanMouseClicked
         // TODO add your handling code here:
+        dpanee.removeAll();
+        Laporan.form_Laporan home = new Laporan.form_Laporan();
+        dpanee.add(home);
+        home.setVisible(true);
         ImageIcon a = new ImageIcon("src/Sidebar/sidebar_laporan.png");
         sidebarr.setIcon(a);
     }//GEN-LAST:event_btn_laporanMouseClicked
 
     private void btn_LainnyaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_LainnyaMouseClicked
         // TODO add your handling code here:
+        dpanee.removeAll();
+        Lainnya.form_Lainnya home = new Lainnya.form_Lainnya();
+        dpanee.add(home);
+        home.setVisible(true);
         ImageIcon a = new ImageIcon("src/Sidebar/sidebar_lainnya.png");
         sidebarr.setIcon(a);
     }//GEN-LAST:event_btn_LainnyaMouseClicked

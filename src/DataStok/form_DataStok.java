@@ -1,6 +1,7 @@
-package Beranda;
+package DataStok;
 
 
+import Beranda.*;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /*
@@ -13,12 +14,12 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  *
  * @author LenataHoma
  */
-public class form_Beranda extends javax.swing.JInternalFrame {
+public class form_DataStok extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Beranda
      */
-    public form_Beranda() {
+    public form_DataStok() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI gui = (BasicInternalFrameUI)this.getUI();
@@ -34,7 +35,6 @@ public class form_Beranda extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setBorder(null);
@@ -42,30 +42,14 @@ public class form_Beranda extends javax.swing.JInternalFrame {
         setMinimumSize(new java.awt.Dimension(960, 710));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 230, -1, -1));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Beranda/form_Beranda.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataStok/Group 87.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 680));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-//        Main.MainFrame mn = new Main.MainFrame();
-//        dialog d = new dialog(mn, true);
-//        d.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
