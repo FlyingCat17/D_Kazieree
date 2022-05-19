@@ -222,6 +222,8 @@ String id_produk = null;
     private void btn_tamabahJasaProdukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_tamabahJasaProdukMouseClicked
         // TODO add your handling code here:
 
+        form_TambahJasa nn = new form_TambahJasa(no, true);
+        nn.setVisible(true);
         //        TabelProduk.setVisible(false);
         //        jScrollPane1.setVisible(false);
         //        panel_tambahProdukJasa.setVisible(true);

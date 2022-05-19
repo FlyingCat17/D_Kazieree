@@ -2,7 +2,10 @@ package DataStok;
 
 
 import Beranda.*;
+import db.konekdb;
+import java.sql.Connection;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -24,8 +27,39 @@ public class form_DataStok extends javax.swing.JInternalFrame {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI gui = (BasicInternalFrameUI)this.getUI();
         gui.setNorthPane(null);
+        loadTableStok();
     }
 
+    public void loadTableStok(){
+        DefaultTableModel tbl = new DefaultTableModel();
+            TabelStok.setBorder(null);
+            tb_stok.setBorder(null);
+            tbl.addColumn("ID Produk");
+            tbl.addColumn("Nama Produk");
+            tbl.addColumn("Jumlah Stok");
+            TabelStok.setModel(tbl);
+            try {
+                String sql = "SELECT tb_produk.id_produk, tb_produk.nama_produk, tb_stokbarang.stok_produk FROM tb_produk, tb_stokbarang\n"
+                        + "WHERE tb_produk.id_produk = tb_stokbarang.id_produk;";
+                java.sql.Connection conn = (Connection)konekdb.GetConnection();
+                java.sql.Statement stm = conn.createStatement();
+                java.sql.ResultSet res = stm.executeQuery(sql);
+                while(res.next())
+                {
+                    tbl.addRow(new Object[]{
+                        res.getString("id_produk"),
+                        res.getString("nama_produk"),
+                        res.getString("stok_produk")
+            });
+                    
+                TabelStok.setModel(tbl);
+            }
+         } catch (Exception e) {
+                System.err.println(e.getMessage());
+                System.out.println("Gagal mendapatkan Data!");
+         }
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,6 +69,18 @@ public class form_DataStok extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        tb_stok = new javax.swing.JScrollPane();
+        TabelStok = new javax.swing.JTable(){
+
+            public boolean isCellEditable(int rowIndex, int colIndex)
+            {
+                return false; //Disallow the editing of any cell
+            }
+
+        };
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        bgt_serachBox1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setBorder(null);
@@ -42,14 +88,106 @@ public class form_DataStok extends javax.swing.JInternalFrame {
         setMinimumSize(new java.awt.Dimension(960, 710));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        tb_stok.setBorder(null);
+
+        TabelStok.setFont(new java.awt.Font("Quicksand Medium", 0, 15)); // NOI18N
+        TabelStok.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Kode Barang", "Nama Barang", "Stok"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TabelStok.setRowHeight(40);
+        TabelStok.getTableHeader().setResizingAllowed(false);
+        TabelStok.getTableHeader().setReorderingAllowed(false);
+        TabelStok.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelStokMouseClicked(evt);
+            }
+        });
+        tb_stok.setViewportView(TabelStok);
+
+        getContentPane().add(tb_stok, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 860, 470));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataStok/btn_tambahStok.png"))); // NOI18N
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 124, 90, 30));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataStok/btn_kurangStok.png"))); // NOI18N
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 124, 90, 30));
+
+        bgt_serachBox1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataStok/searchBox (1).png"))); // NOI18N
+        getContentPane().add(bgt_serachBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 640, 60));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataStok/Group 87.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 680));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void TabelStokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelStokMouseClicked
+        // TODO add your handling code here:
+
+//        int baris= TabelStok.rowAtPoint(evt.getPoint());
+//        id_stokBarang = TabelStok.getValueAt(baris, 0).toString();
+//        System.out.println("ID PRODUK = "+id_stokBarang);
+    }//GEN-LAST:event_TabelStokMouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+//        DataStok.TambahStok ts = new DataStok.TambahStok(this, true);
+//        ts.txt__kodeProduk.setText(getIdStok());
+//        ts.loadDataStok();
+//        ts.setVisible(true);
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        // TODO add your handling code here:
+//        DataStok.KurangStok ks = new DataStok.KurangStok(this, true);
+//        ks.txt__kodeProduk.setText(getIdStok());
+//        ks.loadDataStok();
+//        ks.setVisible(true);
+    }//GEN-LAST:event_jLabel3MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static javax.swing.JTable TabelStok;
+    private javax.swing.JLabel bgt_serachBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane tb_stok;
     // End of variables declaration//GEN-END:variables
 }
