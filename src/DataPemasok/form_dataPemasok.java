@@ -2,7 +2,10 @@ package DataPemasok;
 
 
 import Beranda.*;
+import db.konekdb;
+import java.sql.Connection;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -26,6 +29,7 @@ public class form_dataPemasok extends javax.swing.JInternalFrame {
         gui.setNorthPane(null);
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
