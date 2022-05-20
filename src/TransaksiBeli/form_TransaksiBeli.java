@@ -379,6 +379,7 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         if (evt.getButton() == MouseEvent.BUTTON1) {
+            
             this.getDesktopPane().add(new pemasok()).setVisible(true);
 
         }

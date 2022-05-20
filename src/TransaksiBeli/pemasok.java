@@ -12,6 +12,7 @@ import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.Statement;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -28,6 +29,8 @@ public class pemasok extends javax.swing.JInternalFrame {
         initComponents();
         tabel();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+         BasicInternalFrameUI gui = (BasicInternalFrameUI) this.getUI();
+        gui.setNorthPane(null);
         jTable1.getTableHeader().setFont(new Font("Quicksand", Font.PLAIN, 17));
         jTable1.getTableHeader().setOpaque(false);
         jTable1.getTableHeader().setBackground(new Color(254, 149, 46));
