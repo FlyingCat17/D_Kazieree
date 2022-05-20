@@ -12,6 +12,7 @@ import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -119,7 +120,10 @@ public class pemasok extends javax.swing.JInternalFrame {
         if (evt.getButton() == MouseEvent.BUTTON1) {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             int i = jTable1.getSelectedRow();
-            TableModel tm = jTable1.getModel();
+            if (i < 0) {
+                JOptionPane.showMessageDialog(this, "Pilih pemasok terlebih dahulu");
+            }else{
+                TableModel tm = jTable1.getModel();
             
             String id = tm.getValueAt(i, 0).toString();
             String nama = tm.getValueAt(i, 1).toString();
@@ -127,12 +131,21 @@ public class pemasok extends javax.swing.JInternalFrame {
             form_TransaksiBeli.idPemasok.setText(id);
             form_TransaksiBeli.namaPemasok.setText(nama);
             this.dispose();
+            }
+            
         }
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         if (evt.getButton()==MouseEvent.BUTTON1) {
-            this.dispose();
+            int inginMembatalkan = JOptionPane.showOptionDialog(this, "Ingin membatalkan memilih Pemasok?", "Konfirmasi Pembatalan", 
+                    JOptionPane.YES_NO_OPTION, 
+                    JOptionPane.QUESTION_MESSAGE, null, null, null);
+            if (inginMembatalkan==JOptionPane.YES_OPTION) {
+                this.dispose();
+            }
+            
+            
         }
     }//GEN-LAST:event_jLabel3MouseClicked
 
