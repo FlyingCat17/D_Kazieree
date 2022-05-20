@@ -1,6 +1,5 @@
 package TransaksiBeli;
 
-
 import DataStok.*;
 import Beranda.*;
 import com.sun.org.apache.bcel.internal.generic.DDIV;
@@ -18,19 +17,17 @@ import java.util.Locale;
 import javax.swing.Timer;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import db.konekdb;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
-
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author LenataHoma
@@ -42,21 +39,21 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
      */
     public form_TransaksiBeli() {
         initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
-        BasicInternalFrameUI gui = (BasicInternalFrameUI)this.getUI();
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        BasicInternalFrameUI gui = (BasicInternalFrameUI) this.getUI();
         gui.setNorthPane(null);
         jTable1.getTableHeader().setFont(new Font("Quicksand", Font.PLAIN, 17));
         jTable1.getTableHeader().setOpaque(false);
         jTable1.getTableHeader().setBackground(new Color(254, 149, 46));
         jTable1.getTableHeader().setForeground(new Color(255, 255, 255));
         jTable1.setRowHeight(20);
+
         tanggal();
-        idTransaksi();
         search();
         colom();
-        
+
     }
-    
+
     public void colom() {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID Produk");
@@ -66,10 +63,10 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
         model.addColumn("Total Harga");
         jTable1.setModel(model);
     }
-    
-    public void tanggal(){
-      
-     ActionListener taskPerformer = new ActionListener() {
+
+    public void tanggal() {
+
+        ActionListener taskPerformer = new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -77,24 +74,24 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
                 SimpleDateFormat smpdtfmt = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 String tanggal = smpdtfmt.format(tglsekarang);
 
-                jTextField3.setText(tanggal );
-                
+                jTextField3.setText(tanggal);
+
                 int total = 0;
                 for (int i = 0; i < jTable1.getRowCount(); i++) {
-                    int amount = Integer.parseInt( (String) jTable1.getValueAt(i, 4).toString());
+                    int amount = Integer.parseInt((String) jTable1.getValueAt(i, 4).toString());
 //                    int mount = (Integer)jTable1.getValueAt(i, 4);
                     total += amount;
                 }
                 jLabel7.setText(String.valueOf(total));
+                idTransaksi();
             }
         };
         new Timer(1, taskPerformer).start();
-        
-        
-    
+
     }
-    public void idTransaksi(){
-       try {
+
+    public void idTransaksi() {
+        try {
             DateFormat vblnth = new SimpleDateFormat("yyyyMMdd");
             String blnth = vblnth.format(Calendar.getInstance().getTime());
 
@@ -102,7 +99,7 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
             String a = hari.format(Calendar.getInstance().getTime());
 
             String sql = "SELECT MAX(right(id_transaksi,6)) AS Kode_Pinjam "
-                    + "FROM tb_beli Where tgl_transaksi like '"+a+"';";
+                    + "FROM tb_beli Where tgl_transaksi like '" + a + "';";
             java.sql.Connection con = (java.sql.Connection) konekdb.GetConnection();
             java.sql.Statement pst = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             java.sql.ResultSet rs = pst.executeQuery(sql);
@@ -120,9 +117,10 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
         } catch (SQLException e) {
             System.out.println("Error : " + e.getMessage());
 
-        }}
-    
-      public void search() {
+        }
+    }
+
+    public void search() {
         if (jTextField2.getText().equals("")) {
             jTextField5.setText("");
             jTextField4.setText("");
@@ -137,7 +135,7 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
                     if (jTextField2.getText().equals(res.getString(1))) {
                         jTextField5.setText(res.getString(2));
                         jTextField8.setText(res.getString(3));
-                    } 
+                    }
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
@@ -198,6 +196,7 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 320, 860, 150));
 
+        jTextField1.setEditable(false);
         jTextField1.setBackground(new java.awt.Color(196, 196, 196));
         jTextField1.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
         jTextField1.setBorder(null);
@@ -222,6 +221,11 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
         jTextField4.setBackground(new java.awt.Color(196, 196, 196));
         jTextField4.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
         jTextField4.setBorder(null);
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField4KeyTyped(evt);
+            }
+        });
         getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 270, 110, 30));
 
         jTextField5.setBackground(new java.awt.Color(196, 196, 196));
@@ -239,6 +243,7 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
         jTextField7.setBorder(null);
         getContentPane().add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 630, 170, 30));
 
+        jTextField8.setEditable(false);
         jTextField8.setBackground(new java.awt.Color(196, 196, 196));
         jTextField8.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
         jTextField8.setBorder(null);
@@ -268,6 +273,11 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiBeli/2.5.png"))); // NOI18N
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 620, 180, 40));
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -314,17 +324,20 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyReleased
-       search();
+        search();
     }//GEN-LAST:event_jTextField2KeyReleased
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
-        if (evt.getButton()==MouseEvent.BUTTON1) {
+        if (evt.getButton() == MouseEvent.BUTTON1) {
+            if (rootPaneCheckingEnabled) {
+                
+            }
             int hargad = Integer.parseInt(jTextField8.getText());
             int juml = Integer.parseInt(jTextField4.getText());
             int total = hargad * juml;
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            Object row []={
+            Object row[] = {
                 jTextField2.getText(),
                 jTextField5.getText(),
                 jTextField8.getText(),
@@ -332,78 +345,130 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
                 total
             };
             model.addRow(row);
+            jTextField2.requestFocus();
+            jTextField2.setText("");
+            jTextField5.setText("");
+            jTextField8.setText("");
+            jTextField4.setText("");
+
         }
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
-        if (evt.getButton()==MouseEvent.BUTTON1){
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.removeRow(jTable1.getSelectedRow());
+        if (evt.getButton() == MouseEvent.BUTTON1) {
+            int jikaTidakpilih = jTable1.getSelectedRow();
+            if (jikaTidakpilih < 0) {
+                JOptionPane.showMessageDialog(rootPane, "Tidak ada baris yang dipilih");
+
+            } else {
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                model.removeRow(jTable1.getSelectedRow());
+            }
+
         }
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-        if (evt.getButton()==MouseEvent.BUTTON1) {
-           this.getDesktopPane().add(new pemasok()).setVisible(true);
-  
-            
+        if (evt.getButton() == MouseEvent.BUTTON1) {
+            this.getDesktopPane().add(new pemasok()).setVisible(true);
+
         }
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-        if (evt.getButton()==MouseEvent.BUTTON1) {
-            int jumlhTabel=jTable1.getRowCount();
-            if (jumlhTabel ==0) {
+        if (evt.getButton() == MouseEvent.BUTTON1) {
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            int jumlhTabel = jTable1.getRowCount();
+            if (jumlhTabel == 0) {
                 JOptionPane.showMessageDialog(rootPane, "Keranjang tidak boleh kosong");
-            }else {
-                jTable1.removeColumnSelectionInterval(0, 1);
+            } else {
                 try {
                     String sql = "INSERT INTO `tb_beli`(`id_transaksi`, `tgl_transaksi`, `id_pengguna`, `id_pemasok`, `total_harga`) VALUES ('"
-                            +jTextField1.getText()+"','"+jTextField3.getText()+"','"+jTextField6.getText()+"','"+idPemasok.getText()+"','"+jLabel7.getText()+"')";
-                    java.sql.Connection c = (Connection)konekdb.GetConnection();
+                            + jTextField1.getText() + "','" + jTextField3.getText() + "','" + jTextField6.getText() + "','" + idPemasok.getText() + "','" + jLabel7.getText() + "')";
+                    java.sql.Connection c = (Connection) konekdb.GetConnection();
                     java.sql.PreparedStatement pst = c.prepareStatement(sql);
                     pst.execute();
-                    JOptionPane.showMessageDialog(rootPane, "Data Berhasil Tersimpan");
-                    
-                    int barisan = jTable1.getRowCount();
-                    DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
-                    if (barisan == 0) {
-                        JOptionPane.showMessageDialog(rootPane, "Tabel tidak boleh kosong");
-                        
-                    }else{
-                        try {
-                            for (int i = 0; i <barisan; i++) {
-                                String idProduk = model.getValueAt(i, 0).toString();
-                                String namaProduk = model.getValueAt(i, 1).toString();
-                                String jumlahProduk = model.getValueAt(i, 3).toString();
-                                String hargaBeli = model.getValueAt(i, 2).toString();
-                                String totalHarga = model.getValueAt(i, 4).toString();
-                                String squl = "INSERT INTO `tb_detailbeli`(`id_transaksi`, `id_produk`, `nama_produk`, `jumlah_produk`, `harga_beli`, `total_harga`) VALUES "
-                                        + "('"+jTextField1.getText()+"','"+idProduk+"','"+namaProduk+"','"+jumlahProduk+"','"+hargaBeli+"','"+totalHarga+"')";
-                                java.sql.PreparedStatement pstt = c.prepareStatement(squl);
-                                pstt.execute();
-                                for (int j = barisan -1; j >= 0; j--) {
-                                    System.out.println("Baris ke-"+i+"telah terhapus");
-                                    model.removeRow(j);
-                                    
-                                }
-                                
-                                
-                            }
-                        } catch (Exception e) {
-                            JOptionPane.showMessageDialog(rootPane, e);
+                    jTextField2.setText("");
+                    jTextField5.setText("");
+                    jTextField8.setText("");
+                    jTextField4.setText("");
+
+                    try {
+                        for (int i = 0; i < jumlhTabel; i++) {
+                            String idProduk = model.getValueAt(i, 0).toString();
+                            String namaProduk = model.getValueAt(i, 1).toString();
+                            String jumlahProduk = model.getValueAt(i, 3).toString();
+                            String hargaBeli = model.getValueAt(i, 2).toString();
+                            String totalHarga = model.getValueAt(i, 4).toString();
+                            String squl = "INSERT INTO `tb_detailbeli`(`id_transaksi`, `id_produk`, `nama_produk`, `jumlah_produk`, `harga_beli`, `total_harga`) VALUES "
+                                    + "('" + jTextField1.getText() + "','" + idProduk + "','" + namaProduk + "'," + jumlahProduk + "," + hargaBeli + "," + totalHarga + ")";
+                            java.sql.PreparedStatement pstt = c.prepareStatement(squl);
+                            pstt.execute();
                         }
-}
-                    
-                    
+                        for (int j = jumlhTabel - 1; j >= 0; j--) {
+                            model.removeRow(j);
+                        }
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(rootPane, e);
+                    }
+
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(rootPane, "Gagal Tersimpan"+e);
+                    JOptionPane.showMessageDialog(rootPane, "Gagal Tersimpan" + e);
                 }
-}
-            
+
+            }
+
         }
+
+//        DefaultTableModel mengmodel = (DefaultTableModel)jTable1.getModel();
+//            if (mengmodel.getRowCount()==0) {
+//                JOptionPane.showMessageDialog(this, "Tabelnya Kosong kau orang udik!");
+//            }else {
+//                try {
+//                    for (int i = 0; i <mengmodel.getRowCount(); i++) {
+//                        String idProduk = mengmodel.getValueAt(i, 0).toString();
+//                        String namaProduk = mengmodel.getValueAt(i, 1).toString();
+//                        String jumlahProduk = mengmodel.getValueAt(i, 3).toString();
+//                        String hargaBeli = mengmodel.getValueAt(i, 2).toString();
+//                        String totalHarga = mengmodel.getValueAt(i, 4).toString();
+//                        
+//                        String querya = "INSERT INTO `tb_detailbeli`(`id_transaksi`, `id_produk`, `nama_produk`, `jumlah_produk`, `harga_beli`, `total_harga`) "
+//                                + "VALUES ('"+jTextField1.getText()+"','"+idProduk+"','"+namaProduk+"',"+jumlahProduk+","+hargaBeli+","+totalHarga+")";
+//                        System.out.println(querya);
+//                        
+//                    }
+//                } catch (Exception e) {
+//                }
+//            }
+//        
+//        }
     }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void jTextField4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyTyped
+        char k = evt.getKeyChar();
+        if (!(Character.isDigit(k) || k == KeyEvent.VK_BACK_SPACE || k == KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+        if (jTextField4.getText().length() >= 11) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextField4KeyTyped
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        if (evt.getButton() == MouseEvent.BUTTON1) {
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            int bersihTabel = jTable1.getRowCount();
+            for (int j = bersihTabel - 1; j >= 0; j--) {
+                model.removeRow(j);
+
+            }
+            jTextField2.setText("");
+            jTextField5.setText("");
+            jTextField8.setText("");
+            jTextField4.setText("");
+        }
+    }//GEN-LAST:event_jLabel2MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
