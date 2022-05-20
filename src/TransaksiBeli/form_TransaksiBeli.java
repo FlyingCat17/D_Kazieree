@@ -156,6 +156,8 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        idPemasok = new javax.swing.JLabel();
+        namaPemasok = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
@@ -166,8 +168,6 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
         jTextField8 = new javax.swing.JTextField();
         jTextField9 = new javax.swing.JTextField();
         jTextField10 = new javax.swing.JTextField();
-        namaPemasok = new javax.swing.JLabel();
-        idPemasok = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -195,6 +195,12 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 320, 860, 150));
+
+        idPemasok.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
+        getContentPane().add(idPemasok, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 540, 150, 30));
+
+        namaPemasok.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
+        getContentPane().add(namaPemasok, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 590, 150, 30));
 
         jTextField1.setEditable(false);
         jTextField1.setBackground(new java.awt.Color(196, 196, 196));
@@ -243,29 +249,22 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
         jTextField7.setBorder(null);
         getContentPane().add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 630, 170, 30));
 
-        jTextField8.setEditable(false);
         jTextField8.setBackground(new java.awt.Color(196, 196, 196));
         jTextField8.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
         jTextField8.setBorder(null);
         getContentPane().add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, 150, 30));
 
+        jTextField9.setEditable(false);
         jTextField9.setBackground(new java.awt.Color(196, 196, 196));
         jTextField9.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
         jTextField9.setBorder(null);
         getContentPane().add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 540, 170, 30));
 
+        jTextField10.setEditable(false);
         jTextField10.setBackground(new java.awt.Color(196, 196, 196));
         jTextField10.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
         jTextField10.setBorder(null);
         getContentPane().add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 590, 170, 30));
-
-        namaPemasok.setFont(new java.awt.Font("Quicksand Medium", 0, 13)); // NOI18N
-        namaPemasok.setText("nama pemasok");
-        getContentPane().add(namaPemasok, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 480, 120, 30));
-
-        idPemasok.setFont(new java.awt.Font("Quicksand Medium", 0, 13)); // NOI18N
-        idPemasok.setText("ID_pemasok");
-        getContentPane().add(idPemasok, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 480, 90, 30));
 
         jLabel7.setFont(new java.awt.Font("Quicksand SemiBold", 1, 40)); // NOI18N
         jLabel7.setText("200,000");
@@ -330,10 +329,17 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
         if (evt.getButton() == MouseEvent.BUTTON1) {
-            if (rootPaneCheckingEnabled) {
-                
-            }
-            int hargad = Integer.parseInt(jTextField8.getText());
+            int jumlahRow = jTable1.getRowCount();
+            if (jTextField2.getText().equals("")) {
+                JOptionPane.showMessageDialog(this,"Kode Produk tidak boleh kosong");
+            }else if (jTextField5.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Nama Produk tidak boleh kosong");
+            }else if (jTextField8.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Kolom Harga tidak boleh kosong");
+            }else if (jTextField4.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Jumlah produk tidak boleh kosong ");
+            }else{
+                  int hargad = Integer.parseInt(jTextField8.getText());
             int juml = Integer.parseInt(jTextField4.getText());
             int total = hargad * juml;
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
@@ -350,6 +356,8 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
             jTextField5.setText("");
             jTextField8.setText("");
             jTextField4.setText("");
+            }
+          
 
         }
     }//GEN-LAST:event_jLabel3MouseClicked
@@ -371,6 +379,7 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         if (evt.getButton() == MouseEvent.BUTTON1) {
+            
             this.getDesktopPane().add(new pemasok()).setVisible(true);
 
         }
