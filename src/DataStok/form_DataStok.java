@@ -4,6 +4,7 @@ package DataStok;
 import Beranda.*;
 import db.konekdb;
 import java.sql.Connection;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,7 +19,8 @@ import javax.swing.table.DefaultTableModel;
  * @author LenataHoma
  */
 public class form_DataStok extends javax.swing.JInternalFrame {
-
+Main.MainFrame mf = new Main.MainFrame();
+String id_produk = null;
     /**
      * Creates new form Beranda
      */
@@ -28,6 +30,7 @@ public class form_DataStok extends javax.swing.JInternalFrame {
         BasicInternalFrameUI gui = (BasicInternalFrameUI)this.getUI();
         gui.setNorthPane(null);
         loadTableStok();
+        System.out.println("ID PRODUK : "+id_produk);
     }
 
     public void loadTableStok(){
@@ -164,9 +167,33 @@ public class form_DataStok extends javax.swing.JInternalFrame {
 //        int baris= TabelStok.rowAtPoint(evt.getPoint());
 //        id_stokBarang = TabelStok.getValueAt(baris, 0).toString();
 //        System.out.println("ID PRODUK = "+id_stokBarang);
+        int baris = TabelStok.rowAtPoint(evt.getPoint());
+        id_produk = TabelStok.getValueAt(baris, 0).toString();
+        System.out.println("ID PRODUK : "+ id_produk);
     }//GEN-LAST:event_TabelStokMouseClicked
 
+    public String getIdProduk(){
+        return id_produk;
+    }
+    
+    public void setIdProduk(String id){
+        this.id_produk = id;
+    }
+    
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        
+        if (id_produk==null) {
+            JOptionPane.showMessageDialog(this, "Harap pilih produk yang tersedia!", "Data Stok", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            TambahStok ts = new TambahStok(mf, true);
+            ts.txt__kodeProduk.setText(getIdProduk());
+            ts.loadDataStok();
+            loadTableStok();
+            ts.setVisible(true);
+            loadTableStok();
+        
+        }
+        
 //        DataStok.TambahStok ts = new DataStok.TambahStok(this, true);
 //        ts.txt__kodeProduk.setText(getIdStok());
 //        ts.loadDataStok();
@@ -175,6 +202,16 @@ public class form_DataStok extends javax.swing.JInternalFrame {
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
+        if (id_produk==null) {
+            JOptionPane.showMessageDialog(this, "Harap pilih produk yang tersedia!", "Data Stok", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            KurangStok ks = new KurangStok(mf, true);
+            ks.txt__kodeProduk.setText(getIdProduk());
+            ks.loadDataStok();
+            loadTableStok();
+            ks.setVisible(true);
+            loadTableStok();
+        }
 //        DataStok.KurangStok ks = new DataStok.KurangStok(this, true);
 //        ks.txt__kodeProduk.setText(getIdStok());
 //        ks.loadDataStok();
