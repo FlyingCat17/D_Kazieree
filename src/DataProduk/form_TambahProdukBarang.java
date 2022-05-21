@@ -18,7 +18,7 @@ public class form_TambahProdukBarang extends javax.swing.JDialog {
 int x, y;
 form_DataProduk m = new form_DataProduk();
 Connection con;
-    PreparedStatement pst;
+    PreparedStatement pst, pst1;
     /**
      * Creates new form formTambahProdukBarang
      */
@@ -136,9 +136,12 @@ Connection con;
             try {
                 String addProdukBarang = "INSERT INTO tb_produk VALUES('"+kp+"','"
                 +np+"','"+sp+"','"+hb+"','"+hj+"');";
+                String addStokKosong = "INSERT INTO tb_stokbarang VALUES('"+kp+"', '0');";
                 con = (Connection)db.konekdb.GetConnection();
                 pst = con.prepareStatement(addProdukBarang);
+                pst1 = con.prepareStatement(addStokKosong);
                 pst.execute();
+                pst1.execute();
                 JOptionPane.showMessageDialog(this, "Berhasil Tersimpan!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
                 txt_kodeProduk.setText("");
                 txt_namaProduk.setText("");
