@@ -5,6 +5,7 @@
  */
 package Main;
 
+import Login.LoginPage;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 
@@ -138,13 +139,14 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btn_berandaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_berandaMouseClicked
         // TODO add your handling code here:
+        ImageIcon a = new ImageIcon("src/Sidebar/sidebar_beranda.png");
+        sidebarr.setIcon(a);
         dpanee.removeAll();
         dpanee.repaint();
         Beranda.form_Beranda home = new Beranda.form_Beranda();
         dpanee.add(home);
         home.setVisible(true);
-        ImageIcon a = new ImageIcon("src/Sidebar/sidebar_beranda.png");
-        sidebarr.setIcon(a);
+        
         
         
     }//GEN-LAST:event_btn_berandaMouseClicked
@@ -161,45 +163,50 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btn_dataStokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dataStokMouseClicked
         // TODO add your handling code here:
+        ImageIcon a = new ImageIcon("src/Sidebar/sidebar_dataStok.png");
+        sidebarr.setIcon(a);
         dpanee.removeAll();
         dpanee.repaint();
         DataStok.form_DataStok home = new DataStok.form_DataStok();
         dpanee.add(home);
         home.setVisible(true);
-        ImageIcon a = new ImageIcon("src/Sidebar/sidebar_dataStok.png");
-        sidebarr.setIcon(a);
+        
     }//GEN-LAST:event_btn_dataStokMouseClicked
 
     private void btn_TransaBeliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_TransaBeliMouseClicked
         // TODO add your handling code here:
+        ImageIcon a = new ImageIcon("src/Sidebar/sidebar_transbeli.png");
+        sidebarr.setIcon(a);
         dpanee.removeAll();
         dpanee.repaint();
         TransaksiBeli.form_TransaksiBeli home = new TransaksiBeli.form_TransaksiBeli();
         dpanee.add(home);
         home.setVisible(true);
-        ImageIcon a = new ImageIcon("src/Sidebar/sidebar_transbeli.png");
-        sidebarr.setIcon(a);
+        
     }//GEN-LAST:event_btn_TransaBeliMouseClicked
 
     private void btn_transJualMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_transJualMouseClicked
         // TODO add your handling code here:
+        ImageIcon a = new ImageIcon("src/Sidebar/sidebar_transjual.png");
+        sidebarr.setIcon(a);
         dpanee.removeAll();
         dpanee.repaint();
         TransaksiJual.form_TransaksiJual home = new TransaksiJual.form_TransaksiJual();
         dpanee.add(home);
         home.setVisible(true);
-        ImageIcon a = new ImageIcon("src/Sidebar/sidebar_transjual.png");
-        sidebarr.setIcon(a);
+        
     }//GEN-LAST:event_btn_transJualMouseClicked
 
     private void btn_dataPemasokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dataPemasokMouseClicked
         // TODO add your handling code here:
         dpanee.removeAll();
+        dpanee.repaint();
         DataPemasok.form_dataPemasok home = new DataPemasok.form_dataPemasok();
         dpanee.add(home);
         home.setVisible(true);
         ImageIcon a = new ImageIcon("src/Sidebar/side_dataPemasok.png");
         sidebarr.setIcon(a);
+        
     }//GEN-LAST:event_btn_dataPemasokMouseClicked
 
     private void btn_laporanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_laporanMouseClicked
@@ -215,15 +222,25 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btn_LainnyaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_LainnyaMouseClicked
         // TODO add your handling code here:
+        ImageIcon a = new ImageIcon("src/Sidebar/sidebar_lainnya.png");
+        sidebarr.setIcon(a);
         dpanee.removeAll();
         dpanee.repaint();
         Lainnya.form_Lainnya home = new Lainnya.form_Lainnya();
         dpanee.add(home);
         home.setVisible(true);
-        ImageIcon a = new ImageIcon("src/Sidebar/sidebar_lainnya.png");
-        sidebarr.setIcon(a);
+        
+        
     }//GEN-LAST:event_btn_LainnyaMouseClicked
-
+    public void logOut(){
+        dpanee.removeAll();
+        dpanee.repaint();
+        dispose();
+        Login.LoginPage l  = new Login.LoginPage();
+        this.dispose();
+        l.setVisible(true);
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -254,7 +271,7 @@ public class MainFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login.Login().setVisible(true);
+                new Login.LoginPage().setVisible(true);
             }
         });
     }
@@ -268,7 +285,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel btn_dataStok;
     private javax.swing.JLabel btn_laporan;
     private javax.swing.JLabel btn_transJual;
-    private javax.swing.JDesktopPane dpanee;
+    public javax.swing.JDesktopPane dpanee;
     private javax.swing.JLabel sidebarr;
     // End of variables declaration//GEN-END:variables
 }

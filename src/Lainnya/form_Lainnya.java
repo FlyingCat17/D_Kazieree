@@ -3,8 +3,11 @@ package Lainnya;
 
 import DataStok.*;
 import Beranda.*;
+import Login.LoginPage;
+import java.awt.event.MouseEvent;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
-
+import Main.MainFrame;
+import javax.swing.JOptionPane;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -16,6 +19,7 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  * @author LenataHoma
  */
 public class form_Lainnya extends javax.swing.JInternalFrame {
+Main.MainFrame n = new Main.MainFrame();
 
     /**
      * Creates new form Beranda
@@ -36,6 +40,8 @@ public class form_Lainnya extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setBorder(null);
@@ -43,14 +49,60 @@ public class form_Lainnya extends javax.swing.JInternalFrame {
         setMinimumSize(new java.awt.Dimension(960, 710));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Lainnya/btn_signOut.png"))); // NOI18N
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 400, 110));
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Lainnya/btn_dataPengguna.png"))); // NOI18N
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 400, 110));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Lainnya/Group 95.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 680));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // TODO add your handling code here:
+        if (evt.getButton()==MouseEvent.BUTTON1) {
+            dataPengguna.formDataPengguna dp = new dataPengguna.formDataPengguna(n, true);
+            dp.setVisible(true);
+        }
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        // TODO add your handling code here:
+        if (evt.getButton()==MouseEvent.BUTTON1) {
+            int jawab = JOptionPane.showConfirmDialog(this, "Yakin Ingin Keluar?", "Keluar Akun", JOptionPane.INFORMATION_MESSAGE);
+            switch(jawab){
+                case JOptionPane.YES_OPTION:
+                    n.setVisible(false);
+                    n.logOut();
+                    
+                    break;
+                case JOptionPane.NO_OPTION:
+                    break;
+            
+            }
+        }
+    }//GEN-LAST:event_jLabel3MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }
