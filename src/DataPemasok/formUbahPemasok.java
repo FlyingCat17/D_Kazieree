@@ -10,13 +10,15 @@ import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author LenataHoma
  */
-public class formTambahPemasok extends javax.swing.JDialog {
+public class formUbahPemasok extends javax.swing.JDialog {
 Main.MainFrame k = new Main.MainFrame();
 form_dataPemasok daata = new form_dataPemasok();
     Connection con;
@@ -25,28 +27,29 @@ form_dataPemasok daata = new form_dataPemasok();
     /**
      * Creates new form formTambahPemasok
      */
-    public formTambahPemasok(java.awt.Frame parent, boolean modal) {
+    public formUbahPemasok(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        loadDataPemasokk();
         this.setLocationRelativeTo(null);
         this.setBackground(new Color(0,0,0,0));
         jScrollPane1.setBackground(new Color(0,0,0,0));
         jScrollPane1.getViewport().setOpaque(false);
-        user_id();
+        
     }
 
-    public void user_id() {
-        String SALTCHARS = "1234567890";
-        StringBuilder salt = new StringBuilder();
-        Random rnd = new Random();
-        while (salt.length() < 4) {
-            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
-            salt.append(SALTCHARS.charAt(index));
-        }
-        String saltStr = salt.toString();
-        String id_kar = "SP";
-        txt_idPemasok.setText(id_kar+saltStr);
-     }
+//    public void user_id() {
+//        String SALTCHARS = "1234567890";
+//        StringBuilder salt = new StringBuilder();
+//        Random rnd = new Random();
+//        while (salt.length() < 4) {
+//            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+//            salt.append(SALTCHARS.charAt(index));
+//        }
+//        String saltStr = salt.toString();
+//        String id_kar = "SP";
+//        txt_idPemasok.setText(id_kar+saltStr);
+//     }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -125,12 +128,32 @@ form_dataPemasok daata = new form_dataPemasok();
         });
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 520, 95, 30));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataPemasok/form_tambahPemasok.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataPemasok/form_ubahPemasok (1).png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 650));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void loadDataPemasokk(){
+        try {
+            String lihat = "SELECT * FROM tb_pemasok WHERE id_pemasok = '" + txt_idPemasok.getText() + "';";
+            java.sql.Connection con = (Connection) konekdb.GetConnection();
+            java.sql.Statement stm = con.createStatement();
+            java.sql.ResultSet rs = stm.executeQuery(lihat);
+            while (rs.next()) {
+                txt_namaPemasok.setText(rs.getString("nama_pemasok"));
+                txt_usaha.setText(rs.getString("nama_usaha"));
+                txt_alamat.setText(rs.getString("alamat_usaha"));
+                txt_noTelp.setText(rs.getString("no_telp_pemasok"));
+                System.out.println(rs.getString("nama_pemasok"));
+            }
+            
+        } catch (Exception e) {
+            System.out.println("Gagal Load Data");
+            System.err.println(e.getMessage());
+
+        }
+    }
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
         daata.loadDataPemasok();
@@ -162,21 +185,21 @@ form_dataPemasok daata = new form_dataPemasok();
             try {
                 String a = "INSERT INTO tb_pemasok VALUES('"+ip+"','"+np
                         +"','"+nu+"','"+au+"','"+no+"');";
+                String b = "UPDATE tb_pemasok SET nama_pemasok = '"+np+"', nama_usaha = '"
+                        + nu +"', alamat_usaha = '"+au+"', no_telp_pemasok = '"+no+"' WHERE id_pemasok = '"+ip+"';";
                 con = (Connection)konekdb.GetConnection();
-                pst = con.prepareStatement(a);
+                pst = con.prepareStatement(b);
                 pst.execute();
+                daata.loadDataPemasok();
                 JOptionPane.showMessageDialog(this, "Berhasil Tersimpan!");
-                System.out.println("Berhasil Menyimpan Data Pemasok");
+                System.out.println("Berhasil Menyimpan Perubahan Data Pemasok");
                 System.out.println("ID      : "+ip);
                 System.out.println("Nama    : "+np);
                 System.out.println("Usaha   : "+nu);
                 System.out.println("Alamat  : "+au);
                 System.out.println("No Telp : "+no);
-                user_id();
-                txt_namaPemasok.setText("");
-                txt_alamat.setText("");
-                txt_usaha.setText("");
-                txt_noTelp.setText("");
+                daata.loadDataPemasok();
+                this.dispose();
                 daata.loadDataPemasok();
             } catch (Exception e) {
                 System.out.println("Something Wrong. You can check it below");
@@ -202,21 +225,23 @@ form_dataPemasok daata = new form_dataPemasok();
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(formTambahPemasok.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(formUbahPemasok.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(formTambahPemasok.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(formUbahPemasok.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(formTambahPemasok.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(formUbahPemasok.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(formTambahPemasok.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(formUbahPemasok.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                formTambahPemasok dialog = new formTambahPemasok(new javax.swing.JFrame(), true);
+                formUbahPemasok dialog = new formUbahPemasok(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -234,7 +259,7 @@ form_dataPemasok daata = new form_dataPemasok();
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea txt_alamat;
-    private javax.swing.JTextField txt_idPemasok;
+    public javax.swing.JTextField txt_idPemasok;
     private javax.swing.JTextField txt_namaPemasok;
     private javax.swing.JTextField txt_noTelp;
     private javax.swing.JTextField txt_usaha;
