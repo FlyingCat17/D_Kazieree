@@ -164,11 +164,11 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
         } else {
             try {
                 String sql = "SELECT tb_produk.id_produk, tb_produk.nama_produk, tb_produk.harga_jual, tb_stokbarang.stok_produk "
-                        + "FROM tb_produk JOIN tb_stokbarang ON tb_produk.id_produk = tb_stokbarang.id_produk";
+                        + "FROM tb_produk LEFT JOIN tb_stokbarang ON tb_produk.id_produk = tb_stokbarang.id_produk WHERE tb_produk.id_produk like '" + id_prod.getText() + "'";
                 java.sql.Connection conn = (Connection) konekdb.GetConnection();
                 java.sql.Statement stm = conn.createStatement();
                 java.sql.ResultSet res = stm.executeQuery(sql);
-                while (res.next()) {
+                if (res.next()) {
                     if (id_prod.getText().equals(res.getString(1))) {
                         nama_prod.setText(res.getString(2));
                         harga_prod.setText(res.getString(3));
@@ -181,21 +181,27 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                         harga_prod.setText("");
                         jumlah_prod.setText("");
                     }
+                } else {
+                    nama_prod.setText("");
+                    harga_prod.setText("");
+                    jumlah_prod.setText("");
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e);
+                nama_prod.setText("");
+                harga_prod.setText("");
+                jumlah_prod.setText("");
             }
         }
     }
 
     public void kembalian() {
-        int sub = Integer.parseInt(jLabel3.getText());
-        int disk;
         if (jLabel3.getText().equals("")) {
             kembalian_harga.setText("");
         } else if (jLabel3.getText().isEmpty()) {
             kembalian_harga.setText("");
-        }else if (!(pembayaran.getText().equals(""))) {
+        } else if (!(pembayaran.getText().equals(""))) {
+            int sub = Integer.parseInt(jLabel3.getText());
+            int disk;
             disk = Integer.parseInt(pembayaran.getText());
             int ttl = disk - sub;
             if (!(ttl < 0)) {
@@ -203,7 +209,9 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
             } else {
                 kembalian_harga.setText("");
             }
-        } 
+        } else {
+            kembalian_harga.setText("");
+        }
     }
 
     public void diskon() {
@@ -337,6 +345,9 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
         id_prod.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 id_prodKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                id_prodKeyTyped(evt);
             }
         });
         getContentPane().add(id_prod, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 380, 30));
@@ -603,6 +614,9 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
         if (!(Character.isDigit(k) || k == KeyEvent.VK_BACK_SPACE || k == KeyEvent.VK_DELETE)) {
             evt.consume();
         }
+        if (evt.getKeyChar() == KeyEvent.VK_SPACE) {
+            evt.consume();
+        }
         if (panjang > 2) {
             evt.consume();
         }
@@ -613,6 +627,9 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
         char k = evt.getKeyChar();
         int panjang = pembayaran.getText().length();
         if (!(Character.isDigit(k) || k == KeyEvent.VK_BACK_SPACE || k == KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+        if (evt.getKeyChar() == KeyEvent.VK_SPACE) {
             evt.consume();
         }
         if (panjang > 8) {
@@ -627,10 +644,20 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
         if (!(Character.isDigit(k) || k == KeyEvent.VK_BACK_SPACE || k == KeyEvent.VK_DELETE)) {
             evt.consume();
         }
+        if (evt.getKeyChar() == KeyEvent.VK_SPACE) {
+            evt.consume();
+        }
         if (panjang > 8) {
             evt.consume();
         }
     }//GEN-LAST:event_jumlah_prodKeyTyped
+
+    private void id_prodKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_id_prodKeyTyped
+        // TODO add your handling code here:
+        if (evt.getKeyChar() == KeyEvent.VK_SPACE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_id_prodKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
