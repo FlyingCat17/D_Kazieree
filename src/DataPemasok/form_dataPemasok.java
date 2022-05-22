@@ -2,10 +2,17 @@ package DataPemasok;
 
 
 import Beranda.*;
+import Main.MainFrame;
 import db.konekdb;
 import java.sql.Connection;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
+import db.konekdb;
+import java.awt.event.MouseEvent;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -18,7 +25,12 @@ import javax.swing.table.DefaultTableModel;
  * @author LenataHoma
  */
 public class form_dataPemasok extends javax.swing.JInternalFrame {
-
+Main.MainFrame n = new Main.MainFrame();
+    Connection con;
+    PreparedStatement pst;
+    Statement st;
+    ResultSet rs;
+    String id_pemasok = null;
     /**
      * Creates new form Beranda
      */
@@ -27,6 +39,8 @@ public class form_dataPemasok extends javax.swing.JInternalFrame {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI gui = (BasicInternalFrameUI)this.getUI();
         gui.setNorthPane(null);
+        loadDataPemasok();
+        System.out.println("ID Pemasok : "+id_pemasok);
     }
 
     
@@ -39,8 +53,11 @@ public class form_dataPemasok extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        tb_produk = new javax.swing.JScrollPane();
-        TabelProduk = new javax.swing.JTable(){
+        jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        tb_pemaasok = new javax.swing.JScrollPane();
+        tabelPemasok = new javax.swing.JTable(){
 
             public boolean isCellEditable(int rowIndex, int colIndex)
             {
@@ -57,10 +74,34 @@ public class form_dataPemasok extends javax.swing.JInternalFrame {
         setMinimumSize(new java.awt.Dimension(960, 710));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tb_produk.setBorder(null);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataPemasok/btn_hapus.png"))); // NOI18N
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 125, -1, 30));
 
-        TabelProduk.setFont(new java.awt.Font("Quicksand Medium", 0, 15)); // NOI18N
-        TabelProduk.setModel(new javax.swing.table.DefaultTableModel(
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataPemasok/btn_ubah.png"))); // NOI18N
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 125, -1, 30));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataPemasok/btn_tambah.png"))); // NOI18N
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 125, -1, 30));
+
+        tb_pemaasok.setBorder(null);
+
+        tabelPemasok.setFont(new java.awt.Font("Quicksand Medium", 0, 15)); // NOI18N
+        tabelPemasok.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -90,25 +131,25 @@ public class form_dataPemasok extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        TabelProduk.setRowHeight(40);
-        TabelProduk.getTableHeader().setResizingAllowed(false);
-        TabelProduk.getTableHeader().setReorderingAllowed(false);
-        TabelProduk.addMouseListener(new java.awt.event.MouseAdapter() {
+        tabelPemasok.setRowHeight(40);
+        tabelPemasok.getTableHeader().setResizingAllowed(false);
+        tabelPemasok.getTableHeader().setReorderingAllowed(false);
+        tabelPemasok.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TabelProdukMouseClicked(evt);
+                tabelPemasokMouseClicked(evt);
             }
         });
-        tb_produk.setViewportView(TabelProduk);
+        tb_pemaasok.setViewportView(tabelPemasok);
 
-        getContentPane().add(tb_produk, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 177, 860, 470));
+        getContentPane().add(tb_pemaasok, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 177, 860, 470));
 
         txt_searchProduk.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
         txt_searchProduk.setBorder(null);
         txt_searchProduk.setOpaque(false);
         getContentPane().add(txt_searchProduk, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 125, 290, 30));
 
-        bgt_serachBox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataProduk/searchBox.png"))); // NOI18N
-        getContentPane().add(bgt_serachBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 360, 60));
+        bgt_serachBox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataPemasok/searchBoxPemasok (1).png"))); // NOI18N
+        getContentPane().add(bgt_serachBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 550, 60));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataPemasok/Group 96.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 680));
@@ -116,7 +157,35 @@ public class form_dataPemasok extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TabelProdukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelProdukMouseClicked
+    public void loadDataPemasok(){
+    DefaultTableModel tab = new DefaultTableModel();
+        tab.addColumn("ID Supplier");
+        tab.addColumn("Nama_Supplier");
+        tab.addColumn("Usaha");
+        tab.addColumn("Alamat");
+        tab.addColumn("No HP");
+        try {
+            String sql = "SELECT * FROM tb_pemasok";
+            java.sql.Connection con = (Connection)konekdb.GetConnection();
+            java.sql.Statement stm = con.createStatement();
+            java.sql.ResultSet rs = stm.executeQuery(sql);
+            while (rs.next()) {     
+                tab.addRow(new Object[]{
+                rs.getString("id_pemasok"),
+                rs.getString("nama_pemasok"),
+                rs.getString("nama_usaha"),
+                rs.getString("alamat_usaha"),
+                rs.getString("no_telp_pemasok")
+                });
+                tabelPemasok.setModel(tab);
+            };
+        } catch (Exception e) {
+            System.out.println("Gagal Mendapatkan Data!");
+            System.err.println(e.getMessage());
+        }
+    
+    }
+    private void tabelPemasokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelPemasokMouseClicked
         // TODO add your handling code here:
 //        int baris= TabelProduk.rowAtPoint(evt.getPoint());
 //        kategor_jasa = TabelProduk.getValueAt(baris, 2).toString();
@@ -129,14 +198,83 @@ public class form_dataPemasok extends javax.swing.JInternalFrame {
         //        DataProdukJasa.formUbahJasa mn = new DataProdukJasa.formUbahJasa(this, true);
         //        id_produk= tm.getValueAt(i, 0).toString();
         //        mn.txt_kodeProdukJasa.setText(id_produk);
-    }//GEN-LAST:event_TabelProdukMouseClicked
+        int i = tabelPemasok.rowAtPoint(evt.getPoint());
+        id_pemasok = tabelPemasok.getValueAt(i, 0).toString();
+        System.out.println("ID PEMASOK : "+ id_pemasok);
+        
+        
+    }//GEN-LAST:event_tabelPemasokMouseClicked
+
+    public String getIdPemasok(){
+        return id_pemasok;
+    }
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // TODO add your handling code here:
+        if (evt.getButton()==MouseEvent.BUTTON1){
+            formTambahPemasok mn = new formTambahPemasok(n, true);
+            loadDataPemasok();
+            mn.setVisible(true);
+            loadDataPemasok();
+            System.out.println("Membuka Form Tambah Pemasok");
+            
+        }
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        // TODO add your handling code here:
+        if (evt.getButton()==MouseEvent.BUTTON1){
+            if (getIdPemasok()==null) {
+                JOptionPane.showMessageDialog(this, "Harap Pilih Salah Satu Pemasok");
+            } else {
+                formUbahPemasok nn = new formUbahPemasok(n, true);
+                loadDataPemasok();
+                nn.txt_idPemasok.setText(getIdPemasok());
+                System.out.println("Membuka Form Ubah Pemasok");
+                nn.loadDataPemasokk();
+                loadDataPemasok();
+                nn.setVisible(true);
+                loadDataPemasok();
+                
+            }
+        }
+    }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        // TODO add your handling code here:
+        if (getIdPemasok()==null) {
+            JOptionPane.showMessageDialog(this, "Harap Pilih Salah Satu Pemasok");
+        } else {
+            try {
+            int jawab = JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus Data Pemasok ini?", "Konfirmasi", JOptionPane.INFORMATION_MESSAGE);
+            switch(jawab){
+                case JOptionPane.YES_OPTION:
+                    String d = "DELETE FROM tb_pemasok WHERE id_pemasok = '"+getIdPemasok()+"';";
+                    con = (Connection)konekdb.GetConnection();
+                    pst = con.prepareStatement(d);
+                    pst.execute();
+                    JOptionPane.showMessageDialog(this, "Berhasil Terhapus", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+                    loadDataPemasok();
+                    break;
+                case JOptionPane.NO_OPTION:
+                    break;
+            }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Gagal Menghapus Data!");
+                System.out.println("Gagal Menghapus Data");
+                System.err.println(e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jLabel4MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JTable TabelProduk;
     private javax.swing.JLabel bgt_serachBox;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane tb_produk;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    public static javax.swing.JTable tabelPemasok;
+    private javax.swing.JScrollPane tb_pemaasok;
     private javax.swing.JTextField txt_searchProduk;
     // End of variables declaration//GEN-END:variables
 }
