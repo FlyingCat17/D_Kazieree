@@ -139,6 +139,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void btn_berandaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_berandaMouseClicked
         // TODO add your handling code here:
         dpanee.removeAll();
+        dpanee.repaint();
         Beranda.form_Beranda home = new Beranda.form_Beranda();
         dpanee.add(home);
         home.setVisible(true);
@@ -152,6 +153,7 @@ public class MainFrame extends javax.swing.JFrame {
         ImageIcon a = new ImageIcon("src/Sidebar/sidebar_dataProduk.png");
         sidebarr.setIcon(a);
         dpanee.removeAll();
+        dpanee.repaint();
         DataProduk.form_DataProduk home = new DataProduk.form_DataProduk();
         dpanee.add(home);
         home.setVisible(true);
@@ -160,6 +162,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void btn_dataStokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dataStokMouseClicked
         // TODO add your handling code here:
         dpanee.removeAll();
+        dpanee.repaint();
         DataStok.form_DataStok home = new DataStok.form_DataStok();
         dpanee.add(home);
         home.setVisible(true);
@@ -170,6 +173,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void btn_TransaBeliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_TransaBeliMouseClicked
         // TODO add your handling code here:
         dpanee.removeAll();
+        dpanee.repaint();
         TransaksiBeli.form_TransaksiBeli home = new TransaksiBeli.form_TransaksiBeli();
         dpanee.add(home);
         home.setVisible(true);
@@ -180,6 +184,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void btn_transJualMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_transJualMouseClicked
         // TODO add your handling code here:
         dpanee.removeAll();
+        dpanee.repaint();
         TransaksiJual.form_TransaksiJual home = new TransaksiJual.form_TransaksiJual();
         dpanee.add(home);
         home.setVisible(true);
@@ -200,6 +205,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void btn_laporanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_laporanMouseClicked
         // TODO add your handling code here:
         dpanee.removeAll();
+        dpanee.repaint();
         Laporan.form_Laporan home = new Laporan.form_Laporan();
         dpanee.add(home);
         home.setVisible(true);
@@ -210,6 +216,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void btn_LainnyaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_LainnyaMouseClicked
         // TODO add your handling code here:
         dpanee.removeAll();
+        dpanee.repaint();
         Lainnya.form_Lainnya home = new Lainnya.form_Lainnya();
         dpanee.add(home);
         home.setVisible(true);

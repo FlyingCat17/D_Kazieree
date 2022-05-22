@@ -39,6 +39,17 @@ public class form_dataPemasok extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        tb_produk = new javax.swing.JScrollPane();
+        TabelProduk = new javax.swing.JTable(){
+
+            public boolean isCellEditable(int rowIndex, int colIndex)
+            {
+                return false; //Disallow the editing of any cell
+            }
+
+        };
+        txt_searchProduk = new javax.swing.JTextField();
+        bgt_serachBox = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setBorder(null);
@@ -46,14 +57,86 @@ public class form_dataPemasok extends javax.swing.JInternalFrame {
         setMinimumSize(new java.awt.Dimension(960, 710));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        tb_produk.setBorder(null);
+
+        TabelProduk.setFont(new java.awt.Font("Quicksand Medium", 0, 15)); // NOI18N
+        TabelProduk.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Kode Barang", "Nama Barang", "Satuan", "Harga Beli", "Harga Jual"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TabelProduk.setRowHeight(40);
+        TabelProduk.getTableHeader().setResizingAllowed(false);
+        TabelProduk.getTableHeader().setReorderingAllowed(false);
+        TabelProduk.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelProdukMouseClicked(evt);
+            }
+        });
+        tb_produk.setViewportView(TabelProduk);
+
+        getContentPane().add(tb_produk, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 177, 860, 470));
+
+        txt_searchProduk.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
+        txt_searchProduk.setBorder(null);
+        txt_searchProduk.setOpaque(false);
+        getContentPane().add(txt_searchProduk, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 125, 290, 30));
+
+        bgt_serachBox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataProduk/searchBox.png"))); // NOI18N
+        getContentPane().add(bgt_serachBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 360, 60));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataPemasok/Group 96.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 680));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void TabelProdukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelProdukMouseClicked
+        // TODO add your handling code here:
+//        int baris= TabelProduk.rowAtPoint(evt.getPoint());
+//        kategor_jasa = TabelProduk.getValueAt(baris, 2).toString();
+//        id_produk = TabelProduk.getValueAt(baris, 0).toString();
+//        System.out.println("ID PRODUK = "+id_produk);
+//        System.out.println("Kategori "+ kategor_jasa);
+//        //        lbl_id.setText(id_produk);
+        //        int i = TabelProduk.getSelectedRow();
+        //        TableModel tm = TabelProduk.getModel();
+        //        DataProdukJasa.formUbahJasa mn = new DataProdukJasa.formUbahJasa(this, true);
+        //        id_produk= tm.getValueAt(i, 0).toString();
+        //        mn.txt_kodeProdukJasa.setText(id_produk);
+    }//GEN-LAST:event_TabelProdukMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static javax.swing.JTable TabelProduk;
+    private javax.swing.JLabel bgt_serachBox;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane tb_produk;
+    private javax.swing.JTextField txt_searchProduk;
     // End of variables declaration//GEN-END:variables
 }
