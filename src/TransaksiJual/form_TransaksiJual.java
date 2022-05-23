@@ -3,6 +3,7 @@ package TransaksiJual;
 import TransaksiBeli.*;
 import DataStok.*;
 import Beranda.*;
+import Main.MainFrame;
 import Main.user;
 import db.konekdb;
 import java.awt.event.ActionEvent;
@@ -42,6 +43,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI gui = (BasicInternalFrameUI) this.getUI();
         gui.setNorthPane(null);
+        search();
         kolom();
         Tampil_Jam();
     }
@@ -49,8 +51,8 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
     public void kolom() {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("No");
-        model.addColumn("ID Barang");
-        model.addColumn("Nama Barang");
+        model.addColumn("ID Produk");
+        model.addColumn("Nama Produk");
         model.addColumn("Harga");
         model.addColumn("Jumlah");
         model.addColumn("Total Harga");
@@ -151,6 +153,29 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                 user usr = new user();
                 String nama = usr.getNama();
                 kasir.setText(usr.getNama());
+
+                try {
+                    String sql = "SELECT tb_produk.id_produk, tb_produk.nama_produk, tb_produk.harga_jual, tb_stokbarang.stok_produk "
+                            + "FROM tb_produk LEFT JOIN tb_stokbarang ON tb_produk.id_produk = tb_stokbarang.id_produk WHERE tb_produk.id_produk like '" + id_prod.getText() + "'";
+                    java.sql.Connection conn = (Connection) konekdb.GetConnection();
+                    java.sql.Statement stm = conn.createStatement();
+                    java.sql.ResultSet res = stm.executeQuery(sql);
+                    if (res.next()) {
+                        if (id_prod.getText().equals(res.getString(1))) {
+                            nama_prod.setText(res.getString(2));
+                            harga_prod.setText(res.getString(3));
+                            String stoknya = res.getString(4);
+                            if (stoknya == null) {
+                                stok_prod.setText("Tersedia");
+                                jumlah_prod.setEditable(false);
+                                System.out.println("==null");
+                            } else {
+                                stok_prod.setText(res.getString(4));
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                }
             }
         };
         new Timer(1, taskPerformer).start();
@@ -161,6 +186,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
             nama_prod.setText("");
             harga_prod.setText("");
             jumlah_prod.setText("");
+            stok_prod.setText("");
         } else {
             try {
                 String sql = "SELECT tb_produk.id_produk, tb_produk.nama_produk, tb_produk.harga_jual, tb_stokbarang.stok_produk "
@@ -172,24 +198,36 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                     if (id_prod.getText().equals(res.getString(1))) {
                         nama_prod.setText(res.getString(2));
                         harga_prod.setText(res.getString(3));
+                        String stoknya = res.getString(4);
+                        if (stoknya == null) {
+                            stok_prod.setText("Tersedia");
+                            jumlah_prod.setEditable(false);
+                            System.out.println("==null");
+                        } else {
+                            stok_prod.setText(res.getString(4));
+                        }
                     } else if (id_prod.getText().isEmpty()) {
                         nama_prod.setText("");
                         harga_prod.setText("");
                         jumlah_prod.setText("");
+                        stok_prod.setText("");
                     } else {
                         nama_prod.setText("");
                         harga_prod.setText("");
                         jumlah_prod.setText("");
+                        stok_prod.setText("");
                     }
                 } else {
                     nama_prod.setText("");
                     harga_prod.setText("");
                     jumlah_prod.setText("");
+                    stok_prod.setText("");
                 }
             } catch (Exception e) {
                 nama_prod.setText("");
                 harga_prod.setText("");
                 jumlah_prod.setText("");
+                stok_prod.setText("");
             }
         }
     }
@@ -279,6 +317,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                         nama_prod.setText("");
                         harga_prod.setText("");
                         jumlah_prod.setText("");
+                        stok_prod.setText("");
 
                         //Hapus Bottom
                         diskon_harga.setText("");
@@ -309,10 +348,10 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        id_prod = new javax.swing.JTextField();
         pilih_prod = new javax.swing.JLabel();
         kembalian_harga = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        id_prod = new javax.swing.JTextField();
         nama_prod = new javax.swing.JLabel();
         harga_prod = new javax.swing.JLabel();
         jumlah_prod = new javax.swing.JTextField();
@@ -323,6 +362,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
         tgl_trx = new javax.swing.JLabel();
         id_trx = new javax.swing.JLabel();
         total_tabel = new javax.swing.JLabel();
+        stok_prod = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -339,15 +379,6 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
         setMinimumSize(new java.awt.Dimension(960, 710));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        pilih_prod.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pilih_prodMouseClicked(evt);
-            }
-        });
-        getContentPane().add(pilih_prod, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 210, 30, 30));
-        getContentPane().add(kembalian_harga, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 630, 170, 30));
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 540, 170, 30));
-
         id_prod.setBorder(null);
         id_prod.setOpaque(false);
         id_prod.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -359,6 +390,15 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(id_prod, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 340, 30));
+
+        pilih_prod.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pilih_prodMouseClicked(evt);
+            }
+        });
+        getContentPane().add(pilih_prod, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 210, 30, 30));
+        getContentPane().add(kembalian_harga, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 630, 170, 30));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 540, 170, 30));
         getContentPane().add(nama_prod, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 210, 460, 30));
         getContentPane().add(harga_prod, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 150, 30));
 
@@ -411,6 +451,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
         total_tabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         total_tabel.setText("0");
         getContentPane().add(total_tabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(631, 530, 270, 70));
+        getContentPane().add(stok_prod, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, 140, 30));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiJual/Total.png"))); // NOI18N
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 490, -1, -1));
@@ -437,7 +478,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                 jLabel5MouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(578, 277, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 277, -1, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiJual/btn_tambah.png"))); // NOI18N
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -445,7 +486,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                 jLabel4MouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(338, 277, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 277, -1, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -502,6 +543,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                     nama_prod.setText("");
                     harga_prod.setText("");
                     jumlah_prod.setText("");
+                    stok_prod.setText("");
 
                     //Hapus Bottom
                     diskon_harga.setText("");
@@ -524,34 +566,73 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
         if (evt.getButton() == MouseEvent.BUTTON1) {
             if (!(id_prod.getText().equals(""))) {
                 if (!(jumlah_prod.getText().equals(""))) {
-                    int har = Integer.parseInt(harga_prod.getText());
-                    int juml = Integer.parseInt(jumlah_prod.getText());
-                    int total = har * juml;
-                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-                    Object row[] = {
-                        id,
-                        id_prod.getText(),
-                        nama_prod.getText(),
-                        harga_prod.getText(),
-                        jumlah_prod.getText(),
-                        total
-                    };
-                    model.addRow(row);
+                    if (!(stok_prod.equals("Tersedia"))) {
+                        int juml = Integer.parseInt(jumlah_prod.getText());
+                        int har = Integer.parseInt(harga_prod.getText());
+                        int total = har * juml;
+                        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                        Object row[] = {
+                            id,
+                            id_prod.getText(),
+                            nama_prod.getText(),
+                            harga_prod.getText(),
+                            jumlah_prod.getText(),
+                            total
+                        };
+                        model.addRow(row);
 
-                    //Hapus top
-                    id_prod.setText("");
-                    nama_prod.setText("");
-                    harga_prod.setText("");
-                    jumlah_prod.setText("");
+                        //Hapus top
+                        id_prod.setText("");
+                        nama_prod.setText("");
+                        harga_prod.setText("");
+                        jumlah_prod.setText("");
+                        stok_prod.setText("");
 
-                    //Hapus Bottom
-                    diskon_harga.setText("");
-                    diskon_persen.setText("");
-                    jLabel3.setText("");
-                    pembayaran.setText("");
-                    kembalian_harga.setText("");
+                        //Hapus Bottom
+                        diskon_harga.setText("");
+                        diskon_persen.setText("");
+                        jLabel3.setText("");
+                        pembayaran.setText("");
+                        kembalian_harga.setText("");
 
-                    id_prod.requestFocus();
+                        id_prod.requestFocus();
+                    } else {
+                        int stok = Integer.parseInt(stok_prod.getText());
+                        int juml = Integer.parseInt(jumlah_prod.getText());
+                        if (juml > stok) {
+                            JOptionPane.showMessageDialog(null, "Jumlah Barang Tidak Boleh Lebih Dari Stok");
+                        } else {
+                            int har = Integer.parseInt(harga_prod.getText());
+                            int total = har * juml;
+                            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                            Object row[] = {
+                                id,
+                                id_prod.getText(),
+                                nama_prod.getText(),
+                                harga_prod.getText(),
+                                jumlah_prod.getText(),
+                                total
+                            };
+                            model.addRow(row);
+
+                            //Hapus top
+                            id_prod.setText("");
+                            nama_prod.setText("");
+                            harga_prod.setText("");
+                            jumlah_prod.setText("");
+                            stok_prod.setText("");
+
+                            //Hapus Bottom
+                            diskon_harga.setText("");
+                            diskon_persen.setText("");
+                            jLabel3.setText("");
+                            pembayaran.setText("");
+                            kembalian_harga.setText("");
+
+                            id_prod.requestFocus();
+                        }
+                    }
+
                 } else {
                     JOptionPane.showMessageDialog(null, "Jumlah tidak boleh kosong");
                 }
@@ -561,12 +642,6 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jLabel4MouseClicked
 
-    private void id_prodKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_id_prodKeyReleased
-        // TODO add your handling code here:
-        id_prod.setText(id_prod.getText().toUpperCase());
-        search();
-    }//GEN-LAST:event_id_prodKeyReleased
-
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         // TODO add your handling code here:
         if (evt.getButton() == MouseEvent.BUTTON1) {
@@ -575,6 +650,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
             nama_prod.setText("");
             harga_prod.setText("");
             jumlah_prod.setText("");
+            stok_prod.setText("");
 
             //Hapus Bottom
             diskon_harga.setText("");
@@ -669,6 +745,19 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jumlah_prodKeyTyped
 
+    private void pilih_prodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pilih_prodMouseClicked
+        // TODO add your handling code here:
+        if (evt.getButton() == MouseEvent.BUTTON1) {
+            this.getDesktopPane().add(new data_barang()).setVisible(true);
+        }
+    }//GEN-LAST:event_pilih_prodMouseClicked
+
+    private void id_prodKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_id_prodKeyReleased
+        // TODO add your handling code here:
+        id_prod.setText(id_prod.getText().toUpperCase());
+        search();
+    }//GEN-LAST:event_id_prodKeyReleased
+
     private void id_prodKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_id_prodKeyTyped
         // TODO add your handling code here:
         if (evt.getKeyChar() == KeyEvent.VK_SPACE) {
@@ -676,20 +765,13 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_id_prodKeyTyped
 
-    private void pilih_prodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pilih_prodMouseClicked
-        // TODO add your handling code here:
-        if (evt.getButton()==MouseEvent.BUTTON1) {
-            
-        }
-    }//GEN-LAST:event_pilih_prodMouseClicked
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel botom;
     private javax.swing.JTextField diskon_harga;
     private javax.swing.JTextField diskon_persen;
     private javax.swing.JLabel harga_prod;
-    private javax.swing.JTextField id_prod;
+    public static javax.swing.JTextField id_prod;
     private javax.swing.JLabel id_trx;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -707,6 +789,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
     private javax.swing.JLabel nama_prod;
     private javax.swing.JTextField pembayaran;
     private javax.swing.JLabel pilih_prod;
+    private javax.swing.JLabel stok_prod;
     private javax.swing.JLabel tgl_trx;
     private javax.swing.JLabel total_tabel;
     // End of variables declaration//GEN-END:variables
