@@ -5,9 +5,14 @@
  */
 package Login;
 
-
+import Main.user;
+import db.konekdb;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
 import javax.swing.JOptionPane;
+import java.sql.ResultSet;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 
 /**
  *
@@ -18,11 +23,40 @@ public class LoginPage extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    user usr = new user();
+
     public LoginPage() {
         initComponents();
         this.setLocationRelativeTo(null);
         txt_password.setOpaque(false);
         txt_username.setOpaque(false);
+    }
+
+    public void login() {
+        try {
+            String sql = "SELECT * FROM `tb_pengguna`";
+            Connection con = (Connection) konekdb.GetConnection();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                if (rs.getString("username").equals(txt_username.getText()) && rs.getString("kata_sandi").equals(txt_password.getText())) {
+                    usr.setNama(rs.getString("username"));
+                    usr.setHak_akses("hakakses");
+                    usr.setId_pengguna("id_pengguna");
+                    if (rs.getString("hak_akses").equals("ADMIN")) {
+                        JOptionPane.showMessageDialog(this, "Berhasil Masuk!!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+                        Main.MainFrame mn = new Main.MainFrame();
+                        mn.setVisible(true);
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Berhasil Masuk!!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Username Atau Katasandi Salah!!");
+                }
+            }
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -100,31 +134,29 @@ public class LoginPage extends javax.swing.JFrame {
     private void txt_passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_passwordKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (txt_username.getText().equals("user")) {
-                if (txt_password.getText().equals("user")) {
-//                    dialogboxloginsuccess box = new dialogboxloginsuccess();
-//                    box.setVisible(true);
-                    this.dispose();
+            if (!(txt_username.getText().equals(""))) {
+                if (!(txt_password.getText().equals(""))) {
+                    login();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Password Tidak Boleh Kosong");
                 }
             } else {
-//                new dialogboxloginfailed().setVisible(true);
+                JOptionPane.showMessageDialog(null, "Username Tidak Boleh Kosong");
             }
         }
     }//GEN-LAST:event_txt_passwordKeyPressed
 
     private void btn_masukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_masukMouseClicked
-//        // TODO add your handling code here:
-
-        JOptionPane.showMessageDialog(this, "Berhasil Masuk!!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
-        Main.MainFrame mn = new Main.MainFrame();
-        mn.setVisible(true);
-        this.dispose();
-//        txt_password.setEnabled(false);
-//        txt_username.setEnabled(false);
-//        btn_masuk.setVisible(false);
-//        notif_LoginBerhasilAdmin adm = new notif_LoginBerhasilAdmin(this, true);
-//        adm.setVisible(true);
-        
+        // TODO add your handling code here:
+        if (!(txt_username.getText().equals(""))) {
+            if (!(txt_password.getText().equals(""))) {
+                login();
+            } else {
+                JOptionPane.showMessageDialog(null, "Password Tidak Boleh Kosong");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Username Tidak Boleh Kosong");
+        }
     }//GEN-LAST:event_btn_masukMouseClicked
 
     /**
