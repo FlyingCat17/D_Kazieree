@@ -309,6 +309,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pilih_prod = new javax.swing.JLabel();
         kembalian_harga = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         id_prod = new javax.swing.JTextField();
@@ -337,6 +338,13 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
         setMaximumSize(new java.awt.Dimension(960, 710));
         setMinimumSize(new java.awt.Dimension(960, 710));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        pilih_prod.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pilih_prodMouseClicked(evt);
+            }
+        });
+        getContentPane().add(pilih_prod, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 210, 30, 30));
         getContentPane().add(kembalian_harga, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 630, 170, 30));
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 540, 170, 30));
 
@@ -350,7 +358,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                 id_prodKeyTyped(evt);
             }
         });
-        getContentPane().add(id_prod, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 380, 30));
+        getContentPane().add(id_prod, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 340, 30));
         getContentPane().add(nama_prod, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 210, 460, 30));
         getContentPane().add(harga_prod, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 150, 30));
 
@@ -449,7 +457,15 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 860, 140));
@@ -547,6 +563,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
 
     private void id_prodKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_id_prodKeyReleased
         // TODO add your handling code here:
+        id_prod.setText(id_prod.getText().toUpperCase());
         search();
     }//GEN-LAST:event_id_prodKeyReleased
 
@@ -659,6 +676,13 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_id_prodKeyTyped
 
+    private void pilih_prodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pilih_prodMouseClicked
+        // TODO add your handling code here:
+        if (evt.getButton()==MouseEvent.BUTTON1) {
+            
+        }
+    }//GEN-LAST:event_pilih_prodMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel botom;
@@ -682,6 +706,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
     private javax.swing.JLabel kembalian_harga;
     private javax.swing.JLabel nama_prod;
     private javax.swing.JTextField pembayaran;
+    private javax.swing.JLabel pilih_prod;
     private javax.swing.JLabel tgl_trx;
     private javax.swing.JLabel total_tabel;
     // End of variables declaration//GEN-END:variables

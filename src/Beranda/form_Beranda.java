@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -136,8 +137,12 @@ public class form_Beranda extends javax.swing.JInternalFrame {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
             if (rs.next()) {
-                jLabel9.setText(rs.getString(1));
-            } 
+                if (rs.getString(1).equals("NULL")) {
+                    jLabel9.setText("0");
+                } else {
+                    jLabel9.setText(rs.getString(1));
+                }
+            }
         } catch (Exception e) {
             jLabel9.setText("0");
         }
