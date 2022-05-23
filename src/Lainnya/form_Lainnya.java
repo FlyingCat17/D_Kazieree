@@ -7,6 +7,9 @@ import Login.LoginPage;
 import java.awt.event.MouseEvent;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import Main.MainFrame;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -88,9 +91,14 @@ Main.MainFrame n = new Main.MainFrame();
             int jawab = JOptionPane.showConfirmDialog(this, "Yakin Ingin Keluar?", "Keluar Akun", JOptionPane.INFORMATION_MESSAGE);
             switch(jawab){
                 case JOptionPane.YES_OPTION:
-                    n.setVisible(false);
-                    n.logOut();
+                    LoginPage lp = new LoginPage();
+                    lp.dispatchEvent(new WindowEvent(lp, WindowEvent.WINDOW_OPENED));
+                    n.dispatchEvent(new WindowEvent(n, WindowEvent.WINDOW_CLOSING));
+//                    n.setVisible(false);
+//                    n.logOut();
                     
+                    
+//                    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     break;
                 case JOptionPane.NO_OPTION:
                     break;
