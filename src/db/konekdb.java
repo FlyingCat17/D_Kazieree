@@ -11,7 +11,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class konekdb {
-    private static Connection koneksi;
+    public static Connection koneksi;
     
     public static Connection GetConnection() throws SQLException {
         if (koneksi==null){

@@ -77,8 +77,9 @@ Main.MainFrame n = new Main.MainFrame();
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
         if (evt.getButton()==MouseEvent.BUTTON1) {
-            dataPengguna.formDataPengguna dp = new dataPengguna.formDataPengguna(n, true);
-            dp.setVisible(true);
+            this.getDesktopPane().add(new dataPengguna.formDataPenggunaa()).setVisible(true);
+//            dataPengguna.formDataPengguna dp = new dataPengguna.formDataPengguna(n, true);
+//            dp.setVisible(true);
         }
     }//GEN-LAST:event_jLabel2MouseClicked
 

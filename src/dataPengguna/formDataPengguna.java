@@ -5,15 +5,21 @@
  */
 package dataPengguna;
 
+import db.konekdb;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author LenataHoma
  */
 public class formDataPengguna extends javax.swing.JDialog {
-
+DefaultTableModel tabmodel;
+    ResultSet rs;
     /**
      * Creates new form formDataPengguna
      */
@@ -22,6 +28,7 @@ public class formDataPengguna extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setBackground(new Color(0,0,0,0));
+        loadDataPengguna();
     }
 
     /**
@@ -33,6 +40,7 @@ public class formDataPengguna extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTextField1 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -55,6 +63,11 @@ public class formDataPengguna extends javax.swing.JDialog {
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextField1.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
+        jTextField1.setBorder(null);
+        jTextField1.setOpaque(false);
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 125, 270, 30));
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dataPengguna/btn_Hapus.png"))); // NOI18N
@@ -86,11 +99,16 @@ public class formDataPengguna extends javax.swing.JDialog {
         filterAkses.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
         filterAkses.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Karyawan", "Admin" }));
         filterAkses.setOpaque(false);
-        getContentPane().add(filterAkses, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 125, 130, 30));
+        filterAkses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filterAksesActionPerformed(evt);
+            }
+        });
+        getContentPane().add(filterAkses, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 125, 140, 30));
 
         tb_pengguna.setBorder(null);
 
-        TabelPengguna.setFont(new java.awt.Font("Quicksand Medium", 0, 15)); // NOI18N
+        TabelPengguna.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
         TabelPengguna.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -146,6 +164,37 @@ public class formDataPengguna extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void loadDataPengguna(){
+        DefaultTableModel tab = new DefaultTableModel();
+        tab.addColumn("ID Pengguna");
+        tab.addColumn("Username");
+        tab.addColumn("Nama Lengkap");
+        tab.addColumn("Alamat");
+        tab.addColumn("No Telp");
+        tab.addColumn("Hak Akses");
+        tab.addColumn("Status");
+        try {
+            String sql = "SELECT * FROM tb_pengguna";
+            java.sql.Connection con = (Connection)konekdb.GetConnection();
+            java.sql.Statement stm = con.createStatement();
+            java.sql.ResultSet rs = stm.executeQuery(sql);
+            while (rs.next()) {     
+                tab.addRow(new Object[]{
+                rs.getString("id_pengguna"),
+                rs.getString("username"),
+                rs.getString("nama_pengguna"),
+                rs.getString("alamat_pengguna"),
+                rs.getString("no_telp_pengguna"),
+                rs.getString("hak_akses"),
+                rs.getString("status")
+                });
+                TabelPengguna.setModel(tab);
+            };
+        } catch (Exception e) {
+            System.out.println("Gagal Mendapatkan Data!");
+            System.err.println(e.getMessage());
+        }
+    }
     private void TabelPenggunaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelPenggunaMouseClicked
         // TODO add your handling code here:
         int baris= TabelPengguna.rowAtPoint(evt.getPoint());
@@ -170,6 +219,7 @@ public class formDataPengguna extends javax.swing.JDialog {
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
+//        OptionPilihPengguna nn = new OptionPilihPengguna(, true);
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
@@ -179,6 +229,39 @@ public class formDataPengguna extends javax.swing.JDialog {
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void filterAksesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterAksesActionPerformed
+        // TODO add your handling code here:
+        String tipe = (String)filterAkses.getSelectedItem();
+        if (tipe == "ADMIN") {
+            try {
+            Object[] judul_kolom = {"ID Pengguna", "Username", "Nama Lengkap", "No Telepon", "Hak Akses", "Status"};
+            tabmodel = new DefaultTableModel(null, judul_kolom);
+            TabelPengguna.setModel(tabmodel);
+            
+            Connection conn = (Connection)konekdb.GetConnection();
+            Statement st = conn.createStatement();
+            tabmodel.getDataVector().removeAllElements();
+            
+            rs = st.executeQuery("SELECT * FROM tb_pengguna WHERE hak_akses = 'ADMIN'");
+            while(rs.next()){
+                Object[] data = {
+                    rs.getString("id_pengguna"),
+                    rs.getString("username"),
+                    rs.getString("nama_pengguna"),
+                    rs.getString("alamat_pengguna"),
+                    rs.getString("no_telp_pengguna"),
+                    rs.getString("hak_akses"),
+                    rs.getString("status")
+                };
+                tabmodel.addRow(data);
+                System.out.println("Berhasil Admin");
+            }
+            } catch (Exception ex) {
+                System.err.println(ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_filterAksesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -230,6 +313,7 @@ public class formDataPengguna extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JScrollPane tb_pengguna;
     // End of variables declaration//GEN-END:variables
 }
