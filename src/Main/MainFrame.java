@@ -8,6 +8,7 @@ package Main;
 import Login.LoginPage;
 import java.awt.Color;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 /**
  *
@@ -233,12 +234,15 @@ public class MainFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btn_LainnyaMouseClicked
     public void logOut(){
-        dpanee.removeAll();
-        dpanee.repaint();
-        dispose();
-        Login.LoginPage l  = new Login.LoginPage();
         this.dispose();
-        l.setVisible(true);
+        dispose();
+        this.validate();
+//        dpanee.removeAll();
+//        dpanee.repaint();
+//        dispose();
+//        Login.LoginPage l  = new Login.LoginPage();
+//        this.dispose();
+//        l.setVisible(true);
         
     }
     /**
