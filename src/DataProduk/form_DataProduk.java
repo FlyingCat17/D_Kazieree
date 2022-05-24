@@ -2,6 +2,7 @@ package DataProduk;
 
 
 import Beranda.*;
+import static DataProduk.formUbahJasa.txt_kodeProdukJasa;
 import java.sql.Connection;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
@@ -22,15 +23,18 @@ public class form_DataProduk extends javax.swing.JInternalFrame {
 Main.MainFrame no = new Main.MainFrame();
 String kategor_jasa = null;
 String id_produk = null;
+String nama = null;
+String hargabeli = null;
+String hargajual = null;
     /**
      * Creates new form Beranda
      */
     public form_DataProduk() {
         initComponents();
+        loadTableProduk();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI gui = (BasicInternalFrameUI)this.getUI();
         gui.setNorthPane(null);
-        loadTableProduk();
     }
 
     /**
@@ -67,6 +71,11 @@ String id_produk = null;
         txt_searchProduk.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
         txt_searchProduk.setBorder(null);
         txt_searchProduk.setOpaque(false);
+        txt_searchProduk.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_searchProdukKeyReleased(evt);
+            }
+        });
         getContentPane().add(txt_searchProduk, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 125, 290, 30));
 
         bgt_serachBox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataProduk/searchBox.png"))); // NOI18N
@@ -163,10 +172,10 @@ String id_produk = null;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void loadTableProduk(){
+    public static void loadTableProduk(){
     DefaultTableModel tbl = new DefaultTableModel();
             TabelProduk.setBorder(null);
-            tb_produk.setBorder(null);
+           // tb_produk.setBorder(null);
             tbl.addColumn("ID Produk");
             tbl.addColumn("Nama Produk");
             tbl.addColumn("Satuan");
@@ -240,6 +249,9 @@ String id_produk = null;
         } else if(kategor_jasa.equals("jasa")){
 //            DataProdukJasa.formUbahJasa tj = new DataProdukJasa.formUbahJasa(this, true);
             DataProduk.formUbahJasa jj = new DataProduk.formUbahJasa(no, true);
+            jj.txt_kodeProdukJasa.setText(getIdProduk());
+            jj.txt_namaJasa.setText(getnama2());
+            jj.txt_hargaJasa.setText(getjual());
             jj.setVisible(true);
             loadTableProduk();
 //            tj.txt_kodeProdukJasa.setText(getId_produk());
@@ -253,6 +265,10 @@ String id_produk = null;
 //            ub.setVisible(true);
             DataProduk.formUbahProdukBarang ub = new DataProduk.formUbahProdukBarang(no, true);
             ub.txt_kodeProdukBarang.setText(getIdProduk());
+            ub.txt_namaProduk.setText(getnama2());
+            ub.txt_satuanProduk.setText(getCatJasa());
+            ub.txt_hargaBeli.setText(getbeli());
+            ub.txt_hargaJual.setText(getjual());
             ub.setVisible(true);
 
             System.out.println("btn ubah = "+ getIdProduk());
@@ -264,6 +280,15 @@ String id_produk = null;
     public void setIdProdukJasanull(String id_produk){
         this.id_produk = id_produk;
     }
+    public void setIdProdukJasanul(String nama2){
+        this.nama = nama2;
+        
+    }public void setIdProdukJasanull2(String beli){
+        this.hargabeli = beli;
+        
+    }public void setIdProdukJasanull3(String jual){
+        this.hargajual = jual;
+    }
     private void btn_hapusProdukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_hapusProdukMouseClicked
         // TODO add your handling code here:
         if (id_produk==null) {
@@ -273,7 +298,7 @@ String id_produk = null;
             int jawab = JOptionPane.showConfirmDialog(this, "Yakin ingin Menghapus Produk Jasa ini?");
             switch (jawab){
                 case JOptionPane.YES_OPTION:
-                    String sql = "DELETE FROM tb_produk where id_produk='" +id_produk+ "'";
+                    String sql = "DELETE from tb_produk where id_produk='" +id_produk+ "'";
                     java.sql.Connection conn = (Connection) konekdb.GetConnection();
                     java.sql.PreparedStatement pst = conn.prepareStatement(sql);
                     pst.execute();
@@ -312,13 +337,31 @@ String id_produk = null;
     public String getIdProduk(){
         return id_produk;
     }
+    public String getCatJasa(){
+        return kategor_jasa;
+    }
+    public String getnama2(){
+        return nama;
+    }
+    public String getbeli(){
+        return hargabeli;
+    } 
+    public String getjual(){
+        return hargajual;
+    }
     private void TabelProdukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelProdukMouseClicked
         // TODO add your handling code here:
         int baris= TabelProduk.rowAtPoint(evt.getPoint());
         kategor_jasa = TabelProduk.getValueAt(baris, 2).toString();
         id_produk = TabelProduk.getValueAt(baris, 0).toString();
+        nama = TabelProduk.getValueAt(baris, 1).toString();
+        hargabeli = TabelProduk.getValueAt(baris, 3).toString();
+        hargajual = TabelProduk.getValueAt(baris, 4).toString();
         System.out.println("ID PRODUK = "+id_produk);
+        System.out.println("Nama PRODUK = "+nama);
         System.out.println("Kategori "+ kategor_jasa);
+        System.out.println("Harga Beli "+ hargabeli);
+        System.out.println("Harga Jual "+ hargajual);
 //        lbl_id.setText(id_produk);
         //        int i = TabelProduk.getSelectedRow();
         //        TableModel tm = TabelProduk.getModel();
@@ -326,6 +369,39 @@ String id_produk = null;
         //        id_produk= tm.getValueAt(i, 0).toString();
         //        mn.txt_kodeProdukJasa.setText(id_produk);
     }//GEN-LAST:event_TabelProdukMouseClicked
+
+    private void txt_searchProdukKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchProdukKeyReleased
+        // TODO add your handling code here:
+        String c = txt_searchProduk.getText();
+        try {
+            DefaultTableModel tbl = new DefaultTableModel();
+            tbl.addColumn("ID Produk");
+            tbl.addColumn("Nama Produk");
+            tbl.addColumn("Satuan");
+            tbl.addColumn("Harga Dasar");
+            tbl.addColumn("Harga Jual");
+            TabelProduk.setModel(tbl);
+            String sql = "SELECT * FROM tb_produk WHERE id_produk LIKE '"+c+"%' OR nama_produk LIKE '"+c+"%'";
+            java.sql.Connection conn=(Connection)konekdb.GetConnection();
+            java.sql.Statement stm=conn.createStatement();
+            java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+            java.sql.ResultSet res=stm.executeQuery(sql);
+            pst.execute();
+            while (res.next()) {
+                tbl.addRow(new Object[]{
+                    res.getString("id_produk"),
+                        res.getString("nama_produk"),
+                        res.getString("satuan"),
+                        res.getString("harga_beli"),
+                        res.getString("harga_jual")
+                });
+                TabelProduk.setModel(tbl);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Gagal mencari data");
+            loadTableProduk();
+        }
+    }//GEN-LAST:event_txt_searchProdukKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
