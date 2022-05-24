@@ -2,6 +2,8 @@ package DataStok;
 
 
 import Beranda.*;
+import static DataProduk.form_DataProduk.TabelProduk;
+import static DataProduk.form_DataProduk.loadTableProduk;
 import db.konekdb;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
@@ -83,6 +85,7 @@ String id_produk = null;
         };
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         bgt_serachBox1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -152,6 +155,16 @@ String id_produk = null;
         });
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 124, 90, 30));
 
+        jTextField1.setBackground(new java.awt.Color(196, 196, 196));
+        jTextField1.setFont(new java.awt.Font("Quicksand Medium", 0, 16)); // NOI18N
+        jTextField1.setBorder(null);
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 126, 580, 30));
+
         bgt_serachBox1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataStok/searchBox (1).png"))); // NOI18N
         getContentPane().add(bgt_serachBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 640, 60));
 
@@ -218,6 +231,35 @@ String id_produk = null;
 //        ks.setVisible(true);
     }//GEN-LAST:event_jLabel3MouseClicked
 
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        // TODO add your handling code here:
+        String c = jTextField1.getText();
+        try {
+            DefaultTableModel tbl = new DefaultTableModel();
+            tbl.addColumn("ID Produk");
+            tbl.addColumn("Nama Produk");
+            tbl.addColumn("Jumlah Stok");
+            TabelStok.setModel(tbl);
+            String sql = "SELECT tb_produk.id_produk, tb_produk.nama_produk,tb_stokbarang.stok_produk FROM tb_produk RIGHT JOIN tb_stokbarang ON tb_produk.id_produk=tb_stokbarang.id_produk WHERE tb_produk.id_produk like '"+c+"%' OR tb_produk.nama_produk LIKE '"+c+"%'";
+            java.sql.Connection conn=(Connection)konekdb.GetConnection();
+            java.sql.Statement stm=conn.createStatement();
+            java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+            java.sql.ResultSet res=stm.executeQuery(sql);
+            pst.execute();
+            while (res.next()) {
+                tbl.addRow(new Object[]{
+                    res.getString("id_produk"),
+                    res.getString("nama_produk"),
+                    res.getString("stok_produk")
+                });
+                TabelStok.setModel(tbl);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Gagal mencari data");
+            //loadTableStok();
+        }
+    }//GEN-LAST:event_jTextField1KeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JTable TabelStok;
@@ -225,6 +267,7 @@ String id_produk = null;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JScrollPane tb_stok;
     // End of variables declaration//GEN-END:variables
 }

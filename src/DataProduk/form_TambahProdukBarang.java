@@ -161,6 +161,7 @@ Connection con;
                 pst1.execute();
                 JOptionPane.showMessageDialog(this, "Berhasil Tersimpan!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
                 form_DataProduk.loadTableProduk();
+                
                 this.dispose();
                 txt_kodeProduk.setText("");
                 txt_namaProduk.setText("");
