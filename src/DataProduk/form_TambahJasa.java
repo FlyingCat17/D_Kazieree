@@ -8,6 +8,7 @@ package DataProduk;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import db.konekdb;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
@@ -54,6 +55,11 @@ Connection con;
         txt_hargaJasa.setFont(new java.awt.Font("Quicksand Medium", 0, 16)); // NOI18N
         txt_hargaJasa.setBorder(null);
         txt_hargaJasa.setOpaque(false);
+        txt_hargaJasa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_hargaJasaKeyTyped(evt);
+            }
+        });
         getContentPane().add(txt_hargaJasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 265, 360, 40));
 
         txt_namaJasa.setFont(new java.awt.Font("Quicksand Medium", 0, 16)); // NOI18N
@@ -120,12 +126,10 @@ Connection con;
 
     private void btn_simpanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_simpanMouseClicked
         // TODO add your handling code here:
-
                 String kp, np, sp;
                 kp = txt_kodeProduk.getText().toString();
                 np = txt_namaJasa.getText().toString();
                 sp = txt_hargaJasa.getText();
-                
             if (kp.equals("")) {
                 JOptionPane.showMessageDialog(this, "Harap isi Kode Produk Jasa");
             } else if(np.equals("")){
@@ -140,6 +144,8 @@ Connection con;
                 pst = con.prepareStatement(addProdukBarang);
                 pst.execute();
                 JOptionPane.showMessageDialog(this, "Berhasil Tersimpan!");
+                form_DataProduk.loadTableProduk();
+                this.dispose();
                 txt_kodeProduk.setText("");
                 txt_namaJasa.setText("");
                 txt_hargaJasa.setText("");
@@ -204,6 +210,17 @@ Connection con;
         //        txt_hargabeliTambahProdukBarang.setText("");
         //        txt_hargajualTambahProdukBarang.setText("");
     }//GEN-LAST:event_btn_batalMouseClicked
+
+    private void txt_hargaJasaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_hargaJasaKeyTyped
+        // TODO add your handling code here:
+        char k = evt.getKeyChar();
+        if (!(Character.isDigit(k) || k == KeyEvent.VK_BACK_SPACE || k == KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+        if (txt_hargaJasa.getText().length()>=12){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_hargaJasaKeyTyped
 
     /**
      * @param args the command line arguments

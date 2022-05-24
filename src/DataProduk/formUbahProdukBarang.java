@@ -6,8 +6,13 @@
 package DataProduk;
 
 
+import static DataProduk.form_DataProduk.loadTableProduk;
 import Main.MainFrame;
+import db.konekdb;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,6 +24,7 @@ DataProduk.form_DataProduk m = new DataProduk.form_DataProduk();
     /**
      * Creates new form formTambahProdukBarang
      */
+    
     public formUbahProdukBarang(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -26,6 +32,7 @@ DataProduk.form_DataProduk m = new DataProduk.form_DataProduk();
         this.setLocationRelativeTo(null);
         
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,11 +60,21 @@ DataProduk.form_DataProduk m = new DataProduk.form_DataProduk();
         txt_hargaJual.setFont(new java.awt.Font("Quicksand Medium", 0, 16)); // NOI18N
         txt_hargaJual.setBorder(null);
         txt_hargaJual.setOpaque(false);
+        txt_hargaJual.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_hargaJualKeyTyped(evt);
+            }
+        });
         getContentPane().add(txt_hargaJual, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 400, 370, 40));
 
         txt_hargaBeli.setFont(new java.awt.Font("Quicksand Medium", 0, 16)); // NOI18N
         txt_hargaBeli.setBorder(null);
         txt_hargaBeli.setOpaque(false);
+        txt_hargaBeli.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_hargaBeliKeyTyped(evt);
+            }
+        });
         getContentPane().add(txt_hargaBeli, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 335, 370, 40));
 
         txt_satuanProduk.setFont(new java.awt.Font("Quicksand Medium", 0, 16)); // NOI18N
@@ -77,6 +94,7 @@ DataProduk.form_DataProduk m = new DataProduk.form_DataProduk();
 
         btn_simpan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btn_simpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataProduk/btn_simpan.png"))); // NOI18N
+        btn_simpan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_simpan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btn_simpanMouseClicked(evt);
@@ -86,6 +104,7 @@ DataProduk.form_DataProduk m = new DataProduk.form_DataProduk();
 
         btn_batal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btn_batal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataProduk/btn_bstal.png"))); // NOI18N
+        btn_batal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_batal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btn_batalMouseClicked(evt);
@@ -110,17 +129,38 @@ DataProduk.form_DataProduk m = new DataProduk.form_DataProduk();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void btn_simpanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_simpanMouseClicked
         // TODO add your handling code here:
         
-//        String kp, np, sp, hb, hj;
-//        kp = txt_kodeProduk.getText().toString();
-//        np = txt_namaProduk.getText().toString();
-//        sp = txt_satuan.getText();
-//        hb = txt_hargabeli.getText();
-//        hj = txt_hargajual.getText();
-
+        String kp, np, sp, hb, hj,ib;
+        int b,j;
+        ib = txt_kodeProdukBarang.getText().toString();
+        kp = txt_kodeProdukBarang.getText().toString();
+        np = txt_namaProduk.getText().toString();
+        sp = txt_satuanProduk.getText();
+        hb = txt_hargaBeli.getText();
+        hj = txt_hargaJual.getText();
+        b = Integer.parseInt(txt_hargaBeli.getText());
+        j = Integer.parseInt(txt_hargaJual.getText());
+        if (b < j) {
+        try {
+            String update = "UPDATE tb_produk SET id_produk = '"+ kp +"',nama_produk = '"+ np +"', satuan = '"
+                    + sp +"', harga_beli = '"+ hb +"', harga_jual = '"+ hj +
+                    "' WHERE id_produk = '"+ ib +"'";
+            java.sql.Connection con = (Connection)konekdb.GetConnection();
+            java.sql.PreparedStatement stm = con.prepareStatement(update);
+            stm.execute();
+            JOptionPane.showMessageDialog(null, "Data Berhasil Disimpan");
+            form_DataProduk k = new form_DataProduk();
+            k.loadTableProduk();
+            this.dispose();
+        } catch (Exception t){
+            JOptionPane.showMessageDialog(null, "Data Gagal Disimpan");
+        }
+        } else {
+            JOptionPane.showMessageDialog(null, "Harga jual harus lebih besar dari harga beli");
+    }
     }//GEN-LAST:event_btn_simpanMouseClicked
 
     private void btn_batalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_batalMouseClicked
@@ -146,7 +186,7 @@ DataProduk.form_DataProduk m = new DataProduk.form_DataProduk();
         x = evt.getX();
         y = evt.getY();
     }//GEN-LAST:event_jLabel2MousePressed
-
+   
     private void jLabel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseDragged
         // TODO add your handling code here:
         int ex = evt.getXOnScreen();
@@ -154,6 +194,28 @@ DataProduk.form_DataProduk m = new DataProduk.form_DataProduk();
 
         this.setLocation(ex-x, ye-y);
     }//GEN-LAST:event_jLabel2MouseDragged
+
+    private void txt_hargaBeliKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_hargaBeliKeyTyped
+        // TODO add your handling code here:
+         char k = evt.getKeyChar();
+        if (!(Character.isDigit(k) || k == KeyEvent.VK_BACK_SPACE || k == KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+        if (txt_hargaBeli.getText().length()>=12){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_hargaBeliKeyTyped
+
+    private void txt_hargaJualKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_hargaJualKeyTyped
+        // TODO add your handling code here:
+         char k = evt.getKeyChar();
+        if (!(Character.isDigit(k) || k == KeyEvent.VK_BACK_SPACE || k == KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+        if (txt_hargaJual.getText().length()>=12){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_hargaJualKeyTyped
 
     /**
      * @param args the command line arguments
@@ -205,10 +267,10 @@ DataProduk.form_DataProduk m = new DataProduk.form_DataProduk();
     private javax.swing.JLabel btn_simpan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField txt_hargaBeli;
-    private javax.swing.JTextField txt_hargaJual;
+    public static javax.swing.JTextField txt_hargaBeli;
+    public static javax.swing.JTextField txt_hargaJual;
     public static javax.swing.JTextField txt_kodeProdukBarang;
-    private javax.swing.JTextField txt_namaProduk;
-    private javax.swing.JTextField txt_satuanProduk;
+    public static javax.swing.JTextField txt_namaProduk;
+    public static javax.swing.JTextField txt_satuanProduk;
     // End of variables declaration//GEN-END:variables
 }

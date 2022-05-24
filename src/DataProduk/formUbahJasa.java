@@ -5,7 +5,11 @@
  */
 package DataProduk;
 
+import db.konekdb;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -45,6 +49,7 @@ DataProduk.form_DataProduk vm = new DataProduk.form_DataProduk();
         btn_simpan = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -86,7 +91,7 @@ DataProduk.form_DataProduk vm = new DataProduk.form_DataProduk();
         });
         getContentPane().add(btn_simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(505, 320, 100, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataProdukJasa/form_ubahProdukJasa.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataProduk/Group 118.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -3, 700, 450));
 
         jLabel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -100,6 +105,9 @@ DataProduk.form_DataProduk vm = new DataProduk.form_DataProduk();
             }
         });
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 660, 60));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataProduk/form_tambahProdukJasa (1).png"))); // NOI18N
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -3, 700, 450));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -120,53 +128,35 @@ DataProduk.form_DataProduk vm = new DataProduk.form_DataProduk();
 
     private void btn_simpanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_simpanMouseClicked
         // TODO add your handling code here:
-
-        //        String kp, np, sp, hb, hj;
-        //        kp = txt_kodeProduk.getText().toString();
-        //        np = txt_namaProduk.getText().toString();
-        //        sp = txt_satuan.getText();
-        //        hb = txt_hargabeli.getText();
-        //        hj = txt_hargajual.getText();
-        //        if (kp.equals("")) {
-            //            panel_WarningKodeProduk.setVisible(true);
-            //            btn_simpanTambahProdukBarang.setVisible(false);
-            //            btn_batalTambahProdukbarang.setVisible(false);
-            //        } else if(np.equals("")){
-            //            panel_WarningNamaProduk.setVisible(true);
-            //            btn_simpanTambahProdukBarang.setVisible(false);
-            //            btn_batalTambahProdukbarang.setVisible(false);
-            //        } else if(sp.equals("")){
-            //            panel_WarningSatuanProduk.setVisible(true);
-            //            btn_simpanTambahProdukBarang.setVisible(false);
-            //            btn_batalTambahProdukbarang.setVisible(false);
-            //        } else if(hb.equals("")){
-            //            panel_WarningHargaBeliProduk.setVisible(true);
-            //            btn_simpanTambahProdukBarang.setVisible(false);
-            //            btn_batalTambahProdukbarang.setVisible(false);
-            //        } else if(hj.equals("")){
-            //            panel_WarningHargaJualProduk.setVisible(true);
-            //            btn_simpanTambahProdukBarang.setVisible(false);
-            //            btn_batalTambahProdukbarang.setVisible(false);
-            //        } else {
-            //
-            //            try {
-                //                String addProdukBarang = "INSERT INTO tb_produk VALUES('"+kp+"','"
-                //                +np+"','"+sp+"','"+hb+"','"+hj+"');";
-                //                con = (Connection)konekdb.GetConnection();
-                //                pst = con.prepareStatement(addProdukBarang);
-                //                pst.execute();
-                //                panel_Berhasiltersimpan.setVisible(true);
-                //                txt_kodeProduk.setText("");
-                //                txt_namaProduk.setText("");
-                //                txt_satuan.setText("");
-                //                txt_hargabeli.setText("");
-                //                txt_hargajual.setText("");
-                //                btn_batalTambahProdukbarang.setVisible(false);
-                //                btn_simpanTambahProdukBarang.setVisible(false);
-                //            } catch (Exception e) {
-                //                JOptionPane.showMessageDialog(null, e.getMessage());
-                //            }
-            //        }
+                String kp, np, sp, ib;
+                ib = txt_kodeProdukJasa.getText().toString();
+                kp = txt_kodeProdukJasa.getText().toString();
+                np = txt_namaJasa.getText().toString();
+                sp = txt_hargaJasa.getText();
+            if (kp.equals("")) {
+                JOptionPane.showMessageDialog(this, "Harap isi Kode Produk Jasa");
+            } else if(np.equals("")){
+               JOptionPane.showMessageDialog(this, "Nama Produk Jasa Harap diisi");
+            } else if(sp.equals("")){
+                JOptionPane.showMessageDialog(this, "Harga Jasa Harap diisi");
+            } else {
+                try {
+                String update = "UPDATE tb_produk SET id_produk = '"+ kp +"', nama_produk = '"+ np +
+                        "', harga_jual = '"+ sp +
+                    "' WHERE id_produk = '"+ ib +"'";
+                    Connection con = (Connection) konekdb.GetConnection();
+                    PreparedStatement pst = con.prepareStatement(update);
+                pst.execute();
+                JOptionPane.showMessageDialog(this, "Berhasil Tersimpan!");
+                form_DataProduk.loadTableProduk();
+                this.dispose();
+                txt_kodeProdukJasa.setText("");
+                txt_namaJasa.setText("");
+                txt_hargaJasa.setText("");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
+        }
     }//GEN-LAST:event_btn_simpanMouseClicked
 
     private void btn_batalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_batalMouseClicked
@@ -238,8 +228,9 @@ DataProduk.form_DataProduk vm = new DataProduk.form_DataProduk();
     private javax.swing.JLabel btn_simpan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField txt_hargaJasa;
+    private javax.swing.JLabel jLabel3;
+    public static javax.swing.JTextField txt_hargaJasa;
     public static javax.swing.JTextField txt_kodeProdukJasa;
-    private javax.swing.JTextField txt_namaJasa;
+    public static javax.swing.JTextField txt_namaJasa;
     // End of variables declaration//GEN-END:variables
 }

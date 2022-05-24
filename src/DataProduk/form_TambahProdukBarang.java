@@ -6,6 +6,7 @@
 package DataProduk;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
@@ -55,11 +56,21 @@ Connection con;
         txt_hargaJual.setFont(new java.awt.Font("Quicksand Medium", 0, 16)); // NOI18N
         txt_hargaJual.setBorder(null);
         txt_hargaJual.setOpaque(false);
+        txt_hargaJual.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_hargaJualKeyTyped(evt);
+            }
+        });
         getContentPane().add(txt_hargaJual, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 400, 370, 40));
 
         txt_hargaBeli.setFont(new java.awt.Font("Quicksand Medium", 0, 16)); // NOI18N
         txt_hargaBeli.setBorder(null);
         txt_hargaBeli.setOpaque(false);
+        txt_hargaBeli.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_hargaBeliKeyTyped(evt);
+            }
+        });
         getContentPane().add(txt_hargaBeli, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 335, 370, 40));
 
         txt_satuanProduk.setFont(new java.awt.Font("Quicksand Medium", 0, 16)); // NOI18N
@@ -79,6 +90,7 @@ Connection con;
 
         btn_simpan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btn_simpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataProduk/btn_simpan.png"))); // NOI18N
+        btn_simpan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_simpan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btn_simpanMouseClicked(evt);
@@ -88,6 +100,7 @@ Connection con;
 
         btn_batal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btn_batal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataProduk/btn_bstal.png"))); // NOI18N
+        btn_batal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_batal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btn_batalMouseClicked(evt);
@@ -117,11 +130,15 @@ Connection con;
         // TODO add your handling code here:
         
         String kp, np, sp, hb, hj;
+        int b,j;
         kp = txt_kodeProduk.getText().toString();
         np = txt_namaProduk.getText().toString();
         sp = txt_satuanProduk.getText();
         hb = txt_hargaBeli.getText();
         hj = txt_hargaJual.getText();
+        b = Integer.parseInt(txt_hargaBeli.getText());
+        j = Integer.parseInt(txt_hargaJual.getText());
+        if (b < j) {
         if (kp.equals("")) {
             JOptionPane.showMessageDialog(this, "Harap isi ID Produk/Barcode Produk!", "Ada yang Kosong", JOptionPane.INFORMATION_MESSAGE);
         } else if(np.equals("")){
@@ -143,6 +160,8 @@ Connection con;
                 pst.execute();
                 pst1.execute();
                 JOptionPane.showMessageDialog(this, "Berhasil Tersimpan!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+                form_DataProduk.loadTableProduk();
+                this.dispose();
                 txt_kodeProduk.setText("");
                 txt_namaProduk.setText("");
                 txt_satuanProduk.setText("");
@@ -152,10 +171,10 @@ Connection con;
                 JOptionPane.showMessageDialog(null, e.getMessage());
             }
         
-        }
-//
-//            
-//        }
+        }       
+     } else {
+            JOptionPane.showMessageDialog(null, "Harga jual harus lebih besar dari harga beli");
+    }
     }//GEN-LAST:event_btn_simpanMouseClicked
 
     private void btn_batalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_batalMouseClicked
@@ -188,6 +207,28 @@ Connection con;
 
         this.setLocation(ex-x, ye-y);
     }//GEN-LAST:event_jLabel2MouseDragged
+
+    private void txt_hargaBeliKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_hargaBeliKeyTyped
+        // TODO add your handling code here:
+         char k = evt.getKeyChar();
+        if (!(Character.isDigit(k) || k == KeyEvent.VK_BACK_SPACE || k == KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+        if (txt_hargaBeli.getText().length()>=12){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_hargaBeliKeyTyped
+
+    private void txt_hargaJualKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_hargaJualKeyTyped
+        // TODO add your handling code here:
+         char k = evt.getKeyChar();
+        if (!(Character.isDigit(k) || k == KeyEvent.VK_BACK_SPACE || k == KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+        if (txt_hargaJual.getText().length()>=12){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_hargaJualKeyTyped
 
     /**
      * @param args the command line arguments
