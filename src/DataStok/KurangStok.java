@@ -121,6 +121,7 @@ public class KurangStok extends javax.swing.JDialog {
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataProduk/btn_bstal.png"))); // NOI18N
+        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel3MouseClicked(evt);
@@ -130,6 +131,7 @@ public class KurangStok extends javax.swing.JDialog {
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataProduk/btn_simpan.png"))); // NOI18N
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel2MouseClicked(evt);
@@ -137,7 +139,7 @@ public class KurangStok extends javax.swing.JDialog {
         });
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 390, -1, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataStok/form_tambahProdukBarang (3).png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataStok/Group 118.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 490));
 
         pack();
@@ -192,8 +194,10 @@ public class KurangStok extends javax.swing.JDialog {
             con = (Connection)konekdb.GetConnection();
             pst = con.prepareStatement(s);
             pst.execute();
-            JOptionPane.showMessageDialog(null, "Berhasil Ditambahkan");
-            
+            JOptionPane.showMessageDialog(null, "Berhasil Dikurangi");
+            form_DataStok j = new form_DataStok();
+            j.loadTableStok();
+            this.dispose();
         } catch (Exception e) {
             System.out.println("Error !");
             System.err.println(e.getMessage());
