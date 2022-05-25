@@ -47,6 +47,7 @@ public class beli_utama extends javax.swing.JInternalFrame {
         jTable1.getTableHeader().setBackground(new Color(254, 149, 46));
         jTable1.getTableHeader().setForeground(new Color(255, 255, 255));
         jTable1.setRowHeight(20);
+        kode_prodd.requestFocus();
         tanggal();
         search();
         colom();
