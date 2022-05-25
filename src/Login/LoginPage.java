@@ -7,6 +7,7 @@ package Login;
 
 import Main.user;
 import db.konekdb;
+import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
@@ -69,6 +70,8 @@ public class LoginPage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txt_username = new javax.swing.JTextField();
         btn_masuk = new javax.swing.JLabel();
+        password_unreveal = new javax.swing.JLabel();
+        Password_reveal = new javax.swing.JLabel();
         txt_password = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
 
@@ -98,6 +101,24 @@ public class LoginPage extends javax.swing.JFrame {
             }
         });
         jPanel2.add(btn_masuk, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 450, -1, 40));
+
+        password_unreveal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Login/btn_password_unreveal.png"))); // NOI18N
+        password_unreveal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        password_unreveal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                password_unrevealMouseClicked(evt);
+            }
+        });
+        jPanel2.add(password_unreveal, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 370, -1, -1));
+
+        Password_reveal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Login/btn_password_reveal.png"))); // NOI18N
+        Password_reveal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Password_reveal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Password_revealMouseClicked(evt);
+            }
+        });
+        jPanel2.add(Password_reveal, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 370, -1, -1));
 
         txt_password.setBorder(null);
         txt_password.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -156,6 +177,31 @@ public class LoginPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_masukMouseClicked
 
+    private void password_unrevealMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_password_unrevealMouseClicked
+        // TODO add your handling code here:
+        Password_reveal.setVisible(true);
+        Password_reveal.setEnabled(true);
+        
+        password_unreveal.setVisible(false);
+        password_unreveal.setVisible(false);
+        
+        txt_password.setEchoChar((char)0);
+        txt_password.setFont(new Font("Quicksand Bold", Font.PLAIN, 18));
+    }//GEN-LAST:event_password_unrevealMouseClicked
+
+    private void Password_revealMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Password_revealMouseClicked
+        // TODO add your handling code here:
+        Password_reveal.setVisible(false);
+        Password_reveal.setEnabled(false);
+        
+        password_unreveal.setVisible(true);
+        password_unreveal.setVisible(true);
+        
+        
+        txt_password.setEchoChar((char) 8226);
+        txt_password.setFont(new Font("Arial", Font.BOLD, 18));
+    }//GEN-LAST:event_Password_revealMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -195,10 +241,12 @@ public class LoginPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Password_reveal;
     private javax.swing.JLabel btn_masuk;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel password_unreveal;
     private javax.swing.JPasswordField txt_password;
     private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables

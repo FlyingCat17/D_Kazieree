@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
@@ -22,6 +23,9 @@ public class formDataPenggunaa extends javax.swing.JInternalFrame {
     ResultSet rs;
     Statement st;
     Main.MainFrame vm = new Main.MainFrame();
+    String id_pengguna = null;
+    String hakAkses = null;
+    String status = null;
     /**
      * Creates new form formDataPenggunaa
      */
@@ -31,6 +35,9 @@ public class formDataPenggunaa extends javax.swing.JInternalFrame {
         BasicInternalFrameUI gui = (BasicInternalFrameUI)this.getUI();
         gui.setNorthPane(null);
         loadDataPengguna();
+        System.out.println(id_pengguna);
+        System.out.println(hakAkses);
+        System.out.println(status);
     }
 
     public void loadDataPengguna(){
@@ -152,7 +159,7 @@ public class formDataPenggunaa extends javax.swing.JInternalFrame {
         getContentPane().add(tb_pengguna, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 860, 490));
 
         filterAkses.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
-        filterAkses.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Karyawan", "Admin" }));
+        filterAkses.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "KARYAWAN", "ADMIN" }));
         filterAkses.setOpaque(false);
         filterAkses.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -172,6 +179,7 @@ public class formDataPenggunaa extends javax.swing.JInternalFrame {
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dataPengguna/btn_Ubah.png"))); // NOI18N
+        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel4MouseClicked(evt);
@@ -197,6 +205,12 @@ public class formDataPenggunaa extends javax.swing.JInternalFrame {
     private void TabelPenggunaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelPenggunaMouseClicked
         // TODO add your handling code here:
         int baris= TabelPengguna.rowAtPoint(evt.getPoint());
+        id_pengguna = TabelPengguna.getValueAt(baris, 0).toString();
+        hakAkses = TabelPengguna.getValueAt(baris, 5).toString();
+        status = TabelPengguna.getValueAt(baris, 6).toString();
+        System.out.println("ID Pengguna : "+id_pengguna);
+        System.out.println("Hak Akses   : "+hakAkses);
+        System.out.println("Status      : "+status);
         //        kategor_jasa = TabelPengguna.getValueAt(baris, 2).toString();
         //        id_produk = TabelPengguna.getValueAt(baris, 0).toString();
         //        System.out.println("ID PRODUK = "+id_produk);
@@ -209,6 +223,15 @@ public class formDataPenggunaa extends javax.swing.JInternalFrame {
         //        mn.txt_kodeProdukJasa.setText(id_produk);
     }//GEN-LAST:event_TabelPenggunaMouseClicked
 
+    public String getIdPengguna(){
+        return id_pengguna;
+    }
+    public String getHakAkses(){
+        return hakAkses;
+    }
+    public String getStatus(){
+        return status;
+    }
     private void filterAksesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterAksesActionPerformed
         // TODO add your handling code here:
         String tipe = (String)filterAkses.getSelectedItem();
@@ -253,6 +276,44 @@ public class formDataPenggunaa extends javax.swing.JInternalFrame {
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
+//        if (getIdPengguna()==null) {
+//            JOptionPane.showMessageDialog(this, "Harap Pilih Salah Satu Pengguna!");
+//        } 
+////        else if(getIdPengguna().equals("ADMIN")&& getHakAkses().equals("LUPA")){
+////            form_UbahAdminReset ubr = new form_UbahAdminReset(vm, true);
+////            ubr.setVisible(true);
+////        }
+//        else if (getIdPengguna()=="ADMIN") {
+//            form_UbahAdmin ua = new form_UbahAdmin(vm, true);
+//            ua.setVisible(true);
+//        }
+//        form_UbahAdmin aa = new form_UbahAdmin(vm, true);
+//        aa.setVisible(true);
+        if (id_pengguna==null) {
+            JOptionPane.showMessageDialog(this, "Harap Pilih Salah Satu Pengguna!");
+        } else if (hakAkses.equals("ADMIN")&&status.equals("LUPA")) {
+            
+            
+            loadDataPengguna();
+            form_UbahAdminReset ubr = new form_UbahAdminReset(vm, true);
+            ubr.txt_IDPengguna.setText(getIdPengguna());
+            ubr.loadDataAdmin();
+            ubr.setVisible(true);
+            ubr.loadDataAdmin();
+            loadDataPengguna();
+            ubr.txt_IDPengguna.setText(getIdPengguna());
+            loadDataPengguna();
+        } else if (hakAkses.equals("ADMIN")) {
+            form_UbahAdmin ua = new form_UbahAdmin(vm, true);
+            ua.txt_IDPengguna.setText(getIdPengguna());
+            loadDataPengguna();
+            ua.loadDataAdmin();
+            ua.setVisible(true);
+            ua.loadDataAdmin();
+            ua.txt_IDPengguna.setText(getIdPengguna());
+            loadDataPengguna();
+        }
+        
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked

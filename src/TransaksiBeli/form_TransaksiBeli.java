@@ -1,7 +1,13 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package TransaksiBeli;
 
 import DataStok.*;
 import Beranda.*;
+import Main.user;
 import com.sun.org.apache.bcel.internal.generic.DDIV;
 import java.awt.Color;
 import java.awt.Font;
@@ -23,19 +29,14 @@ import java.sql.Connection;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  *
- * @author LenataHoma
+ * @author LENOVO
  */
 public class form_TransaksiBeli extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form Beranda
+     * Creates new form beli_utama
      */
     public form_TransaksiBeli() {
         initComponents();
@@ -47,11 +48,11 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
         jTable1.getTableHeader().setBackground(new Color(254, 149, 46));
         jTable1.getTableHeader().setForeground(new Color(255, 255, 255));
         jTable1.setRowHeight(20);
-
+        kode_prodd.requestFocus();
         tanggal();
         search();
         colom();
-
+        id_kasirr.setText(new user().getNama());
     }
 
     public void colom() {
@@ -74,7 +75,7 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
                 SimpleDateFormat smpdtfmt = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 String tanggal = smpdtfmt.format(tglsekarang);
 
-                jTextField3.setText(tanggal);
+                tanggal_transaksi.setText(tanggal);
 
                 int total = 0;
                 for (int i = 0; i < jTable1.getRowCount(); i++) {
@@ -82,7 +83,8 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
 //                    int mount = (Integer)jTable1.getValueAt(i, 4);
                     total += amount;
                 }
-                jLabel7.setText(String.valueOf(total));
+                total_hrg_label.setText(String.valueOf(total));
+                total_harga.setText(String.valueOf(total));
                 idTransaksi();
             }
         };
@@ -111,7 +113,7 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
                     for (int j = 0; j < 6 - NomorJual; j++) {
                         no = "0" + no;
                     }
-                    jTextField1.setText("TB/" + blnth + "/" + no);
+                    id_trbeli.setText("TB/" + blnth + "/" + no);
                 }
             }
         } catch (SQLException e) {
@@ -121,9 +123,9 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
     }
 
     public void search() {
-        if (jTextField2.getText().equals("")) {
-            jTextField5.setText("");
-            jTextField4.setText("");
+        if (kode_prodd.getText().equals("")) {
+            nama_prodd.setText("");
+            jmlh_prodd.setText("");
         } else {
             try {
                 String sql = "SELECT tb_produk.id_produk, tb_produk.nama_produk, tb_produk.harga_beli "
@@ -132,15 +134,15 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
                 java.sql.Statement stm = conn.createStatement();
                 java.sql.ResultSet res = stm.executeQuery(sql);
                 while (res.next()) {
-                    if (jTextField2.getText().equals(res.getString(1))) {
-                        jTextField5.setText(res.getString(2));
-                        jTextField8.setText(res.getString(3));
+                    if (kode_prodd.getText().equals(res.getString(1))) {
+                        nama_prodd.setText(res.getString(2));
+                        harga_prodd.setText(res.getString(3));
                     }
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
-                jTextField5.setText("");
-                jTextField4.setText("");
+                nama_prodd.setText("");
+                jmlh_prodd.setText("");
             }
         }
     }
@@ -156,29 +158,26 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        idPemasok = new javax.swing.JLabel();
-        namaPemasok = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        tanggal_transaksi = new javax.swing.JTextField();
+        id_trbeli = new javax.swing.JTextField();
+        id_kasirr = new javax.swing.JTextField();
+        kode_prodd = new javax.swing.JTextField();
+        nama_prodd = new javax.swing.JTextField();
+        harga_prodd = new javax.swing.JTextField();
+        jmlh_prodd = new javax.swing.JTextField();
+        id_pemasok = new javax.swing.JTextField();
+        nama_pemasok = new javax.swing.JTextField();
+        total_harga = new javax.swing.JTextField();
+        total_hrg_label1 = new javax.swing.JLabel();
+        total_hrg_label = new javax.swing.JLabel();
+        btn_bayar1 = new javax.swing.JLabel();
+        btn_bayar = new javax.swing.JLabel();
+        btnPilihPemasok = new javax.swing.JLabel();
+        btnhapus_keranjang = new javax.swing.JLabel();
+        btntambah_keranjang = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
-        setBorder(null);
-        setMaximumSize(new java.awt.Dimension(960, 710));
-        setMinimumSize(new java.awt.Dimension(960, 710));
+        setPreferredSize(new java.awt.Dimension(960, 723));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -194,176 +193,180 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 320, 860, 150));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 870, 160));
 
-        idPemasok.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
-        getContentPane().add(idPemasok, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 540, 150, 30));
+        tanggal_transaksi.setEditable(false);
+        tanggal_transaksi.setBackground(new java.awt.Color(196, 196, 196));
+        tanggal_transaksi.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
+        tanggal_transaksi.setBorder(null);
+        getContentPane().add(tanggal_transaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 250, 30));
 
-        namaPemasok.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
-        getContentPane().add(namaPemasok, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 590, 150, 30));
+        id_trbeli.setEditable(false);
+        id_trbeli.setBackground(new java.awt.Color(196, 196, 196));
+        id_trbeli.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
+        id_trbeli.setBorder(null);
+        id_trbeli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                id_trbeliActionPerformed(evt);
+            }
+        });
+        getContentPane().add(id_trbeli, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, 280, 30));
 
-        jTextField1.setEditable(false);
-        jTextField1.setBackground(new java.awt.Color(196, 196, 196));
-        jTextField1.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
-        jTextField1.setBorder(null);
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 130, 280, 30));
+        id_kasirr.setEditable(false);
+        id_kasirr.setBackground(new java.awt.Color(196, 196, 196));
+        id_kasirr.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
+        id_kasirr.setBorder(null);
+        getContentPane().add(id_kasirr, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 120, 260, 30));
 
-        jTextField2.setBackground(new java.awt.Color(196, 196, 196));
-        jTextField2.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
-        jTextField2.setBorder(null);
-        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+        kode_prodd.setBackground(new java.awt.Color(196, 196, 196));
+        kode_prodd.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
+        kode_prodd.setBorder(null);
+        kode_prodd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kode_proddActionPerformed(evt);
+            }
+        });
+        kode_prodd.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextField2KeyReleased(evt);
+                kode_proddKeyReleased(evt);
             }
         });
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 370, 30));
+        getContentPane().add(kode_prodd, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 370, 30));
 
-        jTextField3.setEditable(false);
-        jTextField3.setBackground(new java.awt.Color(196, 196, 196));
-        jTextField3.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
-        jTextField3.setBorder(null);
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 250, 30));
+        nama_prodd.setBackground(new java.awt.Color(196, 196, 196));
+        nama_prodd.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
+        nama_prodd.setBorder(null);
+        getContentPane().add(nama_prodd, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 190, 450, 30));
 
-        jTextField4.setBackground(new java.awt.Color(196, 196, 196));
-        jTextField4.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
-        jTextField4.setBorder(null);
-        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+        harga_prodd.setBackground(new java.awt.Color(196, 196, 196));
+        harga_prodd.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
+        harga_prodd.setBorder(null);
+        getContentPane().add(harga_prodd, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 150, 30));
+
+        jmlh_prodd.setBackground(new java.awt.Color(196, 196, 196));
+        jmlh_prodd.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
+        jmlh_prodd.setBorder(null);
+        jmlh_prodd.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField4KeyTyped(evt);
+                jmlh_proddKeyTyped(evt);
             }
         });
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 270, 110, 30));
+        getContentPane().add(jmlh_prodd, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 110, 30));
 
-        jTextField5.setBackground(new java.awt.Color(196, 196, 196));
-        jTextField5.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
-        jTextField5.setBorder(null);
-        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 200, 450, 30));
+        id_pemasok.setBackground(new java.awt.Color(196, 196, 196));
+        id_pemasok.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
+        id_pemasok.setBorder(null);
+        getContentPane().add(id_pemasok, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 530, 170, 30));
 
-        jTextField6.setBackground(new java.awt.Color(196, 196, 196));
-        jTextField6.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
-        jTextField6.setBorder(null);
-        getContentPane().add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 130, 260, 30));
+        nama_pemasok.setBackground(new java.awt.Color(196, 196, 196));
+        nama_pemasok.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
+        nama_pemasok.setBorder(null);
+        getContentPane().add(nama_pemasok, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 580, 170, 30));
 
-        jTextField7.setBackground(new java.awt.Color(196, 196, 196));
-        jTextField7.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
-        jTextField7.setBorder(null);
-        getContentPane().add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 630, 170, 30));
+        total_harga.setEditable(false);
+        total_harga.setBackground(new java.awt.Color(196, 196, 196));
+        total_harga.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
+        total_harga.setBorder(null);
+        getContentPane().add(total_harga, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 620, 170, 30));
 
-        jTextField8.setBackground(new java.awt.Color(196, 196, 196));
-        jTextField8.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
-        jTextField8.setBorder(null);
-        getContentPane().add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, 150, 30));
+        total_hrg_label1.setFont(new java.awt.Font("Quicksand SemiBold", 0, 40)); // NOI18N
+        total_hrg_label1.setText("RP");
+        getContentPane().add(total_hrg_label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 520, 60, 60));
 
-        jTextField9.setEditable(false);
-        jTextField9.setBackground(new java.awt.Color(196, 196, 196));
-        jTextField9.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
-        jTextField9.setBorder(null);
-        getContentPane().add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 540, 170, 30));
+        total_hrg_label.setFont(new java.awt.Font("Quicksand SemiBold", 0, 40)); // NOI18N
+        total_hrg_label.setText("999,999");
+        getContentPane().add(total_hrg_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 520, 150, 60));
 
-        jTextField10.setEditable(false);
-        jTextField10.setBackground(new java.awt.Color(196, 196, 196));
-        jTextField10.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
-        jTextField10.setBorder(null);
-        getContentPane().add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 590, 170, 30));
-
-        jLabel7.setFont(new java.awt.Font("Quicksand SemiBold", 1, 40)); // NOI18N
-        jLabel7.setText("200,000");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 520, 170, 80));
-
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiBeli/2.5.png"))); // NOI18N
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+        btn_bayar1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btn_bayar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiBeli/2.5.png"))); // NOI18N
+        btn_bayar1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
+                btn_bayar1MouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 620, 180, 40));
+        getContentPane().add(btn_bayar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 610, 180, 40));
 
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiBeli/2.0.png"))); // NOI18N
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+        btn_bayar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btn_bayar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiBeli/2.4.png"))); // NOI18N
+        btn_bayar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel3MouseClicked(evt);
+                btn_bayarMouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 260, 230, 40));
+        getContentPane().add(btn_bayar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 620, 90, 40));
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiBeli/2.1.png"))); // NOI18N
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnPilihPemasok.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnPilihPemasok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiBeli/2.3.png"))); // NOI18N
+        btnPilihPemasok.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
+                btnPilihPemasokMouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 260, 120, 40));
+        getContentPane().add(btnPilihPemasok, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 470, 140, 40));
 
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiBeli/2.3.png"))); // NOI18N
-        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnhapus_keranjang.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnhapus_keranjang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiBeli/2.1.png"))); // NOI18N
+        btnhapus_keranjang.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel5MouseClicked(evt);
+                btnhapus_keranjangMouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 480, 140, 40));
+        getContentPane().add(btnhapus_keranjang, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 250, 120, 40));
 
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiBeli/2.4.png"))); // NOI18N
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+        btntambah_keranjang.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btntambah_keranjang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiBeli/2.0.png"))); // NOI18N
+        btntambah_keranjang.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel6MouseClicked(evt);
+                btntambah_keranjangMouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 630, 90, 40));
+        getContentPane().add(btntambah_keranjang, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 250, 230, 40));
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiBeli/gmbr_beli.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 970, 690));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiBeli/form_beliUtama.png"))); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -60, 1020, 790));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyReleased
+    private void kode_proddKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kode_proddKeyReleased
         search();
-    }//GEN-LAST:event_jTextField2KeyReleased
+    }//GEN-LAST:event_kode_proddKeyReleased
 
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-        // TODO add your handling code here:
+    private void btntambah_keranjangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btntambah_keranjangMouseClicked
         if (evt.getButton() == MouseEvent.BUTTON1) {
             int jumlahRow = jTable1.getRowCount();
-            if (jTextField2.getText().equals("")) {
-                JOptionPane.showMessageDialog(this,"Kode Produk tidak boleh kosong");
-            }else if (jTextField5.getText().equals("")) {
+            if (kode_prodd.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Kode Produk tidak boleh kosong");
+            } else if (nama_prodd.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Nama Produk tidak boleh kosong");
-            }else if (jTextField8.getText().equals("")) {
+            } else if (harga_prodd.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Kolom Harga tidak boleh kosong");
-            }else if (jTextField4.getText().equals("")) {
+            } else if (jmlh_prodd.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Jumlah produk tidak boleh kosong ");
-            }else{
-                  int hargad = Integer.parseInt(jTextField8.getText());
-            int juml = Integer.parseInt(jTextField4.getText());
-            int total = hargad * juml;
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            Object row[] = {
-                jTextField2.getText(),
-                jTextField5.getText(),
-                jTextField8.getText(),
-                jTextField4.getText(),
-                total
-            };
-            model.addRow(row);
-            jTextField2.requestFocus();
-            jTextField2.setText("");
-            jTextField5.setText("");
-            jTextField8.setText("");
-            jTextField4.setText("");
+            } else {
+                int hargad = Integer.parseInt(harga_prodd.getText());
+                int juml = Integer.parseInt(jmlh_prodd.getText());
+                int total = hargad * juml;
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                Object row[] = {
+                    kode_prodd.getText(),
+                    nama_prodd.getText(),
+                    harga_prodd.getText(),
+                    jmlh_prodd.getText(),
+                    total
+                };
+                model.addRow(row);
+                kode_prodd.requestFocus();
+                kode_prodd.setText("");
+                nama_prodd.setText("");
+                harga_prodd.setText("");
+                jmlh_prodd.setText("");
             }
-          
 
         }
-    }//GEN-LAST:event_jLabel3MouseClicked
+    }//GEN-LAST:event_btntambah_keranjangMouseClicked
 
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        // TODO add your handling code here:
+    private void btnhapus_keranjangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnhapus_keranjangMouseClicked
         if (evt.getButton() == MouseEvent.BUTTON1) {
             int jikaTidakpilih = jTable1.getSelectedRow();
             if (jikaTidakpilih < 0) {
@@ -375,33 +378,37 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
             }
 
         }
-    }//GEN-LAST:event_jLabel4MouseClicked
+    }//GEN-LAST:event_btnhapus_keranjangMouseClicked
 
-    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+    private void btnPilihPemasokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPilihPemasokMouseClicked
         if (evt.getButton() == MouseEvent.BUTTON1) {
-            
+
             this.getDesktopPane().add(new pemasok()).setVisible(true);
 
         }
-    }//GEN-LAST:event_jLabel5MouseClicked
+    }//GEN-LAST:event_btnPilihPemasokMouseClicked
 
-    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+    private void btn_bayarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_bayarMouseClicked
         if (evt.getButton() == MouseEvent.BUTTON1) {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             int jumlhTabel = jTable1.getRowCount();
             if (jumlhTabel == 0) {
                 JOptionPane.showMessageDialog(rootPane, "Keranjang tidak boleh kosong");
+            }
+            if (id_pemasok.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Pemasok tidak boleh kosong");
+
             } else {
                 try {
                     String sql = "INSERT INTO `tb_beli`(`id_transaksi`, `tgl_transaksi`, `id_pengguna`, `id_pemasok`, `total_harga`) VALUES ('"
-                            + jTextField1.getText() + "','" + jTextField3.getText() + "','" + jTextField6.getText() + "','" + idPemasok.getText() + "','" + jLabel7.getText() + "')";
+                            + id_trbeli.getText() + "','" + tanggal_transaksi.getText() + "','" + id_kasirr.getText() + "','" + id_pemasok.getText() + "','" + total_hrg_label.getText() + "')";
                     java.sql.Connection c = (Connection) konekdb.GetConnection();
                     java.sql.PreparedStatement pst = c.prepareStatement(sql);
                     pst.execute();
-                    jTextField2.setText("");
-                    jTextField5.setText("");
-                    jTextField8.setText("");
-                    jTextField4.setText("");
+                    kode_prodd.setText("");
+                    nama_prodd.setText("");
+                    harga_prodd.setText("");
+                    jmlh_prodd.setText("");
 
                     try {
                         for (int i = 0; i < jumlhTabel; i++) {
@@ -411,7 +418,7 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
                             String hargaBeli = model.getValueAt(i, 2).toString();
                             String totalHarga = model.getValueAt(i, 4).toString();
                             String squl = "INSERT INTO `tb_detailbeli`(`id_transaksi`, `id_produk`, `nama_produk`, `jumlah_produk`, `harga_beli`, `total_harga`) VALUES "
-                                    + "('" + jTextField1.getText() + "','" + idProduk + "','" + namaProduk + "'," + jumlahProduk + "," + hargaBeli + "," + totalHarga + ")";
+                                    + "('" + id_trbeli.getText() + "','" + idProduk + "','" + namaProduk + "'," + jumlahProduk + "," + hargaBeli + "," + totalHarga + ")";
                             java.sql.PreparedStatement pstt = c.prepareStatement(squl);
                             pstt.execute();
                         }
@@ -429,42 +436,19 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
             }
 
         }
+    }//GEN-LAST:event_btn_bayarMouseClicked
 
-//        DefaultTableModel mengmodel = (DefaultTableModel)jTable1.getModel();
-//            if (mengmodel.getRowCount()==0) {
-//                JOptionPane.showMessageDialog(this, "Tabelnya Kosong kau orang udik!");
-//            }else {
-//                try {
-//                    for (int i = 0; i <mengmodel.getRowCount(); i++) {
-//                        String idProduk = mengmodel.getValueAt(i, 0).toString();
-//                        String namaProduk = mengmodel.getValueAt(i, 1).toString();
-//                        String jumlahProduk = mengmodel.getValueAt(i, 3).toString();
-//                        String hargaBeli = mengmodel.getValueAt(i, 2).toString();
-//                        String totalHarga = mengmodel.getValueAt(i, 4).toString();
-//                        
-//                        String querya = "INSERT INTO `tb_detailbeli`(`id_transaksi`, `id_produk`, `nama_produk`, `jumlah_produk`, `harga_beli`, `total_harga`) "
-//                                + "VALUES ('"+jTextField1.getText()+"','"+idProduk+"','"+namaProduk+"',"+jumlahProduk+","+hargaBeli+","+totalHarga+")";
-//                        System.out.println(querya);
-//                        
-//                    }
-//                } catch (Exception e) {
-//                }
-//            }
-//        
-//        }
-    }//GEN-LAST:event_jLabel6MouseClicked
-
-    private void jTextField4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyTyped
+    private void jmlh_proddKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jmlh_proddKeyTyped
         char k = evt.getKeyChar();
         if (!(Character.isDigit(k) || k == KeyEvent.VK_BACK_SPACE || k == KeyEvent.VK_DELETE)) {
             evt.consume();
         }
-        if (jTextField4.getText().length() >= 11) {
+        if (jmlh_prodd.getText().length() >= 11) {
             evt.consume();
         }
-    }//GEN-LAST:event_jTextField4KeyTyped
+    }//GEN-LAST:event_jmlh_proddKeyTyped
 
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+    private void btn_bayar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_bayar1MouseClicked
         if (evt.getButton() == MouseEvent.BUTTON1) {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             int bersihTabel = jTable1.getRowCount();
@@ -472,35 +456,42 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
                 model.removeRow(j);
 
             }
-            jTextField2.setText("");
-            jTextField5.setText("");
-            jTextField8.setText("");
-            jTextField4.setText("");
+            kode_prodd.setText("");
+            nama_prodd.setText("");
+            harga_prodd.setText("");
+            jmlh_prodd.setText("");
         }
-    }//GEN-LAST:event_jLabel2MouseClicked
+    }//GEN-LAST:event_btn_bayar1MouseClicked
+
+    private void id_trbeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_id_trbeliActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_id_trbeliActionPerformed
+
+    private void kode_proddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kode_proddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_kode_proddActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JLabel idPemasok;
+    private javax.swing.JLabel btnPilihPemasok;
+    private javax.swing.JLabel btn_bayar;
+    private javax.swing.JLabel btn_bayar1;
+    private javax.swing.JLabel btnhapus_keranjang;
+    private javax.swing.JLabel btntambah_keranjang;
+    private javax.swing.JTextField harga_prodd;
+    private javax.swing.JTextField id_kasirr;
+    public static javax.swing.JTextField id_pemasok;
+    private javax.swing.JTextField id_trbeli;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
-    public static javax.swing.JLabel namaPemasok;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jmlh_prodd;
+    private javax.swing.JTextField kode_prodd;
+    public static javax.swing.JTextField nama_pemasok;
+    private javax.swing.JTextField nama_prodd;
+    private javax.swing.JTextField tanggal_transaksi;
+    private javax.swing.JTextField total_harga;
+    private javax.swing.JLabel total_hrg_label;
+    private javax.swing.JLabel total_hrg_label1;
     // End of variables declaration//GEN-END:variables
 }
