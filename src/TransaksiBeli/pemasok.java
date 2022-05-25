@@ -128,8 +128,8 @@ public class pemasok extends javax.swing.JInternalFrame {
             String id = tm.getValueAt(i, 0).toString();
             String nama = tm.getValueAt(i, 1).toString();
             
-            beli_utama.id_pemasok.setText(id);
-            beli_utama.nama_pemasok.setText(nama);
+            form_TransaksiBeli.id_pemasok.setText(id);
+            form_TransaksiBeli.nama_pemasok.setText(nama);
             this.dispose();
             }
             
