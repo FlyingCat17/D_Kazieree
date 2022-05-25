@@ -140,6 +140,7 @@ String id_produk = null;
         getContentPane().add(tb_stok, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 860, 470));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataStok/btn_tambahStok.png"))); // NOI18N
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel2MouseClicked(evt);
@@ -148,6 +149,7 @@ String id_produk = null;
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 124, 90, 30));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataStok/btn_kurangStok.png"))); // NOI18N
+        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel3MouseClicked(evt);
