@@ -34,29 +34,25 @@ public class LoginPage extends javax.swing.JFrame {
 
     public void login() {
         try {
-            String sql = "SELECT * FROM `tb_pengguna`";
+            String sql = "SELECT * FROM `tb_pengguna` WHERE username = '"+txt_username.getText()+"' && kata_sandi = '"+txt_password.getText()+"';";
             Connection con = (Connection) konekdb.GetConnection();
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            while (rs.next()) {
-                if (rs.getString("username").equals(txt_username.getText()) && rs.getString("kata_sandi").equals(txt_password.getText())) {
-                    usr.setNama(rs.getString("username"));
-                    usr.setHak_akses("hakakses");
-                    usr.setId_pengguna("id_pengguna");
-                    if (rs.getString("hak_akses").equals("ADMIN")) {
-                        JOptionPane.showMessageDialog(this, "Berhasil Masuk!!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
-                        Main.MainFrame mn = new Main.MainFrame();
-                        mn.setVisible(true);
-                        this.dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Berhasil Masuk!!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
-                    }
+            if (rs.next()) {
+                usr.setNama(rs.getString("username"));
+                usr.setHak_akses("hak_akses");
+                usr.setId_pengguna("id_pengguna");
+                if (rs.getString("hak_akses").equals("ADMIN")) {
+                    JOptionPane.showMessageDialog(this, "Berhasil Masuk!!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+                    Main.MainFrame mn = new Main.MainFrame();
+                    mn.setVisible(true);
+                    this.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Username Atau Katasandi Salah!!");
+                    JOptionPane.showMessageDialog(this, "Berhasil Masuk!!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         } catch (Exception e) {
-            
+            JOptionPane.showMessageDialog(null, "Username Atau Katasandi Salah!!");
         }
     }
 
