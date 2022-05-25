@@ -1,9 +1,9 @@
 package TransaksiJual;
 
-import TransaksiBeli.*;
-import DataStok.*;
-import Beranda.*;
-import Main.MainFrame;
+//import TransaksiBeli.*;
+//import DataStok.*;
+//import Beranda.*;
+//import Main.MainFrame;
 import Main.user;
 import db.konekdb;
 import java.awt.event.ActionEvent;
@@ -165,10 +165,11 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                             nama_prod.setText(res.getString(2));
                             harga_prod.setText(res.getString(3));
                             String stoknya = res.getString(4);
+                            jumlah_prod.setEditable(true);
                             if (stoknya == null) {
                                 stok_prod.setText("Tersedia");
+                                jumlah_prod.setText("1");
                                 jumlah_prod.setEditable(false);
-                                System.out.println("==null");
                             } else {
                                 stok_prod.setText(res.getString(4));
                             }
@@ -198,11 +199,13 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                     if (id_prod.getText().equals(res.getString(1))) {
                         nama_prod.setText(res.getString(2));
                         harga_prod.setText(res.getString(3));
+                        jumlah_prod.requestFocus();
+                        jumlah_prod.setEditable(true);
                         String stoknya = res.getString(4);
                         if (stoknya == null) {
                             stok_prod.setText("Tersedia");
+                            jumlah_prod.setText("1");
                             jumlah_prod.setEditable(false);
-                            System.out.println("==null");
                         } else {
                             stok_prod.setText(res.getString(4));
                         }
@@ -339,6 +342,84 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
 
     }
 
+    public void simpan() {
+        if (!(id_prod.getText().equals(""))) {
+            if (!(jumlah_prod.getText().equals(""))) {
+                if (!(stok_prod.equals("Tersedia"))) {
+                    int juml = Integer.parseInt(jumlah_prod.getText());
+                    int har = Integer.parseInt(harga_prod.getText());
+                    int total = har * juml;
+                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                    Object row[] = {
+                        id,
+                        id_prod.getText(),
+                        nama_prod.getText(),
+                        harga_prod.getText(),
+                        jumlah_prod.getText(),
+                        total
+                    };
+                    model.addRow(row);
+
+                    //Hapus top
+                    id_prod.setText("");
+                    nama_prod.setText("");
+                    harga_prod.setText("");
+                    jumlah_prod.setText("");
+                    stok_prod.setText("");
+
+                    //Hapus Bottom
+                    diskon_harga.setText("");
+                    diskon_persen.setText("");
+                    jLabel3.setText("");
+                    pembayaran.setText("");
+                    kembalian_harga.setText("");
+
+                    id_prod.requestFocus();
+                } else {
+                    int stok = Integer.parseInt(stok_prod.getText());
+                    int juml = Integer.parseInt(jumlah_prod.getText());
+                    if (juml > stok) {
+                        JOptionPane.showMessageDialog(null, "Jumlah Barang Tidak Boleh Lebih Dari Stok");
+                    } else {
+                        int har = Integer.parseInt(harga_prod.getText());
+                        int total = har * juml;
+                        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                        Object row[] = {
+                            id,
+                            id_prod.getText(),
+                            nama_prod.getText(),
+                            harga_prod.getText(),
+                            jumlah_prod.getText(),
+                            total
+                        };
+                        model.addRow(row);
+
+                        //Hapus top
+                        id_prod.setText("");
+                        nama_prod.setText("");
+                        harga_prod.setText("");
+                        jumlah_prod.setText("");
+                        stok_prod.setText("");
+
+                        //Hapus Bottom
+                        diskon_harga.setText("");
+                        diskon_persen.setText("");
+                        jLabel3.setText("");
+                        pembayaran.setText("");
+                        kembalian_harga.setText("");
+
+                        id_prod.requestFocus();
+                    }
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Jumlah tidak boleh kosong");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Kode Produk tidak boleh kosong");
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -405,6 +486,9 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
         jumlah_prod.setBorder(null);
         jumlah_prod.setOpaque(false);
         jumlah_prod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jumlah_prodKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jumlah_prodKeyTyped(evt);
             }
@@ -564,81 +648,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
         if (evt.getButton() == MouseEvent.BUTTON1) {
-            if (!(id_prod.getText().equals(""))) {
-                if (!(jumlah_prod.getText().equals(""))) {
-                    if (!(stok_prod.equals("Tersedia"))) {
-                        int juml = Integer.parseInt(jumlah_prod.getText());
-                        int har = Integer.parseInt(harga_prod.getText());
-                        int total = har * juml;
-                        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-                        Object row[] = {
-                            id,
-                            id_prod.getText(),
-                            nama_prod.getText(),
-                            harga_prod.getText(),
-                            jumlah_prod.getText(),
-                            total
-                        };
-                        model.addRow(row);
-
-                        //Hapus top
-                        id_prod.setText("");
-                        nama_prod.setText("");
-                        harga_prod.setText("");
-                        jumlah_prod.setText("");
-                        stok_prod.setText("");
-
-                        //Hapus Bottom
-                        diskon_harga.setText("");
-                        diskon_persen.setText("");
-                        jLabel3.setText("");
-                        pembayaran.setText("");
-                        kembalian_harga.setText("");
-
-                        id_prod.requestFocus();
-                    } else {
-                        int stok = Integer.parseInt(stok_prod.getText());
-                        int juml = Integer.parseInt(jumlah_prod.getText());
-                        if (juml > stok) {
-                            JOptionPane.showMessageDialog(null, "Jumlah Barang Tidak Boleh Lebih Dari Stok");
-                        } else {
-                            int har = Integer.parseInt(harga_prod.getText());
-                            int total = har * juml;
-                            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-                            Object row[] = {
-                                id,
-                                id_prod.getText(),
-                                nama_prod.getText(),
-                                harga_prod.getText(),
-                                jumlah_prod.getText(),
-                                total
-                            };
-                            model.addRow(row);
-
-                            //Hapus top
-                            id_prod.setText("");
-                            nama_prod.setText("");
-                            harga_prod.setText("");
-                            jumlah_prod.setText("");
-                            stok_prod.setText("");
-
-                            //Hapus Bottom
-                            diskon_harga.setText("");
-                            diskon_persen.setText("");
-                            jLabel3.setText("");
-                            pembayaran.setText("");
-                            kembalian_harga.setText("");
-
-                            id_prod.requestFocus();
-                        }
-                    }
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "Jumlah tidak boleh kosong");
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Kode Produk tidak boleh kosong");
-            }
+            simpan();
         }
     }//GEN-LAST:event_jLabel4MouseClicked
 
@@ -764,6 +774,22 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
             evt.consume();
         }
     }//GEN-LAST:event_id_prodKeyTyped
+
+    private void jumlah_prodKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumlah_prodKeyReleased
+        // TODO add your handling code here:
+        if (!(stok_prod.getText().equals(""))) {
+            if (!(stok_prod.getText().equals("Tersedia"))) {
+                if (!(jumlah_prod.getText().equals(""))) {
+                    int stk = Integer.parseInt(stok_prod.getText());
+                    int jml = Integer.parseInt(jumlah_prod.getText());
+                    if (jml > stk) {
+                        JOptionPane.showMessageDialog(null, "Jumlah Tidak Boleh Lebih Dari Stok!!");
+                        jumlah_prod.setText("");
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jumlah_prodKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
