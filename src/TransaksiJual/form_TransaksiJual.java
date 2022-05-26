@@ -257,25 +257,66 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
 
     public void diskon() {
         int sub = Integer.parseInt(total_tabel.getText());
+        double sube = Double.valueOf(total_tabel.getText());
         int disk;
         if (!(diskon_harga.getText().equals(""))) {
+            String dik = diskon_harga.getText();
+            double diks = Double.valueOf(dik);
             disk = Integer.parseInt(diskon_harga.getText());
             if (disk == 0) {
                 int ttl = sub;
                 jLabel3.setText(Integer.toString(ttl));
             } else if (disk > 0) {
+                double persen = diks/sube*100;
                 int ttl = sub - disk;
                 if (!(ttl < 0)) {
+                    diskon_persen.setText(String.valueOf(Math.round(persen)));
                     jLabel3.setText(Integer.toString(ttl));
+                    pembayaran.setText("");
                 } else {
-                    diskon_harga.setText("0");
+                    diskon_harga.setText("");
+                    diskon_persen.setText("");
                     JOptionPane.showMessageDialog(null, "Diskon tidak boleh lebih dari Sub Total!");
                 }
             }
-        } else if (diskon_harga.getText().equals("")) {
-            jLabel3.setText(total_tabel.getText());
         } else {
             jLabel3.setText("");
+            diskon_persen.setText("");
+            
+        }
+    }
+
+    public void persen() {
+        int sub = Integer.parseInt(total_tabel.getText());
+        int disk;
+        if (!(diskon_persen.getText().equals(""))) {
+            disk = Integer.parseInt(diskon_persen.getText());
+            if (!(disk > 100)) {
+                if (disk == 0) {
+                    int ttl = sub;
+                    jLabel3.setText(Integer.toString(ttl));
+                } else if (disk > 0) {
+                    int persen = sub * disk / 100;
+                    int ttl = sub - disk;
+                    if (!(ttl < 0)) {
+                        diskon_harga.setText(String.valueOf(persen));
+                        int diskharga = Integer.parseInt(diskon_harga.getText());
+                        int totalnya = sub - diskharga;
+                        jLabel3.setText(Integer.toString(totalnya));
+                        pembayaran.setText("");
+                    } else {
+                        diskon_harga.setText("");
+                        JOptionPane.showMessageDialog(null, "Diskon tidak boleh lebih dari Sub Total!");
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Diskon maksimal 100%");
+                diskon_persen.setText("");
+                diskon_harga.setText("");
+            }
+        } else {
+            jLabel3.setText("");
+            diskon_harga.setText("");
         }
     }
 
@@ -510,6 +551,9 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
         diskon_persen.setBorder(null);
         diskon_persen.setOpaque(false);
         diskon_persen.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                diskon_persenKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 diskon_persenKeyTyped(evt);
             }
@@ -790,6 +834,11 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_jumlah_prodKeyReleased
+
+    private void diskon_persenKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_diskon_persenKeyReleased
+        // TODO add your handling code here:
+        persen();
+    }//GEN-LAST:event_diskon_persenKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
