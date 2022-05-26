@@ -98,6 +98,7 @@
         <Property name="opaque" type="boolean" value="false"/>
       </Properties>
       <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jumlah_prodKeyReleased"/>
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jumlah_prodKeyTyped"/>
       </Events>
       <Constraints>
@@ -131,6 +132,7 @@
         <Property name="opaque" type="boolean" value="false"/>
       </Properties>
       <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="diskon_persenKeyReleased"/>
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="diskon_persenKeyTyped"/>
       </Events>
       <Constraints>
