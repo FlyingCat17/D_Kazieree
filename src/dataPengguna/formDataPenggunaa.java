@@ -237,7 +237,7 @@ public class formDataPenggunaa extends javax.swing.JInternalFrame {
         String tipe = (String)filterAkses.getSelectedItem();
         if (tipe == "ADMIN") {
             try {
-                Object[] judul_kolom = {"ID Pengguna", "Username", "Nama Lengkap", "No Telepon", "Hak Akses", "Status"};
+                Object[] judul_kolom = {"ID Pengguna", "Username", "Nama Lengkap", "Alamat", "No Telepon", "Hak Akses", "Status"};
                 tabmodel = new DefaultTableModel(null, judul_kolom);
                 TabelPengguna.setModel(tabmodel);
 
