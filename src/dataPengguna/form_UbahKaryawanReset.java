@@ -16,25 +16,25 @@ import javax.swing.JOptionPane;
  *
  * @author LenataHoma
  */
-public class form_UbahAdmin extends javax.swing.JDialog {
-formDataPenggunaa nj = new formDataPenggunaa();
+public class form_UbahKaryawanReset extends javax.swing.JDialog {
 Connection con; Statement st; ResultSet rs;
+formDataPenggunaa aa = new formDataPenggunaa();
     /**
      * Creates new form form_UbahAdminReset
      */
-    public form_UbahAdmin(java.awt.Frame parent, boolean modal) {
+    public form_UbahKaryawanReset(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         this.setBackground(new Color(0,0,0,0));
         jScrollPane1.setBackground(new Color(0,0,0,0));
         jScrollPane1.getViewport().setOpaque(false);
-        txt_IDPengguna.setText(nj.getIdPengguna());
-        loadDataAdmin();
-        System.out.println("ID : "+nj.getIdPengguna());
+        txt_IDPengguna.setText(aa.getIdPengguna());
+        loadDataKaryawan();
+        System.out.println("ID : "+aa.getIdPengguna());
     }
 
-    public void loadDataAdmin(){
+    public void loadDataKaryawan(){
         try {
             String sql = "SELECT * FROM tb_pengguna WHERE id_pengguna = '"+txt_IDPengguna.getText()+"';";
             con = (Connection)konekdb.GetConnection();
@@ -46,6 +46,7 @@ Connection con; Statement st; ResultSet rs;
                 txt_alamat.setText(rs.getString("alamat_pengguna"));
                 txt_noTelp.setText(rs.getString("no_telp_pengguna"));
                 txt_status.setText(rs.getString("status"));
+                System.out.println("Username : "+(rs.getString("username")));
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -69,6 +70,7 @@ Connection con; Statement st; ResultSet rs;
         txt_IDPengguna = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -80,12 +82,12 @@ Connection con; Statement st; ResultSet rs;
         txt_status.setBorder(null);
         txt_status.setEnabled(false);
         txt_status.setOpaque(false);
-        getContentPane().add(txt_status, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 480, 170, 30));
+        getContentPane().add(txt_status, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 457, 170, 30));
 
         txt_noTelp.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
         txt_noTelp.setBorder(null);
         txt_noTelp.setOpaque(false);
-        getContentPane().add(txt_noTelp, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 416, 340, 30));
+        getContentPane().add(txt_noTelp, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 392, 340, 30));
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -98,23 +100,23 @@ Connection con; Statement st; ResultSet rs;
         txt_alamat.setOpaque(false);
         jScrollPane1.setViewportView(txt_alamat);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 350, 80));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 276, 350, 80));
 
         txt_namaLengkap.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
         txt_namaLengkap.setBorder(null);
         txt_namaLengkap.setOpaque(false);
-        getContentPane().add(txt_namaLengkap, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 236, 340, 30));
+        getContentPane().add(txt_namaLengkap, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 212, 340, 30));
 
         txt_namaPengguna.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
         txt_namaPengguna.setBorder(null);
         txt_namaPengguna.setOpaque(false);
-        getContentPane().add(txt_namaPengguna, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 177, 340, 30));
+        getContentPane().add(txt_namaPengguna, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 153, 340, 30));
 
         txt_IDPengguna.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
         txt_IDPengguna.setBorder(null);
         txt_IDPengguna.setEnabled(false);
         txt_IDPengguna.setOpaque(false);
-        getContentPane().add(txt_IDPengguna, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 150, 30));
+        getContentPane().add(txt_IDPengguna, new org.netbeans.lib.awtextra.AbsoluteConstraints(63, 95, 150, 30));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dataPengguna/btn_batal2.png"))); // NOI18N
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -122,7 +124,7 @@ Connection con; Statement st; ResultSet rs;
                 jLabel4MouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 480, 70, 30));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(265, 500, 70, 40));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dataPengguna/btn_simpan2.png"))); // NOI18N
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -130,20 +132,52 @@ Connection con; Statement st; ResultSet rs;
                 jLabel3MouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 480, 70, 30));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(345, 500, 70, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dataPengguna/formUBAHADMIN.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 490, 550));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dataPengguna/btn_resetKatasandi.png"))); // NOI18N
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(265, 451, 150, 40));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dataPengguna/formUBAHKARYAWANdgnReset_1.png"))); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 490, 590));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
-        nj.loadDataPengguna();
+        aa.loadDataPengguna();
         this.setVisible(false);
-        nj.loadDataPengguna();
     }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        try {
+        int jawab = JOptionPane.showConfirmDialog(this, "Yakin Ingin Reset Kata Sandi milik "+txt_namaPengguna.getText()+"?", "Konfirmasi", JOptionPane.INFORMATION_MESSAGE);
+        switch(jawab){
+            case JOptionPane.YES_OPTION:
+                
+                    String sql = "UPDATE tb_pengguna SET kata_sandi = '12345678', status = 'AKTIF' WHERE id_pengguna = '"+
+                            txt_IDPengguna.getText()+"';";
+                    con=(Connection)konekdb.GetConnection();
+                    st = con.createStatement();
+                    st.execute(sql);
+                    JOptionPane.showMessageDialog(this , "Berhasil Reset Kata Sandi!");
+                    loadDataKaryawan();
+                    aa.loadDataPengguna();
+                
+                break;
+            case JOptionPane.NO_OPTION:
+                break;
+        }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
@@ -156,8 +190,8 @@ Connection con; Statement st; ResultSet rs;
             st = con.createStatement();
             st.execute(upp);
             JOptionPane.showMessageDialog(this, "Berhasil Tersimpan!");
-            nj.show();
-            nj.loadDataPengguna();
+            aa.show();
+            aa.loadDataPengguna();
             this.dispose();
             
         } catch (Exception e) {
@@ -182,13 +216,13 @@ Connection con; Statement st; ResultSet rs;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(form_UbahAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(form_UbahKaryawanReset.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(form_UbahAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(form_UbahKaryawanReset.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(form_UbahAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(form_UbahKaryawanReset.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(form_UbahAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(form_UbahKaryawanReset.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -196,7 +230,7 @@ Connection con; Statement st; ResultSet rs;
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                form_UbahAdmin dialog = new form_UbahAdmin(new javax.swing.JFrame(), true);
+                form_UbahKaryawanReset dialog = new form_UbahKaryawanReset(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -210,10 +244,11 @@ Connection con; Statement st; ResultSet rs;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JTextField txt_IDPengguna;
+    public javax.swing.JTextField txt_IDPengguna;
     private javax.swing.JTextArea txt_alamat;
     private javax.swing.JTextField txt_namaLengkap;
     private javax.swing.JTextField txt_namaPengguna;

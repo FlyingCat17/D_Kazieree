@@ -10,17 +10,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -355,7 +363,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                         for (int i = jumlah_baris - 1; i >= 0; i--) {
                             model.removeRow(i);
                         }
-
+                            
                         //Hapus top
                         id_prod.setText("");
                         nama_prod.setText("");
@@ -739,6 +747,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         if (evt.getButton() == MouseEvent.BUTTON1) {
             bayar();
+            
         }
     }//GEN-LAST:event_jLabel6MouseClicked
 

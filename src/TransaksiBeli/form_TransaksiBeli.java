@@ -43,12 +43,13 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI gui = (BasicInternalFrameUI) this.getUI();
         gui.setNorthPane(null);
+        kode_prodd.requestFocus();
         jTable1.getTableHeader().setFont(new Font("Quicksand", Font.PLAIN, 17));
         jTable1.getTableHeader().setOpaque(false);
         jTable1.getTableHeader().setBackground(new Color(254, 149, 46));
         jTable1.getTableHeader().setForeground(new Color(255, 255, 255));
         jTable1.setRowHeight(20);
-        kode_prodd.requestFocus();
+        
         tanggal();
         search();
         colom();
@@ -195,16 +196,16 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 870, 160));
 
-        tanggal_transaksi.setEditable(false);
         tanggal_transaksi.setBackground(new java.awt.Color(196, 196, 196));
         tanggal_transaksi.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
         tanggal_transaksi.setBorder(null);
+        tanggal_transaksi.setEnabled(false);
         getContentPane().add(tanggal_transaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 250, 30));
 
-        id_trbeli.setEditable(false);
         id_trbeli.setBackground(new java.awt.Color(196, 196, 196));
         id_trbeli.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
         id_trbeli.setBorder(null);
+        id_trbeli.setEnabled(false);
         id_trbeli.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 id_trbeliActionPerformed(evt);
@@ -212,10 +213,10 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
         });
         getContentPane().add(id_trbeli, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, 280, 30));
 
-        id_kasirr.setEditable(false);
         id_kasirr.setBackground(new java.awt.Color(196, 196, 196));
         id_kasirr.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
         id_kasirr.setBorder(null);
+        id_kasirr.setEnabled(false);
         getContentPane().add(id_kasirr, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 120, 260, 30));
 
         kode_prodd.setBackground(new java.awt.Color(196, 196, 196));
@@ -236,11 +237,13 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
         nama_prodd.setBackground(new java.awt.Color(196, 196, 196));
         nama_prodd.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
         nama_prodd.setBorder(null);
+        nama_prodd.setEnabled(false);
         getContentPane().add(nama_prodd, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 190, 450, 30));
 
         harga_prodd.setBackground(new java.awt.Color(196, 196, 196));
         harga_prodd.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
         harga_prodd.setBorder(null);
+        harga_prodd.setEnabled(false);
         getContentPane().add(harga_prodd, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 150, 30));
 
         jmlh_prodd.setBackground(new java.awt.Color(196, 196, 196));

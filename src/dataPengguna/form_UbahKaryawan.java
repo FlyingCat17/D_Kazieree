@@ -16,13 +16,13 @@ import javax.swing.JOptionPane;
  *
  * @author LenataHoma
  */
-public class form_UbahAdmin extends javax.swing.JDialog {
+public class form_UbahKaryawan extends javax.swing.JDialog {
 formDataPenggunaa nj = new formDataPenggunaa();
 Connection con; Statement st; ResultSet rs;
     /**
      * Creates new form form_UbahAdminReset
      */
-    public form_UbahAdmin(java.awt.Frame parent, boolean modal) {
+    public form_UbahKaryawan(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
@@ -30,11 +30,11 @@ Connection con; Statement st; ResultSet rs;
         jScrollPane1.setBackground(new Color(0,0,0,0));
         jScrollPane1.getViewport().setOpaque(false);
         txt_IDPengguna.setText(nj.getIdPengguna());
-        loadDataAdmin();
+        loadDataLKaryawan();
         System.out.println("ID : "+nj.getIdPengguna());
     }
 
-    public void loadDataAdmin(){
+    public void loadDataLKaryawan(){
         try {
             String sql = "SELECT * FROM tb_pengguna WHERE id_pengguna = '"+txt_IDPengguna.getText()+"';";
             con = (Connection)konekdb.GetConnection();
@@ -132,7 +132,7 @@ Connection con; Statement st; ResultSet rs;
         });
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 480, 70, 30));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dataPengguna/formUBAHADMIN.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dataPengguna/formUBAHKARYAWAN_1.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 490, 550));
 
         pack();
@@ -141,8 +141,7 @@ Connection con; Statement st; ResultSet rs;
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
         nj.loadDataPengguna();
-        this.setVisible(false);
-        nj.loadDataPengguna();
+        this.dispose();
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
@@ -158,7 +157,9 @@ Connection con; Statement st; ResultSet rs;
             JOptionPane.showMessageDialog(this, "Berhasil Tersimpan!");
             nj.show();
             nj.loadDataPengguna();
-            this.dispose();
+            loadDataLKaryawan();
+            this.setVisible(false);
+            nj.loadDataPengguna();
             
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -182,21 +183,23 @@ Connection con; Statement st; ResultSet rs;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(form_UbahAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(form_UbahKaryawan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(form_UbahAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(form_UbahKaryawan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(form_UbahAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(form_UbahKaryawan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(form_UbahAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(form_UbahKaryawan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                form_UbahAdmin dialog = new form_UbahAdmin(new javax.swing.JFrame(), true);
+                form_UbahKaryawan dialog = new form_UbahKaryawan(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

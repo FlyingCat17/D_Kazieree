@@ -127,6 +127,11 @@ formDataPenggunaa aa = new formDataPenggunaa();
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(265, 500, 70, 40));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dataPengguna/btn_simpan2.png"))); // NOI18N
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(345, 500, 70, 40));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dataPengguna/btn_resetKatasandi.png"))); // NOI18N
@@ -147,7 +152,8 @@ formDataPenggunaa aa = new formDataPenggunaa();
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
         aa.loadDataPengguna();
-        this.dispose();
+        this.setVisible(false);
+        aa.loadDataPengguna();
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
@@ -161,7 +167,7 @@ formDataPenggunaa aa = new formDataPenggunaa();
                     con=(Connection)konekdb.GetConnection();
                     st = con.createStatement();
                     st.execute(sql);
-                    JOptionPane.showMessageDialog(this , "Berhasil Reset Kata Sandi!");
+                    JOptionPane.showMessageDialog(this , "Berhasil Reset Kata Sandi! \n Kata Sandi : 12345678");
                     loadDataAdmin();
                     aa.loadDataPengguna();
                 
@@ -173,6 +179,26 @@ formDataPenggunaa aa = new formDataPenggunaa();
             System.err.println(e.getMessage());
         }
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        // TODO add your handling code here:
+        try {
+            String upp = "UPDATE tb_pengguna SET username = '"+txt_namaPengguna.getText()
+                    +"', nama_pengguna = '"+txt_namaLengkap.getText()+"', alamat_pengguna = '"
+                    +txt_alamat.getText()+"', no_telp_pengguna = '"+txt_noTelp.getText()+"' WHERE id_pengguna = '"
+                    +txt_IDPengguna.getText()+"';";
+            con = (Connection)konekdb.GetConnection();
+            st = con.createStatement();
+            st.execute(upp);
+            JOptionPane.showMessageDialog(this, "Berhasil Tersimpan!");
+            aa.show();
+            aa.loadDataPengguna();
+            this.dispose();
+            
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
      * @param args the command line arguments

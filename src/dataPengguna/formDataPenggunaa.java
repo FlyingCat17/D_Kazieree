@@ -159,7 +159,7 @@ public class formDataPenggunaa extends javax.swing.JInternalFrame {
         getContentPane().add(tb_pengguna, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 860, 490));
 
         filterAkses.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
-        filterAkses.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "KARYAWAN", "ADMIN" }));
+        filterAkses.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SEMUA", "KARYAWAN", "ADMIN" }));
         filterAkses.setOpaque(false);
         filterAkses.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -262,6 +262,60 @@ public class formDataPenggunaa extends javax.swing.JInternalFrame {
             } catch (Exception ex) {
                 System.err.println(ex.getMessage());
             }
+        } else if (tipe == "KARYAWAN") {
+            try {
+                Object[] judul_kolom = {"ID Pengguna", "Username", "Nama Lengkap", "Alamat", "No Telepon", "Hak Akses", "Status"};
+                tabmodel = new DefaultTableModel(null, judul_kolom);
+                TabelPengguna.setModel(tabmodel);
+
+                Connection conn = (Connection)konekdb.GetConnection();
+                Statement st = conn.createStatement();
+                tabmodel.getDataVector().removeAllElements();
+
+                rs = st.executeQuery("SELECT * FROM tb_pengguna WHERE hak_akses = 'KARYAWAN'");
+                while(rs.next()){
+                    Object[] data = {
+                        rs.getString("id_pengguna"),
+                        rs.getString("username"),
+                        rs.getString("nama_pengguna"),
+                        rs.getString("alamat_pengguna"),
+                        rs.getString("no_telp_pengguna"),
+                        rs.getString("hak_akses"),
+                        rs.getString("status")
+                    };
+                    tabmodel.addRow(data);
+                    System.out.println("Berhasil Admin");
+                }
+            } catch (Exception ex) {
+                System.err.println(ex.getMessage());
+            }
+        } else if(tipe == "SEMUA"){
+            try {
+                Object[] judul_kolom = {"ID Pengguna", "Username", "Nama Lengkap", "Alamat", "No Telepon", "Hak Akses", "Status"};
+                tabmodel = new DefaultTableModel(null, judul_kolom);
+                TabelPengguna.setModel(tabmodel);
+
+                Connection conn = (Connection)konekdb.GetConnection();
+                Statement st = conn.createStatement();
+                tabmodel.getDataVector().removeAllElements();
+
+                rs = st.executeQuery("SELECT * FROM tb_pengguna");
+                while(rs.next()){
+                    Object[] data = {
+                        rs.getString("id_pengguna"),
+                        rs.getString("username"),
+                        rs.getString("nama_pengguna"),
+                        rs.getString("alamat_pengguna"),
+                        rs.getString("no_telp_pengguna"),
+                        rs.getString("hak_akses"),
+                        rs.getString("status")
+                    };
+                    tabmodel.addRow(data);
+                    System.out.println("Berhasil Admin");
+                }
+            } catch (Exception ex) {
+                System.err.println(ex.getMessage());
+            }
         }
     }//GEN-LAST:event_filterAksesActionPerformed
 
@@ -298,9 +352,10 @@ public class formDataPenggunaa extends javax.swing.JInternalFrame {
             form_UbahAdminReset ubr = new form_UbahAdminReset(vm, true);
             ubr.txt_IDPengguna.setText(getIdPengguna());
             ubr.loadDataAdmin();
-            ubr.setVisible(true);
-            ubr.loadDataAdmin();
             loadDataPengguna();
+            ubr.setVisible(true);
+            loadDataPengguna();
+            ubr.loadDataAdmin();
             ubr.txt_IDPengguna.setText(getIdPengguna());
             loadDataPengguna();
         } else if (hakAkses.equals("ADMIN")) {
@@ -312,12 +367,53 @@ public class formDataPenggunaa extends javax.swing.JInternalFrame {
             ua.loadDataAdmin();
             ua.txt_IDPengguna.setText(getIdPengguna());
             loadDataPengguna();
+        } else if (hakAkses.equals("KARYAWAN")&&status.equals("LUPA")) {
+            form_UbahKaryawanReset ukr = new form_UbahKaryawanReset(vm, true);
+            ukr.txt_IDPengguna.setText(getIdPengguna());
+            ukr.loadDataKaryawan();
+            loadDataPengguna();
+            ukr.setVisible(true);
+            loadDataPengguna();
+            ukr.loadDataKaryawan();
+            ukr.txt_IDPengguna.setText(getIdPengguna());
+            loadDataPengguna();
+        } else if(hakAkses.equals("KARYAWAN")){
+            form_UbahKaryawan uk = new form_UbahKaryawan(vm, true);
+            uk.txt_IDPengguna.setText(getIdPengguna());
+            uk.loadDataLKaryawan();
+            loadDataPengguna();
+            uk.setVisible(true);
+            loadDataPengguna();
+            uk.txt_IDPengguna.setText(getIdPengguna());
+            loadDataPengguna();
         }
         
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         // TODO add your handling code here:
+        if (getIdPengguna() == null) {
+            JOptionPane.showMessageDialog(this, "Harap pilih salah satu pengguna!!");
+        } else {
+            int jawab = JOptionPane.showConfirmDialog(this, "Yakin ingin Menghapus Data Pengguna ini?");
+            switch(jawab){
+                case JOptionPane.YES_OPTION:
+                    try {
+                        String del = "DELETE FROM tb_pengguna WHERE id_pengguna = '"+getIdPengguna()+"';";
+                        java.sql.Connection con = (Connection)konekdb.GetConnection();
+                        java.sql.PreparedStatement pst = con.prepareStatement(del);
+                        pst.execute();
+                        JOptionPane.showMessageDialog(this, "Data berhasil terhapus");
+                        loadDataPengguna();
+                        
+                    } catch (Exception e) {
+                        System.err.println(e.getMessage());
+                    }
+                    break;
+                case JOptionPane.NO_OPTION:
+                    break;
+            }
+        }
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
