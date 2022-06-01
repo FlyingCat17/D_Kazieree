@@ -355,7 +355,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                             String id_prodk = (String) model.getValueAt(i, 1).toString();
                             String nama_p = (String) model.getValueAt(i, 2).toString();
                             String har = (String) model.getValueAt(i, 3).toString();
-                            String sql1 = "INSERT INTO `tb_detailjual`(`id_transaksi`, `id_produk`, `nama_produk`, `harga_jual`, `jumlah_produk`, `total_harga`) VALUES ("
+                            String sql1 = "INSERT INTO `tb_detailjual`(`id_transaksi`, `id_produk`, `nama_produk`, `harga_jual`, `jumlah_produk`, `total_harga_brg`) VALUES ("
                                     + "'" + id_trx.getText() + "', '" + id_prodk + "', '" + nama_p + "', '" + har + "', '" + jumlah + "', '" + harga + "')";
                             java.sql.PreparedStatement ps1 = con.prepareStatement(sql1);
                             ps1.execute();
