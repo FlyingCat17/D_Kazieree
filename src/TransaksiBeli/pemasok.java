@@ -26,6 +26,8 @@ public class pemasok extends javax.swing.JInternalFrame {
     /**
      * Creates new form pemasok
      */
+    DefaultTableModel model = new DefaultTableModel();
+    
     public pemasok() {
         initComponents();
         tabel();
@@ -40,7 +42,7 @@ public class pemasok extends javax.swing.JInternalFrame {
     }
 
     public void tabel() {
-        DefaultTableModel model = new DefaultTableModel();
+        
         model.addColumn("Id Pemasok");
         model.addColumn("Nama Pemasok");
         model.addColumn("Nama Usaha");
@@ -118,7 +120,7 @@ public class pemasok extends javax.swing.JInternalFrame {
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         
         if (evt.getButton() == MouseEvent.BUTTON1) {
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+           jTable1.getModel();
             int i = jTable1.getSelectedRow();
             if (i < 0) {
                 JOptionPane.showMessageDialog(this, "Pilih pemasok terlebih dahulu");
