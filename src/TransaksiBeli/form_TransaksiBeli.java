@@ -38,6 +38,8 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
     /**
      * Creates new form beli_utama
      */
+    DefaultTableModel modelkan = new DefaultTableModel();
+
     public form_TransaksiBeli() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -49,7 +51,7 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
         jTable1.getTableHeader().setBackground(new Color(254, 149, 46));
         jTable1.getTableHeader().setForeground(new Color(255, 255, 255));
         jTable1.setRowHeight(20);
-        
+
         tanggal();
         search();
         colom();
@@ -57,13 +59,13 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
     }
 
     public void colom() {
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("ID Produk");
-        model.addColumn("Nama Produk");
-        model.addColumn("Harga Beli");
-        model.addColumn("Jumlah");
-        model.addColumn("Total Harga");
-        jTable1.setModel(model);
+
+        modelkan.addColumn("ID Produk");
+        modelkan.addColumn("Nama Produk");
+        modelkan.addColumn("Harga Beli");
+        modelkan.addColumn("Jumlah");
+        modelkan.addColumn("Total Harga");
+        jTable1.setModel(modelkan);
     }
 
     public void tanggal() {
@@ -350,7 +352,8 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
                 int hargad = Integer.parseInt(harga_prodd.getText());
                 int juml = Integer.parseInt(jmlh_prodd.getText());
                 int total = hargad * juml;
-                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+                jTable1.getModel();
                 Object row[] = {
                     kode_prodd.getText(),
                     nama_prodd.getText(),
@@ -358,7 +361,7 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
                     jmlh_prodd.getText(),
                     total
                 };
-                model.addRow(row);
+                modelkan.addRow(row);
                 kode_prodd.requestFocus();
                 kode_prodd.setText("");
                 nama_prodd.setText("");
@@ -376,8 +379,9 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(rootPane, "Tidak ada baris yang dipilih");
 
             } else {
-                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-                model.removeRow(jTable1.getSelectedRow());
+
+                jTable1.getModel();
+                modelkan.removeRow(jTable1.getSelectedRow());
             }
 
         }
@@ -393,7 +397,13 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
 
     private void btn_bayarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_bayarMouseClicked
         if (evt.getButton() == MouseEvent.BUTTON1) {
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+            jTable1.getModel();
+            int tanya = JOptionPane.showOptionDialog(this,
+                    "Ingin Menyelesaikan Transaki?",
+                    "Konfirmasi",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE, null, null, null);
             int jumlhTabel = jTable1.getRowCount();
             if (jumlhTabel == 0) {
                 JOptionPane.showMessageDialog(rootPane, "Keranjang tidak boleh kosong");
@@ -401,7 +411,8 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
             if (id_pemasok.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Pemasok tidak boleh kosong");
 
-            } else {
+            } else if (tanya == JOptionPane.YES_OPTION) {
+
                 try {
                     String sql = "INSERT INTO `tb_beli`(`id_transaksi`, `tgl_transaksi`, `id_pengguna`, `id_pemasok`, `total_harga`) VALUES ('"
                             + id_trbeli.getText() + "','" + tanggal_transaksi.getText() + "','" + id_kasirr.getText() + "','" + id_pemasok.getText() + "','" + total_hrg_label.getText() + "')";
@@ -415,18 +426,18 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
 
                     try {
                         for (int i = 0; i < jumlhTabel; i++) {
-                            String idProduk = model.getValueAt(i, 0).toString();
-                            String namaProduk = model.getValueAt(i, 1).toString();
-                            String jumlahProduk = model.getValueAt(i, 3).toString();
-                            String hargaBeli = model.getValueAt(i, 2).toString();
-                            String totalHarga = model.getValueAt(i, 4).toString();
+                            String idProduk = modelkan.getValueAt(i, 0).toString();
+                            String namaProduk = modelkan.getValueAt(i, 1).toString();
+                            String jumlahProduk = modelkan.getValueAt(i, 3).toString();
+                            String hargaBeli = modelkan.getValueAt(i, 2).toString();
+                            String totalHarga = modelkan.getValueAt(i, 4).toString();
                             String squl = "INSERT INTO `tb_detailbeli`(`id_transaksi`, `id_produk`, `nama_produk`, `jumlah_produk`, `harga_beli`, `total_harga`) VALUES "
                                     + "('" + id_trbeli.getText() + "','" + idProduk + "','" + namaProduk + "'," + jumlahProduk + "," + hargaBeli + "," + totalHarga + ")";
                             java.sql.PreparedStatement pstt = c.prepareStatement(squl);
                             pstt.execute();
                         }
                         for (int j = jumlhTabel - 1; j >= 0; j--) {
-                            model.removeRow(j);
+                            modelkan.removeRow(j);
                         }
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(rootPane, e);
@@ -453,10 +464,11 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
 
     private void btn_bayar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_bayar1MouseClicked
         if (evt.getButton() == MouseEvent.BUTTON1) {
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+            jTable1.getModel();
             int bersihTabel = jTable1.getRowCount();
             for (int j = bersihTabel - 1; j >= 0; j--) {
-                model.removeRow(j);
+                modelkan.removeRow(j);
 
             }
             kode_prodd.setText("");
@@ -487,7 +499,7 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
     private javax.swing.JTextField id_trbeli;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    public static javax.swing.JTable jTable1;
     private javax.swing.JTextField jmlh_prodd;
     private javax.swing.JTextField kode_prodd;
     public static javax.swing.JTextField nama_pemasok;
