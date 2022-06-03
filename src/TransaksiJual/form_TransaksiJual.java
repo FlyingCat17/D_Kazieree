@@ -127,7 +127,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                 java.util.Date dateTime = new java.util.Date();
                 int nilai_jam = dateTime.getHours();
                 int nilai_menit = dateTime.getMinutes();
-                int nilai_detik = dateTime.getSeconds();
+//                int nilai_detik = dateTime.getSeconds();
 
                 if (nilai_jam <= 9) {
                     nol_jam = "0";
@@ -135,19 +135,19 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                 if (nilai_menit <= 9) {
                     nol_menit = "0";
                 }
-                if (nilai_detik <= 9) {
-                    nol_detik = "0";
-                }
+//                if (nilai_detik <= 9) {
+//                    nol_detik = "0";
+//                }
 
                 String jam = nol_jam + Integer.toString(nilai_jam);
                 String menit = nol_menit + Integer.toString(nilai_menit);
-                String detik = nol_detik + Integer.toString(nilai_detik);
+//                String detik = nol_detik + Integer.toString(nilai_detik);
 
                 java.util.Date tglsekarang = new java.util.Date();
                 SimpleDateFormat smpdtfmt = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 String tanggal = smpdtfmt.format(tglsekarang);
 
-                tgl_trx.setText(tanggal + " " + jam + ":" + menit + ":" + detik + "");
+                tgl_trx.setText(tanggal + " " + jam + ":" + menit + "");
 
                 int total = 0;
                 for (int i = 0; i < jTable1.getRowCount(); i++) {
@@ -359,6 +359,20 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                                     + "'" + id_trx.getText() + "', '" + id_prodk + "', '" + nama_p + "', '" + har + "', '" + jumlah + "', '" + harga + "')";
                             java.sql.PreparedStatement ps1 = con.prepareStatement(sql1);
                             ps1.execute();
+                        }
+                        try {
+                            String namaFile = "src" + File.separator + "TransaksiJual" + File.separator + "StrukJualBesar.jasper";
+                            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+                            Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost:3306/d'kazieree", "root", "");
+                            HashMap hash = new HashMap();
+                            hash.put("kodeTransaksi", id_trx.getText());
+                            File file = new File(namaFile);
+                            JasperReport jasperReport = (JasperReport) JRLoader.loadObject(file.getPath());
+                            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, hash, koneksi);
+                            JasperViewer.viewReport(jasperPrint, false);
+                        } catch (Exception e) {
+                            System.err.println(e.getMessage());
+
                         }
                         for (int i = jumlah_baris - 1; i >= 0; i--) {
                             model.removeRow(i);
@@ -746,6 +760,8 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         // TODO add your handling code here:
         if (evt.getButton() == MouseEvent.BUTTON1) {
+            
+
             bayar();
             
         }
