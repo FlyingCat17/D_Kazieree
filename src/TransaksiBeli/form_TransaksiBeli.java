@@ -129,6 +129,7 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
         if (kode_prodd.getText().equals("")) {
             nama_prodd.setText("");
             jmlh_prodd.setText("");
+            harga_prodd.setText("");
         } else {
             try {
                 String sql = "SELECT tb_produk.id_produk, tb_produk.nama_produk, tb_produk.harga_beli "
@@ -145,6 +146,7 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
                 nama_prodd.setText("");
+                
                 jmlh_prodd.setText("");
             }
         }
@@ -161,6 +163,7 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
         tanggal_transaksi = new javax.swing.JTextField();
         id_trbeli = new javax.swing.JTextField();
         id_kasirr = new javax.swing.JTextField();
@@ -198,6 +201,10 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 870, 160));
 
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiBeli/2.7.png"))); // NOI18N
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 190, 30, 30));
+
         tanggal_transaksi.setBackground(new java.awt.Color(196, 196, 196));
         tanggal_transaksi.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
         tanggal_transaksi.setBorder(null);
@@ -234,7 +241,7 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
                 kode_proddKeyReleased(evt);
             }
         });
-        getContentPane().add(kode_prodd, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 370, 30));
+        getContentPane().add(kode_prodd, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 340, 30));
 
         nama_prodd.setBackground(new java.awt.Color(196, 196, 196));
         nama_prodd.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
@@ -261,17 +268,20 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
         id_pemasok.setBackground(new java.awt.Color(196, 196, 196));
         id_pemasok.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
         id_pemasok.setBorder(null);
+        id_pemasok.setEnabled(false);
         getContentPane().add(id_pemasok, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 530, 170, 30));
 
         nama_pemasok.setBackground(new java.awt.Color(196, 196, 196));
         nama_pemasok.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
         nama_pemasok.setBorder(null);
+        nama_pemasok.setEnabled(false);
         getContentPane().add(nama_pemasok, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 580, 170, 30));
 
         total_harga.setEditable(false);
         total_harga.setBackground(new java.awt.Color(196, 196, 196));
         total_harga.setFont(new java.awt.Font("Quicksand SemiBold", 0, 15)); // NOI18N
         total_harga.setBorder(null);
+        total_harga.setEnabled(false);
         getContentPane().add(total_harga, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 620, 170, 30));
 
         total_hrg_label1.setFont(new java.awt.Font("Quicksand SemiBold", 0, 40)); // NOI18N
@@ -359,6 +369,7 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
                     nama_prodd.getText(),
                     harga_prodd.getText(),
                     jmlh_prodd.getText(),
+                    
                     total
                 };
                 modelkan.addRow(row);
@@ -498,6 +509,7 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
     public static javax.swing.JTextField id_pemasok;
     private javax.swing.JTextField id_trbeli;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable jTable1;
     private javax.swing.JTextField jmlh_prodd;
