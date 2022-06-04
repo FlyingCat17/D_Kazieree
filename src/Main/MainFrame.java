@@ -192,7 +192,8 @@ public class MainFrame extends javax.swing.JFrame {
         sidebarr.setIcon(a);
         dpanee.removeAll();
         dpanee.repaint();
-        TransaksiJual.form_TransaksiJual home = new TransaksiJual.form_TransaksiJual();
+//        TransaksiJual.form_TransaksiJual home = new TransaksiJual.form_TransaksiJual();
+        TransaksiJual.Transjual home = new TransaksiJual.Transjual();
         dpanee.add(home);
         home.setVisible(true);
         

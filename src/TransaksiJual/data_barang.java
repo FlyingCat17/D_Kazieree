@@ -146,8 +146,8 @@ public class data_barang extends javax.swing.JInternalFrame {
             if (id.equals("null")) {
                 JOptionPane.showMessageDialog(null, "Silahkan pilih baris yang ingin dipilih");
             } else {
-                form_TransaksiJual ft = new form_TransaksiJual();
-                ft.id_prod.setText(id);
+                Transjual ft = new Transjual();
+                ft.txt_KodeProduk.setText(id);
                 this.getDesktopPane().add(ft);
                 ft.setVisible(true);
                 this.dispose();

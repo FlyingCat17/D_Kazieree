@@ -109,6 +109,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                         no = "0" + no;
                     }
                     id_trx.setText("TJ/" + blnth + "/" + no);
+                    
                 }
             }
         } catch (SQLException e) {
@@ -244,12 +245,12 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
     }
 
     public void kembalian() {
-        if (jLabel3.getText().equals("")) {
+        if (txt_totalHargaAftferDiskon.getText().equals("")) {
             kembalian_harga.setText("");
-        } else if (jLabel3.getText().isEmpty()) {
+        } else if (txt_totalHargaAftferDiskon.getText().isEmpty()) {
             kembalian_harga.setText("");
         } else if (!(pembayaran.getText().equals(""))) {
-            int sub = Integer.parseInt(jLabel3.getText());
+            int sub = Integer.parseInt(txt_totalHargaAftferDiskon.getText());
             int disk;
             disk = Integer.parseInt(pembayaran.getText());
             int ttl = disk - sub;
@@ -273,13 +274,13 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
             disk = Integer.parseInt(diskon_harga.getText());
             if (disk == 0) {
                 int ttl = sub;
-                jLabel3.setText(Integer.toString(ttl));
+                txt_totalHargaAftferDiskon.setText(Integer.toString(ttl));
             } else if (disk > 0) {
                 double persen = diks/sube*100;
                 int ttl = sub - disk;
                 if (!(ttl < 0)) {
                     diskon_persen.setText(String.valueOf(Math.round(persen)));
-                    jLabel3.setText(Integer.toString(ttl));
+                    txt_totalHargaAftferDiskon.setText(Integer.toString(ttl));
                     pembayaran.setText("");
                 } else {
                     diskon_harga.setText("");
@@ -288,7 +289,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                 }
             }
         } else {
-            jLabel3.setText("");
+            txt_totalHargaAftferDiskon.setText("");
             diskon_persen.setText("");
             
         }
@@ -302,7 +303,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
             if (!(disk > 100)) {
                 if (disk == 0) {
                     int ttl = sub;
-                    jLabel3.setText(Integer.toString(ttl));
+                    txt_totalHargaAftferDiskon.setText(Integer.toString(ttl));
                 } else if (disk > 0) {
                     int persen = sub * disk / 100;
                     int ttl = sub - disk;
@@ -310,7 +311,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                         diskon_harga.setText(String.valueOf(persen));
                         int diskharga = Integer.parseInt(diskon_harga.getText());
                         int totalnya = sub - diskharga;
-                        jLabel3.setText(Integer.toString(totalnya));
+                        txt_totalHargaAftferDiskon.setText(Integer.toString(totalnya));
                         pembayaran.setText("");
                     } else {
                         diskon_harga.setText("");
@@ -323,7 +324,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                 diskon_harga.setText("");
             }
         } else {
-            jLabel3.setText("");
+            txt_totalHargaAftferDiskon.setText("");
             diskon_harga.setText("");
         }
     }
@@ -343,7 +344,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                     String sql = "INSERT INTO `tb_jual`(`id_transaksi`, "
                             + "`tgl_transaksi`,`id_pengguna`, `total_harga`, `total_diskon`, "
                             + "`nominal_bayar`) VALUES ('" + id_trx.getText() + "',"
-                            + "'" + tgl_trx.getText() + "', 'USER', '" + jLabel3.getText() + "',"
+                            + "'" + tgl_trx.getText() + "', 'USER', '" + txt_totalHargaAftferDiskon.getText() + "',"
                             + "'" + diskon_harga.getText() + "', '" + pembayaran.getText() + "')";
                     java.sql.Connection con = (Connection) konekdb.GetConnection();
                     java.sql.PreparedStatement pst = con.prepareStatement(sql);
@@ -388,7 +389,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                         //Hapus Bottom
                         diskon_harga.setText("");
                         diskon_persen.setText("");
-                        jLabel3.setText("");
+                        txt_totalHargaAftferDiskon.setText("");
                         pembayaran.setText("");
                         kembalian_harga.setText("");
 
@@ -433,7 +434,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                     //Hapus Bottom
                     diskon_harga.setText("");
                     diskon_persen.setText("");
-                    jLabel3.setText("");
+                    txt_totalHargaAftferDiskon.setText("");
                     pembayaran.setText("");
                     kembalian_harga.setText("");
 
@@ -467,7 +468,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                         //Hapus Bottom
                         diskon_harga.setText("");
                         diskon_persen.setText("");
-                        jLabel3.setText("");
+                        txt_totalHargaAftferDiskon.setText("");
                         pembayaran.setText("");
                         kembalian_harga.setText("");
 
@@ -495,7 +496,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
         id_prod = new javax.swing.JTextField();
         pilih_prod = new javax.swing.JLabel();
         kembalian_harga = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        txt_totalHargaAftferDiskon = new javax.swing.JLabel();
         nama_prod = new javax.swing.JLabel();
         harga_prod = new javax.swing.JLabel();
         jumlah_prod = new javax.swing.JTextField();
@@ -539,10 +540,13 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pilih_prodMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pilih_prodMouseEntered(evt);
+            }
         });
         getContentPane().add(pilih_prod, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 210, 30, 30));
         getContentPane().add(kembalian_harga, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 630, 170, 30));
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 540, 170, 30));
+        getContentPane().add(txt_totalHargaAftferDiskon, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 540, 170, 30));
         getContentPane().add(nama_prod, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 210, 460, 30));
         getContentPane().add(harga_prod, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 150, 30));
 
@@ -584,6 +588,11 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
 
         pembayaran.setBorder(null);
         pembayaran.setOpaque(false);
+        pembayaran.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pembayaranActionPerformed(evt);
+            }
+        });
         pembayaran.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 pembayaranKeyReleased(evt);
@@ -698,7 +707,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
                     //Hapus Bottom
                     diskon_harga.setText("");
                     diskon_persen.setText("");
-                    jLabel3.setText("");
+                    txt_totalHargaAftferDiskon.setText("");
                     pembayaran.setText("");
                     kembalian_harga.setText("");
 
@@ -731,7 +740,7 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
             //Hapus Bottom
             diskon_harga.setText("");
             diskon_persen.setText("");
-            jLabel3.setText("");
+            txt_totalHargaAftferDiskon.setText("");
             pembayaran.setText("");
             kembalian_harga.setText("");
 
@@ -865,6 +874,14 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
         persen();
     }//GEN-LAST:event_diskon_persenKeyReleased
 
+    private void pilih_prodMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pilih_prodMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pilih_prodMouseEntered
+
+    private void pembayaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pembayaranActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pembayaranActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel botom;
@@ -875,7 +892,6 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
     private javax.swing.JLabel id_trx;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -892,5 +908,6 @@ public class form_TransaksiJual extends javax.swing.JInternalFrame {
     private javax.swing.JLabel stok_prod;
     private javax.swing.JLabel tgl_trx;
     private javax.swing.JLabel total_tabel;
+    private javax.swing.JLabel txt_totalHargaAftferDiskon;
     // End of variables declaration//GEN-END:variables
 }
