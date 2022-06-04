@@ -14,12 +14,12 @@ import javax.swing.JFrame;
  *
  * @author LenataHoma
  */
-public class MainFrame extends javax.swing.JFrame {
+public class MainFrameKaryawan extends javax.swing.JFrame {
 
     /**
      * Creates new form MainFrame
      */
-    public MainFrame() {
+    public MainFrameKaryawan() {
         initComponents();
         this.setLocationRelativeTo(null);
         dpanee.removeAll();
@@ -37,39 +37,36 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btn_Lainnya = new javax.swing.JLabel();
-        btn_laporan = new javax.swing.JLabel();
+        btn_akun = new javax.swing.JLabel();
+        btn_Pemasok = new javax.swing.JLabel();
         btn_dataPemasok = new javax.swing.JLabel();
         btn_transJual = new javax.swing.JLabel();
         btn_TransaBeli = new javax.swing.JLabel();
-        btn_dataStok = new javax.swing.JLabel();
         btn_dataProduk = new javax.swing.JLabel();
         btn_beranda = new javax.swing.JLabel();
         sidebarr = new javax.swing.JLabel();
         dpanee = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1233, 707));
         setMinimumSize(new java.awt.Dimension(1233, 707));
-        setPreferredSize(new java.awt.Dimension(1233, 707));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btn_Lainnya.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_Lainnya.addMouseListener(new java.awt.event.MouseAdapter() {
+        btn_akun.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_akun.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_LainnyaMouseClicked(evt);
+                btn_akunMouseClicked(evt);
             }
         });
-        getContentPane().add(btn_Lainnya, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 590, 240, 50));
+        getContentPane().add(btn_akun, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 460, 240, 50));
 
-        btn_laporan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_laporan.addMouseListener(new java.awt.event.MouseAdapter() {
+        btn_Pemasok.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_Pemasok.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_laporanMouseClicked(evt);
+                btn_PemasokMouseClicked(evt);
             }
         });
-        getContentPane().add(btn_laporan, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 530, 240, 50));
+        getContentPane().add(btn_Pemasok, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 396, 240, 50));
 
         btn_dataPemasok.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_dataPemasok.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -85,7 +82,7 @@ public class MainFrame extends javax.swing.JFrame {
                 btn_transJualMouseClicked(evt);
             }
         });
-        getContentPane().add(btn_transJual, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 395, 240, 50));
+        getContentPane().add(btn_transJual, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 240, 50));
 
         btn_TransaBeli.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_TransaBeli.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -93,15 +90,7 @@ public class MainFrame extends javax.swing.JFrame {
                 btn_TransaBeliMouseClicked(evt);
             }
         });
-        getContentPane().add(btn_TransaBeli, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 240, 50));
-
-        btn_dataStok.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_dataStok.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_dataStokMouseClicked(evt);
-            }
-        });
-        getContentPane().add(btn_dataStok, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 265, 240, 50));
+        getContentPane().add(btn_TransaBeli, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 265, 240, 50));
 
         btn_dataProduk.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_dataProduk.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -119,7 +108,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         getContentPane().add(btn_beranda, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 240, 50));
 
-        sidebarr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Sidebar/sidebar_beranda.png"))); // NOI18N
+        sidebarr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Sidebar/Karyawan_Beranda.png"))); // NOI18N
         getContentPane().add(sidebarr, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, 710));
 
         javax.swing.GroupLayout dpaneeLayout = new javax.swing.GroupLayout(dpanee);
@@ -140,7 +129,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btn_berandaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_berandaMouseClicked
         // TODO add your handling code here:
-        ImageIcon a = new ImageIcon("src/Sidebar/sidebar_beranda.png");
+        ImageIcon a = new ImageIcon("src/Sidebar/Karyawan_Beranda.png");
         sidebarr.setIcon(a);
         dpanee.removeAll();
         dpanee.repaint();
@@ -153,7 +142,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_berandaMouseClicked
 
     private void btn_dataProdukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dataProdukMouseClicked
-        ImageIcon a = new ImageIcon("src/Sidebar/sidebar_dataProduk.png");
+        ImageIcon a = new ImageIcon("src/Sidebar/Karyawan_DataProduk.png");
         sidebarr.setIcon(a);
         dpanee.removeAll();
         dpanee.repaint();
@@ -162,21 +151,9 @@ public class MainFrame extends javax.swing.JFrame {
         home.setVisible(true);
     }//GEN-LAST:event_btn_dataProdukMouseClicked
 
-    private void btn_dataStokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dataStokMouseClicked
-        // TODO add your handling code here:
-        ImageIcon a = new ImageIcon("src/Sidebar/sidebar_dataStok.png");
-        sidebarr.setIcon(a);
-        dpanee.removeAll();
-        dpanee.repaint();
-        DataStok.form_DataStok home = new DataStok.form_DataStok();
-        dpanee.add(home);
-        home.setVisible(true);
-        
-    }//GEN-LAST:event_btn_dataStokMouseClicked
-
     private void btn_TransaBeliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_TransaBeliMouseClicked
         // TODO add your handling code here:
-        ImageIcon a = new ImageIcon("src/Sidebar/sidebar_transbeli.png");
+        ImageIcon a = new ImageIcon("src/Sidebar/Karyawan_TransaksiBeli.png");
         sidebarr.setIcon(a);
         dpanee.removeAll();
         dpanee.repaint();
@@ -188,7 +165,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btn_transJualMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_transJualMouseClicked
         // TODO add your handling code here:
-        ImageIcon a = new ImageIcon("src/Sidebar/sidebar_transjual.png");
+        ImageIcon a = new ImageIcon("src/Sidebar/Karyawan_TransaksiJual.png");
         sidebarr.setIcon(a);
         dpanee.removeAll();
         dpanee.repaint();
@@ -211,29 +188,22 @@ public class MainFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btn_dataPemasokMouseClicked
 
-    private void btn_laporanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_laporanMouseClicked
+    private void btn_PemasokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_PemasokMouseClicked
         // TODO add your handling code here:
         dpanee.removeAll();
         dpanee.repaint();
-        Laporan.form_Laporan home = new Laporan.form_Laporan();
+        DataPemasok.form_dataPemasok home = new DataPemasok.form_dataPemasok();
         dpanee.add(home);
         home.setVisible(true);
-        ImageIcon a = new ImageIcon("src/Sidebar/sidebar_laporan.png");
+        ImageIcon a = new ImageIcon("src/Sidebar/Karyawan_DataPemasok.png");
         sidebarr.setIcon(a);
-    }//GEN-LAST:event_btn_laporanMouseClicked
+    }//GEN-LAST:event_btn_PemasokMouseClicked
 
-    private void btn_LainnyaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_LainnyaMouseClicked
+    private void btn_akunMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_akunMouseClicked
         // TODO add your handling code here:
-        ImageIcon a = new ImageIcon("src/Sidebar/sidebar_lainnya.png");
+        ImageIcon a = new ImageIcon("src/Sidebar/Karyawan_PengaturanAkun.png");
         sidebarr.setIcon(a);
-        dpanee.removeAll();
-        dpanee.repaint();
-        Lainnya.form_Lainnya home = new Lainnya.form_Lainnya();
-        dpanee.add(home);
-        home.setVisible(true);
-        
-        
-    }//GEN-LAST:event_btn_LainnyaMouseClicked
+    }//GEN-LAST:event_btn_akunMouseClicked
     public void logOut(){
         this.dispose();
         dispose();
@@ -263,32 +233,32 @@ public class MainFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainFrameKaryawan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainFrameKaryawan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainFrameKaryawan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainFrameKaryawan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login.LoginPageNew().setVisible(true);
+                new Login.LoginPage().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel btn_Lainnya;
+    private javax.swing.JLabel btn_Pemasok;
     private javax.swing.JLabel btn_TransaBeli;
+    private javax.swing.JLabel btn_akun;
     private javax.swing.JLabel btn_beranda;
     private javax.swing.JLabel btn_dataPemasok;
     private javax.swing.JLabel btn_dataProduk;
-    private javax.swing.JLabel btn_dataStok;
-    private javax.swing.JLabel btn_laporan;
     private javax.swing.JLabel btn_transJual;
     public javax.swing.JDesktopPane dpanee;
     private javax.swing.JLabel sidebarr;

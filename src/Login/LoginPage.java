@@ -48,8 +48,13 @@ public class LoginPage extends javax.swing.JFrame {
                     Main.MainFrame mn = new Main.MainFrame();
                     mn.setVisible(true);
                     this.dispose();
-                } else {
+                } else if(rs.getString("hak_akses").equals("KARYAWAN")){
                     JOptionPane.showMessageDialog(this, "Berhasil Masuk!!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+                    Main.MainFrameKaryawan mn = new Main.MainFrameKaryawan();
+                    mn.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, ". Masuk!!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         } catch (Exception e) {
