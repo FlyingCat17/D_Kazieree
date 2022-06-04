@@ -48,8 +48,13 @@ public class LoginPageNew extends javax.swing.JFrame {
                     Main.MainFrame mn = new Main.MainFrame();
                     mn.setVisible(true);
                     this.dispose();
-                } else {
+                } else if(rs.getString("hak_akses").equals("KARYAWAN")){
                     JOptionPane.showMessageDialog(this, "Berhasil Masuk!!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+                    Main.MainFrameKaryawan mn = new Main.MainFrameKaryawan();
+                    mn.setVisible(true);
+                    this.dispose();
+                }else {
+                    JOptionPane.showMessageDialog(this, ". Masuk!!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         } catch (Exception e) {
@@ -72,8 +77,6 @@ public class LoginPageNew extends javax.swing.JFrame {
         KataSandiPengguna = new Swing.PasswordField();
         UsernamePengguna = new Swing.TextField();
         jLabel1 = new javax.swing.JLabel();
-        txt_username = new javax.swing.JTextField();
-        txt_password = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -118,31 +121,7 @@ public class LoginPageNew extends javax.swing.JFrame {
         jPanel2.add(UsernamePengguna, new org.netbeans.lib.awtextra.AbsoluteConstraints(688, 270, 320, 50));
 
         jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 410, 100, 10));
-
-        txt_username.setFont(new java.awt.Font("Quicksand", 1, 18)); // NOI18N
-        txt_username.setBorder(null);
-        txt_username.setOpaque(false);
-        txt_username.setSelectedTextColor(new java.awt.Color(238, 238, 238));
-        txt_username.setSelectionColor(new java.awt.Color(246, 122, 2));
-        jPanel2.add(txt_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 300, 40));
-
-        txt_password.setBorder(null);
-        txt_password.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        txt_password.setOpaque(false);
-        txt_password.setSelectedTextColor(new java.awt.Color(238, 238, 238));
-        txt_password.setSelectionColor(new java.awt.Color(246, 122, 2));
-        txt_password.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_passwordActionPerformed(evt);
-            }
-        });
-        txt_password.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_passwordKeyPressed(evt);
-            }
-        });
-        jPanel2.add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, 260, 40));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 430, 100, 70));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Login/loginPagenoTxtField.png"))); // NOI18N
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, 690));
@@ -151,25 +130,6 @@ public class LoginPageNew extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txt_passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_passwordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_passwordActionPerformed
-
-    private void txt_passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_passwordKeyPressed
-        // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (!(UsernamePengguna.getText().equals(""))) {
-                if (!(KataSandiPengguna.getText().equals(""))) {
-                    login();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Password Tidak Boleh Kosong");
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Username Tidak Boleh Kosong");
-            }
-        }
-    }//GEN-LAST:event_txt_passwordKeyPressed
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:
@@ -257,7 +217,5 @@ public class LoginPageNew extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField txt_password;
-    private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables
 }
