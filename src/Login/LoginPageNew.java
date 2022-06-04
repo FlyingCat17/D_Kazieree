@@ -29,8 +29,6 @@ public class LoginPageNew extends javax.swing.JFrame {
     public LoginPageNew() {
         initComponents();
         this.setLocationRelativeTo(null);
-        txt_password.setOpaque(false);
-        txt_username.setOpaque(false);
     }
 
     public void login() {
