@@ -163,6 +163,7 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        button1 = new Swing.Button();
         jLabel2 = new javax.swing.JLabel();
         tanggal_transaksi = new javax.swing.JTextField();
         id_trbeli = new javax.swing.JTextField();
@@ -200,6 +201,9 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 870, 160));
+
+        button1.setText("button1");
+        getContentPane().add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 510, 70, -1));
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiBeli/2.7.png"))); // NOI18N
@@ -504,6 +508,7 @@ public class form_TransaksiBeli extends javax.swing.JInternalFrame {
     private javax.swing.JLabel btn_bayar1;
     private javax.swing.JLabel btnhapus_keranjang;
     private javax.swing.JLabel btntambah_keranjang;
+    private Swing.Button button1;
     private javax.swing.JTextField harga_prodd;
     private javax.swing.JTextField id_kasirr;
     public static javax.swing.JTextField id_pemasok;
