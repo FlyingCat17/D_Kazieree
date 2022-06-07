@@ -175,12 +175,12 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_dataStokMouseClicked
 
     private void btn_TransaBeliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_TransaBeliMouseClicked
-        // TODO add your handling code here:
+         // TODO add your handling code here:
         ImageIcon a = new ImageIcon("src/Sidebar/sidebar_transbeli.png");
         sidebarr.setIcon(a);
         dpanee.removeAll();
         dpanee.repaint();
-        TransaksiBeli.form_TransaksiBeli home = new TransaksiBeli.form_TransaksiBeli();
+        TransaksiBeli.Transbeli home = new TransaksiBeli.Transbeli();
         dpanee.add(home);
         home.setVisible(true);
         
