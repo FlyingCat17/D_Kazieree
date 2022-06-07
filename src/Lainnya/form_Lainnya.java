@@ -43,8 +43,8 @@ Main.MainFrame n = new Main.MainFrame();
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        button2 = new Swing.Button();
+        button1 = new Swing.Button();
         jLabel1 = new javax.swing.JLabel();
 
         setBorder(null);
@@ -52,25 +52,29 @@ Main.MainFrame n = new Main.MainFrame();
         setMinimumSize(new java.awt.Dimension(960, 710));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Lainnya/btn_signOut.png"))); // NOI18N
-        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel3MouseClicked(evt);
+        button2.setBackground(new java.awt.Color(245, 245, 245));
+        button2.setForeground(new java.awt.Color(253, 144, 39));
+        button2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Lainnya/ic_baseline-log-out.png"))); // NOI18N
+        button2.setText("    Keluar");
+        button2.setFont(new java.awt.Font("Quicksand SemiBold", 0, 28)); // NOI18N
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 400, 110));
+        getContentPane().add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 120, 390, 110));
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Lainnya/btn_dataPengguna.png"))); // NOI18N
-        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
+        button1.setBackground(new java.awt.Color(245, 245, 245));
+        button1.setForeground(new java.awt.Color(253, 144, 39));
+        button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Lainnya/bi_people-fill.png"))); // NOI18N
+        button1.setText("    Data Pengguna");
+        button1.setFont(new java.awt.Font("Quicksand SemiBold", 0, 28)); // NOI18N
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 400, 110));
+        getContentPane().add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 390, 110));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Lainnya/Group 95.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 680));
@@ -78,19 +82,14 @@ Main.MainFrame n = new Main.MainFrame();
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:
-        if (evt.getButton()==MouseEvent.BUTTON1) {
-            this.getDesktopPane().add(new dataPengguna.formDataPenggunaa()).setVisible(true);
-//            dataPengguna.formDataPengguna dp = new dataPengguna.formDataPengguna(n, true);
-//            dp.setVisible(true);
-        }
-    }//GEN-LAST:event_jLabel2MouseClicked
+        this.getDesktopPane().add(new dataPengguna.formDataPenggunaa()).setVisible(true);
+    }//GEN-LAST:event_button1ActionPerformed
 
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         // TODO add your handling code here:
-        if (evt.getButton()==MouseEvent.BUTTON1) {
-            int jawab = JOptionPane.showConfirmDialog(this, "Yakin Ingin Keluar?", "Keluar Akun", JOptionPane.INFORMATION_MESSAGE);
+        int jawab = JOptionPane.showConfirmDialog(this, "Yakin Ingin Keluar?", "Keluar Akun", JOptionPane.INFORMATION_MESSAGE);
             switch(jawab){
                 case JOptionPane.YES_OPTION:
                     LoginPage lp = new LoginPage();
@@ -106,13 +105,12 @@ Main.MainFrame n = new Main.MainFrame();
                     break;
             
             }
-        }
-    }//GEN-LAST:event_jLabel3MouseClicked
+    }//GEN-LAST:event_button2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private Swing.Button button1;
+    private Swing.Button button2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }

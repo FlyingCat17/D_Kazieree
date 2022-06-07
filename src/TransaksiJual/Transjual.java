@@ -236,6 +236,8 @@ private DefaultTableModel mod, mod2, mod3;
             System.err.println("ERROR " + e.getMessage());
         }
     }
+    
+    
     public void a(){
         
         
@@ -455,9 +457,9 @@ private DefaultTableModel mod, mod2, mod3;
                 try {
                     String sql = "INSERT INTO `tb_jual`(`id_transaksi`, "
                             + "`tgl_transaksi`,`id_pengguna`, `total_harga`, `total_diskon`, "
-                            + "`nominal_bayar`) VALUES ('" + txt_idTransaksi.getText() + "',"
+                            + "`nominal_bayar`, `cashbox`) VALUES ('" + txt_idTransaksi.getText() + "',"
                             + "'" + txt_TanggalTransaksi.getText() + "', '"+txt_Kasir.getText()+"', '" + txt_totalAfterDiskon.getText() + "',"
-                            + "'" + txt_diskonRP.getText() + "', '" + txt_nominal.getText() + "')";
+                            + "'" + txt_diskonRP.getText() + "', '" + txt_nominal.getText() + "', 'Default')";
                     java.sql.Connection con = (Connection) konekdb.GetConnection();
                     java.sql.PreparedStatement pst = con.prepareStatement(sql);
                     pst.execute();
@@ -472,8 +474,8 @@ private DefaultTableModel mod, mod2, mod3;
                                     + "'" + txt_idTransaksi.getText() + "', '" + id_prodk + "', '" + nama_p + "', '" + har + "', '" + jumlah + "', '" + harga + "')";
                             java.sql.PreparedStatement ps1 = con.prepareStatement(sql1);
                             ps1.execute();
-                            JOptionPane.showMessageDialog(this, "Berhasil Tersimpan\nTotal Kembalian :"+txt_kembalian.getText());
                         }
+                        JOptionPane.showMessageDialog(this, "Berhasil Tersimpan\nTotal Kembalian :"+txt_kembalian.getText());
                         try {
                             String namaFile = "src" + File.separator + "TransaksiJual" + File.separator + "StrukJualBesar.jasper";
                             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
@@ -488,6 +490,7 @@ private DefaultTableModel mod, mod2, mod3;
                             System.err.println(e.getMessage());
 
                         }
+                        
                         for (int i = jumlah_baris - 1; i >= 0; i--) {
                             model.removeRow(i);
                         }
@@ -513,6 +516,7 @@ private DefaultTableModel mod, mod2, mod3;
                     }
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(rootPane, e);
+                    System.err.println(e.getMessage());
                 }
             }
         }
@@ -726,7 +730,7 @@ private DefaultTableModel mod, mod2, mod3;
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiJual/CariJasa.png"))); // NOI18N
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 690));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 690));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -821,7 +825,7 @@ private DefaultTableModel mod, mod2, mod3;
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiJual/CariBarang.png"))); // NOI18N
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 690));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 690));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         txt_diskonPersen.setDisabledTextColor(new java.awt.Color(0, 204, 153));
         txt_diskonPersen.setFont(new java.awt.Font("Quicksand Medium", 0, 13)); // NOI18N
@@ -838,7 +842,7 @@ private DefaultTableModel mod, mod2, mod3;
         });
         getContentPane().add(txt_diskonPersen, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 450, 100, 40));
 
-        txt_stok.setDisabledTextColor(new java.awt.Color(0, 204, 153));
+        txt_stok.setDisabledTextColor(new java.awt.Color(51, 51, 51));
         txt_stok.setEnabled(false);
         txt_stok.setFont(new java.awt.Font("Quicksand Medium", 0, 13)); // NOI18N
         txt_stok.setLabelText("Sisa Stok");
@@ -904,7 +908,7 @@ private DefaultTableModel mod, mod2, mod3;
         });
         getContentPane().add(txt_nominal, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 550, 240, 40));
 
-        txt_totalAfterDiskon.setDisabledTextColor(new java.awt.Color(0, 204, 153));
+        txt_totalAfterDiskon.setDisabledTextColor(new java.awt.Color(51, 51, 51));
         txt_totalAfterDiskon.setEnabled(false);
         txt_totalAfterDiskon.setFont(new java.awt.Font("Quicksand Medium", 0, 13)); // NOI18N
         txt_totalAfterDiskon.setLabelText("Total Setelah Diskon");
@@ -1032,7 +1036,7 @@ private DefaultTableModel mod, mod2, mod3;
         });
         getContentPane().add(txt_Jumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 120, 50));
 
-        txt_hargaSatuan.setDisabledTextColor(new java.awt.Color(0, 204, 153));
+        txt_hargaSatuan.setDisabledTextColor(new java.awt.Color(51, 51, 51));
         txt_hargaSatuan.setEnabled(false);
         txt_hargaSatuan.setFont(new java.awt.Font("Quicksand Medium", 0, 13)); // NOI18N
         txt_hargaSatuan.setLabelText("Harga Satuan");
@@ -1040,7 +1044,7 @@ private DefaultTableModel mod, mod2, mod3;
         txt_hargaSatuan.setOpaque(false);
         getContentPane().add(txt_hargaSatuan, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 150, 50));
 
-        txt_namaProduk.setDisabledTextColor(new java.awt.Color(0, 204, 153));
+        txt_namaProduk.setDisabledTextColor(new java.awt.Color(51, 51, 51));
         txt_namaProduk.setEnabled(false);
         txt_namaProduk.setFont(new java.awt.Font("Quicksand Medium", 0, 13)); // NOI18N
         txt_namaProduk.setLabelText("Nama Produk");
@@ -1062,6 +1066,7 @@ private DefaultTableModel mod, mod2, mod3;
         });
         getContentPane().add(txt_KodeProduk, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 153, 280, -1));
 
+        txt_Kasir.setBackground(new java.awt.Color(238, 238, 238));
         txt_Kasir.setEnabled(false);
         txt_Kasir.setFont(new java.awt.Font("Quicksand Medium", 0, 13)); // NOI18N
         txt_Kasir.setLabelText("Kasir");
@@ -1069,6 +1074,7 @@ private DefaultTableModel mod, mod2, mod3;
         txt_Kasir.setOpaque(false);
         getContentPane().add(txt_Kasir, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 100, 280, 40));
 
+        txt_TanggalTransaksi.setBackground(new java.awt.Color(238, 238, 238));
         txt_TanggalTransaksi.setEnabled(false);
         txt_TanggalTransaksi.setFont(new java.awt.Font("Quicksand Medium", 0, 13)); // NOI18N
         txt_TanggalTransaksi.setLabelText("Tanggal Transaksi");
@@ -1076,6 +1082,7 @@ private DefaultTableModel mod, mod2, mod3;
         txt_TanggalTransaksi.setOpaque(false);
         getContentPane().add(txt_TanggalTransaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 100, 260, 40));
 
+        txt_idTransaksi.setBackground(new java.awt.Color(238, 238, 238));
         txt_idTransaksi.setEnabled(false);
         txt_idTransaksi.setFont(new java.awt.Font("Quicksand Medium", 0, 13)); // NOI18N
         txt_idTransaksi.setLabelText("Kode Transaksi");

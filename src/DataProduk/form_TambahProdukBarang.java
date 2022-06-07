@@ -161,13 +161,13 @@ Connection con;
                 pst1.execute();
                 JOptionPane.showMessageDialog(this, "Berhasil Tersimpan!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
                 form_DataProduk.loadTableProduk();
-                
-                this.dispose();
                 txt_kodeProduk.setText("");
                 txt_namaProduk.setText("");
                 txt_satuanProduk.setText("");
                 txt_hargaBeli.setText("");
                 txt_hargaJual.setText("");
+                this.dispose();
+                form_DataProduk.loadTableProduk();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
             }
@@ -176,6 +176,7 @@ Connection con;
      } else {
             JOptionPane.showMessageDialog(null, "Harga jual harus lebih besar dari harga beli");
     }
+        form_DataProduk.loadTableProduk();
     }//GEN-LAST:event_btn_simpanMouseClicked
 
     private void btn_batalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_batalMouseClicked

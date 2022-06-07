@@ -215,7 +215,7 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         dpanee.removeAll();
         dpanee.repaint();
-        Laporan.form_Laporan home = new Laporan.form_Laporan();
+        Laporan.laporan home = new Laporan.laporan();
         dpanee.add(home);
         home.setVisible(true);
         ImageIcon a = new ImageIcon("src/Sidebar/sidebar_laporan.png");

@@ -3,6 +3,7 @@ package Laporan;
 
 import DataPemasok.*;
 import Beranda.*;
+import javax.swing.ImageIcon;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /*
@@ -36,21 +37,108 @@ public class form_Laporan extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
+        button2 = new Swing.Button();
+        button1 = new Swing.Button();
+        panel_Harian = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        panel_Bulanan = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        bg_harianBulanan = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setBorder(null);
         setMaximumSize(new java.awt.Dimension(960, 710));
         setMinimumSize(new java.awt.Dimension(960, 710));
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
+
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        button2.setBackground(new java.awt.Color(253, 144, 39));
+        button2.setForeground(new java.awt.Color(255, 255, 255));
+        button2.setText("BULANAN");
+        button2.setFont(new java.awt.Font("Quicksand Medium", 0, 12)); // NOI18N
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(478, 120, 100, 30));
+
+        button1.setBackground(new java.awt.Color(253, 144, 39));
+        button1.setForeground(new java.awt.Color(255, 255, 255));
+        button1.setText("HARIAN");
+        button1.setFont(new java.awt.Font("Quicksand Medium", 0, 12)); // NOI18N
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 120, 100, 30));
+
+        panel_Harian.setBackground(new java.awt.Color(255, 255, 255));
+        panel_Harian.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setText("HARIAN");
+        panel_Harian.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 110, 190, 100));
+
+        jPanel1.add(panel_Harian, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 862, 560));
+
+        panel_Bulanan.setBackground(new java.awt.Color(255, 255, 255));
+        panel_Bulanan.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setText("BULANAN");
+        panel_Bulanan.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 150, 90));
+
+        jPanel1.add(panel_Bulanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 862, 560));
+
+        bg_harianBulanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Laporan/bg_laporanHarian.png"))); // NOI18N
+        jPanel1.add(bg_harianBulanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 890, 420));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Laporan/Group 97.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 680));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 680));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 894, 60, 30));
+
+        jScrollPane1.setViewportView(jPanel1);
+
+        getContentPane().add(jScrollPane1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        // TODO add your handling code here:
+        ImageIcon ic = new ImageIcon("src/Laporan/bg_laporanBulanan.png");
+        bg_harianBulanan.setIcon(ic);
+        panel_Bulanan.setVisible(true);
+        panel_Harian.setVisible(false);
+    }//GEN-LAST:event_button2ActionPerformed
+
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        // TODO add your handling code here:
+        ImageIcon iic = new ImageIcon("src/Laporan/bg_laporanHarian.png");
+        bg_harianBulanan.setIcon(iic);
+        panel_Harian.setVisible(true);
+        panel_Bulanan.setVisible(false);
+    }//GEN-LAST:event_button1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel bg_harianBulanan;
+    private Swing.Button button1;
+    private Swing.Button button2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel panel_Bulanan;
+    private javax.swing.JPanel panel_Harian;
     // End of variables declaration//GEN-END:variables
 }

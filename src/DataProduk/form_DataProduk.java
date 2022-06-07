@@ -223,6 +223,7 @@ String hargajual = null;
 //        brg.setVisible(true);
 //        txt_searchProduk.setEnabled(false);
         form_TambahProdukBarang mn = new form_TambahProdukBarang(no, true);
+        loadTableProduk();
         mn.setVisible(true);
         loadTableProduk();
 
