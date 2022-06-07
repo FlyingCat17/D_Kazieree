@@ -41,6 +41,7 @@ public class LoginPageNew extends javax.swing.JFrame {
                 usr.setNama(rs.getString("username"));
                 usr.setHak_akses("hak_akses");
                 usr.setId_pengguna("id_pengguna");
+                usr.setId_pengguna(rs.getString("id_pengguna"));
                 if (rs.getString("hak_akses").equals("ADMIN")) {
                     JOptionPane.showMessageDialog(this, "Berhasil Masuk!!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
                     Main.MainFrame mn = new Main.MainFrame();
@@ -100,6 +101,7 @@ public class LoginPageNew extends javax.swing.JFrame {
         });
         jPanel2.add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 440, 100, 40));
 
+        KataSandiPengguna.setBackground(new java.awt.Color(238, 238, 238));
         KataSandiPengguna.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         KataSandiPengguna.setLabelText("Kata Sandi");
         KataSandiPengguna.setLineColor(new java.awt.Color(253, 144, 39));
@@ -112,6 +114,7 @@ public class LoginPageNew extends javax.swing.JFrame {
         });
         jPanel2.add(KataSandiPengguna, new org.netbeans.lib.awtextra.AbsoluteConstraints(688, 340, 320, -1));
 
+        UsernamePengguna.setBackground(new java.awt.Color(238, 238, 238));
         UsernamePengguna.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         UsernamePengguna.setLabelText("Nama Pengguna");
         UsernamePengguna.setLineColor(new java.awt.Color(253, 144, 39));
