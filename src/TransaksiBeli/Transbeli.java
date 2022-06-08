@@ -600,18 +600,6 @@ public class Transbeli extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        FieldCariProdukBarang = new Swing.TextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable(){
-            public boolean isCellEditable(int rowIndex, int colIndex)
-            {
-                return false; //Disallow the editing of any cell
-            }
-        };
-        btn_pilihBarang = new Swing.Button();
-        button7 = new Swing.Button();
-        jLabel4 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         FieldCariPemasok = new Swing.TextField();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -624,6 +612,18 @@ public class Transbeli extends javax.swing.JInternalFrame {
         btn_pilihPemasok = new Swing.Button();
         button8 = new Swing.Button();
         jLabel5 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        FieldCariProdukBarang = new Swing.TextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex)
+            {
+                return false; //Disallow the editing of any cell
+            }
+        };
+        btn_pilihBarang = new Swing.Button();
+        button7 = new Swing.Button();
+        jLabel4 = new javax.swing.JLabel();
         button6 = new Swing.Button();
         button5 = new Swing.Button();
         button4 = new Swing.Button();
@@ -660,95 +660,6 @@ public class Transbeli extends javax.swing.JInternalFrame {
         setMinimumSize(new java.awt.Dimension(960, 707));
         setPreferredSize(new java.awt.Dimension(960, 707));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        FieldCariProdukBarang.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
-        FieldCariProdukBarang.setLabelText("Cari Barang");
-        FieldCariProdukBarang.setLineColor(new java.awt.Color(255, 144, 39));
-        FieldCariProdukBarang.setOpaque(false);
-        FieldCariProdukBarang.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FieldCariProdukBarangActionPerformed(evt);
-            }
-        });
-        FieldCariProdukBarang.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                FieldCariProdukBarangKeyReleased(evt);
-            }
-        });
-        jPanel1.add(FieldCariProdukBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 400, 50));
-
-        jScrollPane2.setBorder(null);
-
-        jTable2.setFont(new java.awt.Font("Quicksand Medium", 0, 12)); // NOI18N
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Kode Produk", "Nama Produk", "Satuan", "Stok", "Harga Jual"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTable2.setGridColor(new java.awt.Color(102, 102, 102));
-        jTable2.setRowHeight(30);
-        jTable2.setSelectionBackground(new java.awt.Color(253, 144, 39));
-        jTable2.setShowVerticalLines(false);
-        jTable2.getTableHeader().setResizingAllowed(false);
-        jTable2.getTableHeader().setReorderingAllowed(false);
-        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable2MouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(0).setResizable(false);
-            jTable2.getColumnModel().getColumn(1).setResizable(false);
-            jTable2.getColumnModel().getColumn(2).setResizable(false);
-            jTable2.getColumnModel().getColumn(3).setResizable(false);
-            jTable2.getColumnModel().getColumn(4).setResizable(false);
-        }
-
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 860, 430));
-
-        btn_pilihBarang.setBackground(new java.awt.Color(51, 249, 51));
-        btn_pilihBarang.setForeground(new java.awt.Color(255, 255, 255));
-        btn_pilihBarang.setText("Pilih");
-        btn_pilihBarang.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
-        btn_pilihBarang.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_pilihBarangActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btn_pilihBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 630, 80, 30));
-
-        button7.setBackground(new java.awt.Color(255, 51, 51));
-        button7.setForeground(new java.awt.Color(255, 255, 255));
-        button7.setText("Batal");
-        button7.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
-        button7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button7ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(button7, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 630, 80, 30));
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiJual/CariBarang.png"))); // NOI18N
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 690));
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -838,6 +749,95 @@ public class Transbeli extends javax.swing.JInternalFrame {
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 690));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        FieldCariProdukBarang.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
+        FieldCariProdukBarang.setLabelText("Cari Barang");
+        FieldCariProdukBarang.setLineColor(new java.awt.Color(255, 144, 39));
+        FieldCariProdukBarang.setOpaque(false);
+        FieldCariProdukBarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FieldCariProdukBarangActionPerformed(evt);
+            }
+        });
+        FieldCariProdukBarang.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                FieldCariProdukBarangKeyReleased(evt);
+            }
+        });
+        jPanel1.add(FieldCariProdukBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 400, 50));
+
+        jScrollPane2.setBorder(null);
+
+        jTable2.setFont(new java.awt.Font("Quicksand Medium", 0, 12)); // NOI18N
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Kode Produk", "Nama Produk", "Satuan", "Stok", "Harga Jual"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable2.setGridColor(new java.awt.Color(102, 102, 102));
+        jTable2.setRowHeight(30);
+        jTable2.setSelectionBackground(new java.awt.Color(253, 144, 39));
+        jTable2.setShowVerticalLines(false);
+        jTable2.getTableHeader().setResizingAllowed(false);
+        jTable2.getTableHeader().setReorderingAllowed(false);
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTable2);
+        if (jTable2.getColumnModel().getColumnCount() > 0) {
+            jTable2.getColumnModel().getColumn(0).setResizable(false);
+            jTable2.getColumnModel().getColumn(1).setResizable(false);
+            jTable2.getColumnModel().getColumn(2).setResizable(false);
+            jTable2.getColumnModel().getColumn(3).setResizable(false);
+            jTable2.getColumnModel().getColumn(4).setResizable(false);
+        }
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 860, 430));
+
+        btn_pilihBarang.setBackground(new java.awt.Color(51, 249, 51));
+        btn_pilihBarang.setForeground(new java.awt.Color(255, 255, 255));
+        btn_pilihBarang.setText("Pilih");
+        btn_pilihBarang.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
+        btn_pilihBarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_pilihBarangActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_pilihBarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 630, 80, 30));
+
+        button7.setBackground(new java.awt.Color(255, 51, 51));
+        button7.setForeground(new java.awt.Color(255, 255, 255));
+        button7.setText("Batal");
+        button7.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
+        button7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button7ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(button7, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 630, 80, 30));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiJual/CariBarang.png"))); // NOI18N
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 690));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         button6.setBackground(new java.awt.Color(0, 51, 51));
         button6.setForeground(new java.awt.Color(255, 255, 255));
@@ -1093,7 +1093,7 @@ public class Transbeli extends javax.swing.JInternalFrame {
         txt_idTransaksi.setOpaque(false);
         getContentPane().add(txt_idTransaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 280, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiJual/Group 87 (2).png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiBeli/Group 87 (1).png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 680));
 
         pack();
