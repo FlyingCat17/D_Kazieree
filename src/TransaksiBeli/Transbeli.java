@@ -454,7 +454,7 @@ public class Transbeli extends javax.swing.JInternalFrame {
                         }
                         JOptionPane.showMessageDialog(this, "Berhasil Tersimpan");
                         try {
-                            String namaFile = "src" + File.separator + "TransaksiBeli" + File.separator + "StrukBeliKontol.jasper";
+                            String namaFile = "src" + File.separator + "TransaksiBeli" + File.separator + "StrukBeliBesar.jasper";
                             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
                             Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost:3306/d'kazieree", "root", "");
                             HashMap hash = new HashMap();

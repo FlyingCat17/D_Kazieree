@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="212" pageHeight="625" columnWidth="192" leftMargin="10" rightMargin="10" topMargin="0" bottomMargin="0" uuid="7aa04c60-aee3-410e-89cd-88e6b84b5811">
+	<property name="ireport.zoom" value="3.4522712143931042"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="574"/>
+	<parameter name="kodeTransaksi" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT tb_beli.id_transaksi AS ID_TRANSAKSII, tb_detailbeli.nama_produk AS NAMA_PRODUK_DIBELI, tb_beli.id_pengguna AS ID_PENGGUNAA, tb_beli.id_pemasok AS ID_PEMASOKK, tb_detailbeli.jumlah_produk AS TOTAL_PRODUK_DIBELI, tb_detailbeli.harga_beli AS HARGABELI, tb_detailbeli.total_harga AS Total_JIKA_Dikali_Jumlah, tb_beli.tgl_transaksi AS TANGGAL_TRANSAKSI, SUM(tb_beli.total_harga) AS TOTAL_KESELURUHAN
+FROM tb_detailbeli
+JOIN tb_beli
+ON tb_detailbeli.id_transaksi = tb_beli.id_transaksi
+WHERE tb_detailbeli.id_transaksi = $P{kodeTransaksi}
+GROUP BY tb_detailbeli.id_produk]]>
+	</queryString>
+	<field name="ID_TRANSAKSII" class="java.lang.String"/>
+	<field name="NAMA_PRODUK_DIBELI" class="java.lang.String"/>
+	<field name="ID_PENGGUNAA" class="java.lang.String"/>
+	<field name="ID_PEMASOKK" class="java.lang.String"/>
+	<field name="TOTAL_PRODUK_DIBELI" class="java.lang.Integer"/>
+	<field name="HARGABELI" class="java.lang.Integer"/>
+	<field name="Total_JIKA_Dikali_Jumlah" class="java.lang.Integer"/>
+	<field name="TANGGAL_TRANSAKSI" class="java.sql.Date"/>
+	<field name="TOTAL_KESELURUHAN" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="75" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="0" y="12" width="192" height="23"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Quicksand" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[E-SUKA SUKA STICKER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="0" y="35" width="192" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Quicksand" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Pertokoan Graha Bumi Pertiwi 
+Jl. Raya Situbondo Prajekan, Bondowoso
+Telp. 085100053319]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="5" y="0" width="63" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Quicksand" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Tanggal Transaksi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="5" y="14" width="63" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Quicksand" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Kode Transaksi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="5" y="28" width="63" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Quicksand" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Kasir]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="68" y="0" width="10" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Quicksand" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="68" y="14" width="10" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Quicksand" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="68" y="28" width="10" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Quicksand" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="dcc9378c-cceb-4603-b4a5-fa33b58f11d9" x="78" y="0" width="114" height="14"/>
+				<textElement>
+					<font fontName="Quicksand" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TANGGAL_TRANSAKSI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e4a3cc03-e844-48b4-82da-cc0dcbfe7f75" x="78" y="14" width="114" height="12"/>
+				<textElement>
+					<font fontName="Quicksand" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ID_TRANSAKSII}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a44f75bc-1426-4fc0-924e-282e7ff71bf6" x="78" y="28" width="114" height="12"/>
+				<textElement>
+					<font fontName="Quicksand" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ID_PENGGUNAA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<line>
+				<reportElement uuid="abec96da-ffba-4153-a491-05403f01251e" x="0" y="4" width="192" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.75" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement uuid="abec96da-ffba-4153-a491-05403f01251e" x="0" y="27" width="192" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.75" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="5" y="6" width="80" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Quicksand SemiBold" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Produk]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="85" y="6" width="35" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Quicksand SemiBold" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Jumlah]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="120" y="6" width="65" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Quicksand SemiBold" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Harga]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="9ae744f1-787f-4dbd-a690-a0a642f7b8bf" x="5" y="0" width="80" height="20"/>
+				<textElement>
+					<font fontName="Quicksand" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NAMA_PRODUK_DIBELI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="47525218-3373-42e6-b47c-6e11140f62d7" x="85" y="0" width="35" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Quicksand" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL_PRODUK_DIBELI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="69ebb3c5-1990-4260-9567-28ab0d46de09" x="120" y="0" width="65" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Quicksand" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Total_JIKA_Dikali_Jumlah}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="136" splitType="Stretch">
+			<line>
+				<reportElement uuid="abec96da-ffba-4153-a491-05403f01251e" x="0" y="2" width="192" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.75" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="75" y="7" width="47" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Quicksand" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Total Harga]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="abec96da-ffba-4153-a491-05403f01251e" x="77" y="38" width="108" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="185" y="32" width="7" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Quicksand" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[=]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="0" y="111" width="192" height="25"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Quicksand" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[TERIMA KASIH TELAH BERBELANJA DI TOKO KAMI KONTOL!]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="49" y="44" width="73" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Quicksand" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Total Keseluruhan]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="63699666-eefd-49f8-977b-44fbe17024f7" x="122" y="7" width="63" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Quicksand" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL_KESELURUHAN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="63699666-eefd-49f8-977b-44fbe17024f7" x="122" y="44" width="63" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Quicksand" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL_KESELURUHAN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="64" y="26" width="58" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Quicksand" size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ID Pemasok]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7f4858f8-8c1e-4780-8edd-1dc22cd52115" x="122" y="26" width="63" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Quicksand" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ID_PEMASOKK}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
