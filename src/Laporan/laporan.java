@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Laporan;
 import java.awt.Color;
 import java.awt.Font;
@@ -26,6 +21,7 @@ String a = hari.format(Calendar.getInstance().getTime());
 String aa = harii.format(Calendar.getInstance().getTime());
 DateFormat Bulanan = new SimpleDateFormat("yyyyMM");
 String AmbilBulanSekarang = Bulanan.format(Calendar.getInstance().getTime());
+DateFormat Bulann = new SimpleDateFormat("yyyyMM");
 
     /**
      * Creates new form 
@@ -43,32 +39,7 @@ String AmbilBulanSekarang = Bulanan.format(Calendar.getInstance().getTime());
         loadDataHariIni();
         
     }
-//    private void loadTable(){
-//        DefaultTableModel table2 = new DefaultTableModel();
-//        table2.addColumn("Tanggal Transaksi");
-//        table2.addColumn("Jumlah Laba");
-//        try {
-//            String sql = "SELECT tb_transjual.tgl_transaksi,tb_detail_transjual.id_barang, SUM((tb_barang.harga_jual - tb_barang.harga_dasar) * tb_detail_transjual.jumlah) AS laba\n"
-//                    + "FROM tb_detail_transjual\n"
-//                    + "JOIN tb_transjual\n"
-//                    + "ON tb_transjual.id_transjual = tb_detail_transjual.id_transjual\n"
-//                    + "JOIN tb_barang\n"
-//                    + "ON tb_barang.id_barang = tb_detail_transjual.id_barang\n"
-//                    + "GROUP BY tb_transjual.tgl_transaksi;";
-//            java.sql.Connection conn = (Connection)konekdb.GetConnection();
-//            java.sql.Statement stm = conn.createStatement();
-//            java.sql.ResultSet rs = stm.executeQuery(sql);
-//            while (rs.next()) {                
-//                table2.addRow(new Object[]{
-//                    rs.getString("tgl_transaksi"),
-//                    rs.getString("laba")
-//                });
-//                
-//            jTable1.setModel(table2);
-//            }
-//        } catch (Exception e) {
-//        }
-//    }
+//    
     public void loadDataHariIni(){
         DefaultTableModel transjual = new DefaultTableModel();
         transjual.addColumn("ID Transaksi");
@@ -214,6 +185,14 @@ String AmbilBulanSekarang = Bulanan.format(Calendar.getInstance().getTime());
         }
     }
     public void loadDataBulainIni(){
+        DefaultTableModel TBPeringkatProduk = new DefaultTableModel();
+        TBPeringkatProduk.addColumn("ID Produk");
+        TBPeringkatProduk.addColumn("Nama Produk");
+        TBPeringkatProduk.addColumn("Total Terjual");
+        DefaultTableModel transbeli = new DefaultTableModel();
+        transbeli.addColumn("ID Transaksi");
+        transbeli.addColumn("ID Pemasok");
+        transbeli.addColumn("Total Harga");
         txt_BulanHariIni1.setText(AmbilBulanSekarang);
         try {
             String PendapatanBulanIni = "SELECT EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) AS year_and_month, SUM(tb_jual.total_harga) AS Pendapatan\n"
@@ -228,16 +207,53 @@ String AmbilBulanSekarang = Bulanan.format(Calendar.getInstance().getTime());
                     + "ON tb_detailjual.id_produk=tb_produk.id_produk\n"
                     + "WHERE EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) = '"+AmbilBulanSekarang+"'\n"
                     + "GROUP BY EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi)";
-            java.sql.Connection con = (Connection)konekdb.GetConnection();
+            String PemasukanBulanIni = "SELECT EXTRACT(YEAR_MONTH FROM tb_pemasukan.tgl_pemasukan) AS year_and_month, SUM(tb_pemasukan.jumlah_pemasukan) AS PEMASUKAN_BULAN_INI\n"
+                    + "FROM tb_pemasukan\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_pemasukan.tgl_pemasukan) = '"+AmbilBulanSekarang+"'\n"
+                    + "GROUP BY EXTRACT(YEAR_MONTH FROM tb_pemasukan.tgl_pemasukan);";
+            String PengeluaranBulanIni = "SELECT EXTRACT(YEAR_MONTH FROM tb_pengeluaran.tgl_pengeluaran) AS year_and_month, SUM(tb_pengeluaran.jumlah_pengeluaran) AS PENGELUARAN_BULAN_INI\n"
+                    + "FROM tb_pengeluaran\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_pengeluaran.tgl_pengeluaran) = '"+AmbilBulanSekarang+"'\n"
+                    + "GROUP BY EXTRACT(YEAR_MONTH FROM tb_pengeluaran.tgl_pengeluaran);";
+            String PeringkatProduk = "SELECT EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) AS TANGGAL, tb_detailjual.id_produk, tb_produk.nama_produk, COUNT(tb_detailjual.jumlah_produk) AS Total\n"
+                    + "FROM tb_detailjual\n"
+                    + "JOIN tb_jual\n"
+                    + "ON tb_jual.id_transaksi = tb_detailjual.id_transaksi\n"
+                    + "JOIN tb_produk\n"
+                    + "ON tb_detailjual.id_produk = tb_produk.id_produk\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) = '"+AmbilBulanSekarang+"'\n"
+                    + "GROUP BY tb_detailjual.id_produk\n"
+                    + "ORDER BY COUNT(tb_detailjual.jumlah_produk) DESC";
+            java.sql.Connection con = (Connection) konekdb.GetConnection();
             java.sql.Statement st = con.createStatement();
             java.sql.Statement st1 = con.createStatement();
+            java.sql.Statement st2 = con.createStatement();
+            java.sql.Statement st3 = con.createStatement();
+            java.sql.Statement st4 = con.createStatement();
             java.sql.ResultSet rs = st.executeQuery(PendapatanBulanIni);
             java.sql.ResultSet rs1 = st1.executeQuery(LabaBulanIni);
+            java.sql.ResultSet rs2 = st2.executeQuery(PemasukanBulanIni);
+            java.sql.ResultSet rs3 = st3.executeQuery(PengeluaranBulanIni);
+            java.sql.ResultSet rs4 = st4.executeQuery(PeringkatProduk);
             if (rs.next()) {
                 txt_PendapatanBulanan.setText("Rp"+rs.getString(2));
             }
             if (rs1.next()) {
                 txt_labaHarian1.setText("Rp"+rs1.getString(2));
+            }
+            if (rs2.next()) {
+                txt_pemasukanLainLainperTanggal1.setText("Rp"+rs2.getString(2));
+            }
+            if(rs3.next()){
+                txt_pengeluaranmLainLainperTanggal1.setText("Rp"+rs3.getString(2));
+            }
+            while (rs4.next()) {
+                TBPeringkatProduk.addRow(new Object[]{
+                    rs4.getString(2),
+                    rs4.getString(3),
+                    rs4.getString(4)
+                });
+                tabel_PeringkatProduk.setModel(TBPeringkatProduk);
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -263,15 +279,42 @@ String AmbilBulanSekarang = Bulanan.format(Calendar.getInstance().getTime());
         jLabel4 = new javax.swing.JLabel();
         txt_BulanHariIni1 = new javax.swing.JLabel();
         jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
-        panel_pendapatanHarian12 = new Swing.PanelRound();
+        panel_PeringkatPemasokTerlaris = new Swing.PanelRound();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        tabel_PeringkatProduk1 = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex)
+            {
+                return false; //Disallow the editing of any cell
+            }
+        };
+        jLabel29 = new javax.swing.JLabel();
+        tabel_PeringkatProdukTerlaris = new Swing.PanelRound();
         jScrollPane6 = new javax.swing.JScrollPane();
-        tabel_TransaksiPembelianHarian2 = new javax.swing.JTable(){
+        tabel_PeringkatProduk = new javax.swing.JTable(){
             public boolean isCellEditable(int rowIndex, int colIndex)
             {
                 return false; //Disallow the editing of any cell
             }
         };
         jLabel27 = new javax.swing.JLabel();
+        panel_catatanPembelianBulanan = new Swing.PanelRound();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        tabel_TransaksiPenjualanBulanan1 = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex)
+            {
+                return false; //Disallow the editing of any cell
+            }
+        };
+        jLabel30 = new javax.swing.JLabel();
+        panel_catatanPenjualanaBulanan = new Swing.PanelRound();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        tabel_TransaksiPenjualanBulanan = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex)
+            {
+                return false; //Disallow the editing of any cell
+            }
+        };
+        jLabel28 = new javax.swing.JLabel();
         panel_pendapatanHarian6 = new Swing.PanelRound();
         jLabel7 = new javax.swing.JLabel();
         txt_PendapatanBulanan = new javax.swing.JLabel();
@@ -288,24 +331,6 @@ String AmbilBulanSekarang = Bulanan.format(Calendar.getInstance().getTime());
         jLabel23 = new javax.swing.JLabel();
         txt_pengeluaranmLainLainperTanggal1 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
-        panel_pendapatanHarian10 = new Swing.PanelRound();
-        jLabel25 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        tabel_TransaksiPenjualanHarian1 = new javax.swing.JTable(){
-            public boolean isCellEditable(int rowIndex, int colIndex)
-            {
-                return false; //Disallow the editing of any cell
-            }
-        };
-        panel_pendapatanHarian11 = new Swing.PanelRound();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        tabel_TransaksiPembelianHarian1 = new javax.swing.JTable(){
-            public boolean isCellEditable(int rowIndex, int colIndex)
-            {
-                return false; //Disallow the editing of any cell
-            }
-        };
-        jLabel26 = new javax.swing.JLabel();
         panel_Harian = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         txt_TanggalHariIni = new javax.swing.JLabel();
@@ -404,19 +429,19 @@ String AmbilBulanSekarang = Bulanan.format(Calendar.getInstance().getTime());
         jMonthChooser1.setFont(new java.awt.Font("Quicksand Medium", 0, 12)); // NOI18N
         panel_Bulanan.add(jMonthChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 30, -1, 30));
 
-        panel_pendapatanHarian12.setBackground(new java.awt.Color(255, 255, 255));
-        panel_pendapatanHarian12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(253, 144, 39), new java.awt.Color(253, 144, 39), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
-        panel_pendapatanHarian12.setRoundBottomLeft(10);
-        panel_pendapatanHarian12.setRoundBottomRight(10);
-        panel_pendapatanHarian12.setRoundTopLeft(10);
-        panel_pendapatanHarian12.setRoundTopRight(10);
-        panel_pendapatanHarian12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panel_PeringkatPemasokTerlaris.setBackground(new java.awt.Color(255, 255, 255));
+        panel_PeringkatPemasokTerlaris.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(253, 144, 39), new java.awt.Color(253, 144, 39), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
+        panel_PeringkatPemasokTerlaris.setRoundBottomLeft(10);
+        panel_PeringkatPemasokTerlaris.setRoundBottomRight(10);
+        panel_PeringkatPemasokTerlaris.setRoundTopLeft(10);
+        panel_PeringkatPemasokTerlaris.setRoundTopRight(10);
+        panel_PeringkatPemasokTerlaris.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tabel_TransaksiPembelianHarian.getTableHeader().setFont(new Font("Quicksand Medium", Font.PLAIN, 12));
-        tabel_TransaksiPembelianHarian.getTableHeader().setOpaque(false);
-        tabel_TransaksiPembelianHarian.getTableHeader().setBackground(new Color(255,144,39));
-        tabel_TransaksiPembelianHarian.getTableHeader().setForeground(new Color(255,255,255));
-        tabel_TransaksiPembelianHarian2.setModel(new javax.swing.table.DefaultTableModel(
+        tabel_PeringkatProduk.getTableHeader().setFont(new Font("Quicksand Medium", Font.PLAIN, 12));
+        tabel_PeringkatProduk.getTableHeader().setOpaque(false);
+        tabel_PeringkatProduk.getTableHeader().setBackground(new Color(255,144,39));
+        tabel_PeringkatProduk.getTableHeader().setForeground(new Color(255,255,255));
+        tabel_PeringkatProduk1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -435,25 +460,178 @@ String AmbilBulanSekarang = Bulanan.format(Calendar.getInstance().getTime());
                 return canEdit [columnIndex];
             }
         });
-        tabel_TransaksiPembelianHarian2.setRowHeight(30);
-        tabel_TransaksiPembelianHarian2.setRowSelectionAllowed(false);
-        tabel_TransaksiPembelianHarian2.setSelectionBackground(new java.awt.Color(253, 144, 39));
-        tabel_TransaksiPembelianHarian2.setSelectionForeground(new java.awt.Color(0, 0, 0));
-        jScrollPane6.setViewportView(tabel_TransaksiPembelianHarian2);
-        if (tabel_TransaksiPembelianHarian2.getColumnModel().getColumnCount() > 0) {
-            tabel_TransaksiPembelianHarian2.getColumnModel().getColumn(0).setResizable(false);
-            tabel_TransaksiPembelianHarian2.getColumnModel().getColumn(1).setResizable(false);
-            tabel_TransaksiPembelianHarian2.getColumnModel().getColumn(2).setResizable(false);
-            tabel_TransaksiPembelianHarian2.getColumnModel().getColumn(3).setResizable(false);
+        tabel_PeringkatProduk1.setRowHeight(30);
+        tabel_PeringkatProduk1.setRowSelectionAllowed(false);
+        tabel_PeringkatProduk1.setSelectionBackground(new java.awt.Color(253, 144, 39));
+        tabel_PeringkatProduk1.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        jScrollPane8.setViewportView(tabel_PeringkatProduk1);
+        if (tabel_PeringkatProduk1.getColumnModel().getColumnCount() > 0) {
+            tabel_PeringkatProduk1.getColumnModel().getColumn(0).setResizable(false);
+            tabel_PeringkatProduk1.getColumnModel().getColumn(1).setResizable(false);
+            tabel_PeringkatProduk1.getColumnModel().getColumn(2).setResizable(false);
+            tabel_PeringkatProduk1.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        panel_pendapatanHarian12.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 660, 200));
+        panel_PeringkatPemasokTerlaris.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 660, 200));
+
+        jLabel29.setFont(new java.awt.Font("Quicksand", 1, 18)); // NOI18N
+        jLabel29.setText("Peringkat Pemasok");
+        panel_PeringkatPemasokTerlaris.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 270, 30));
+
+        panel_Bulanan.add(panel_PeringkatPemasokTerlaris, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 1450, 720, 290));
+
+        tabel_PeringkatProdukTerlaris.setBackground(new java.awt.Color(255, 255, 255));
+        tabel_PeringkatProdukTerlaris.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(253, 144, 39), new java.awt.Color(253, 144, 39), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
+        tabel_PeringkatProdukTerlaris.setRoundBottomLeft(10);
+        tabel_PeringkatProdukTerlaris.setRoundBottomRight(10);
+        tabel_PeringkatProdukTerlaris.setRoundTopLeft(10);
+        tabel_PeringkatProdukTerlaris.setRoundTopRight(10);
+        tabel_PeringkatProdukTerlaris.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tabel_PeringkatProduk.getTableHeader().setFont(new Font("Quicksand Medium", Font.PLAIN, 12));
+        tabel_PeringkatProduk.getTableHeader().setOpaque(false);
+        tabel_PeringkatProduk.getTableHeader().setBackground(new Color(255,144,39));
+        tabel_PeringkatProduk.getTableHeader().setForeground(new Color(255,255,255));
+        tabel_PeringkatProduk.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID Transaksi", "ID Pemasok", "ID Pengguna", "Total Harga"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabel_PeringkatProduk.setRowHeight(30);
+        tabel_PeringkatProduk.setRowSelectionAllowed(false);
+        tabel_PeringkatProduk.setSelectionBackground(new java.awt.Color(253, 144, 39));
+        tabel_PeringkatProduk.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        jScrollPane6.setViewportView(tabel_PeringkatProduk);
+        if (tabel_PeringkatProduk.getColumnModel().getColumnCount() > 0) {
+            tabel_PeringkatProduk.getColumnModel().getColumn(0).setResizable(false);
+            tabel_PeringkatProduk.getColumnModel().getColumn(1).setResizable(false);
+            tabel_PeringkatProduk.getColumnModel().getColumn(2).setResizable(false);
+            tabel_PeringkatProduk.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        tabel_PeringkatProdukTerlaris.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 660, 200));
 
         jLabel27.setFont(new java.awt.Font("Quicksand", 1, 18)); // NOI18N
-        jLabel27.setText("Produk Paling Banyak Dibeli");
-        panel_pendapatanHarian12.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 270, 30));
+        jLabel27.setText("Peringkat Produk Terlaris");
+        tabel_PeringkatProdukTerlaris.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 270, 30));
 
-        panel_Bulanan.add(panel_pendapatanHarian12, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 1100, 720, 290));
+        panel_Bulanan.add(tabel_PeringkatProdukTerlaris, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 1110, 720, 290));
+
+        panel_catatanPembelianBulanan.setBackground(new java.awt.Color(255, 255, 255));
+        panel_catatanPembelianBulanan.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(253, 144, 39), new java.awt.Color(253, 144, 39), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
+        panel_catatanPembelianBulanan.setRoundBottomLeft(10);
+        panel_catatanPembelianBulanan.setRoundBottomRight(10);
+        panel_catatanPembelianBulanan.setRoundTopLeft(10);
+        panel_catatanPembelianBulanan.setRoundTopRight(10);
+        panel_catatanPembelianBulanan.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tabel_TransaksiPenjualanBulanan.getTableHeader().setFont(new Font("Quicksand Medium", Font.PLAIN, 12));
+        tabel_TransaksiPenjualanBulanan.getTableHeader().setOpaque(false);
+        tabel_TransaksiPenjualanBulanan.getTableHeader().setBackground(new Color(255,144,39));
+        tabel_TransaksiPenjualanBulanan.getTableHeader().setForeground(new Color(255,255,255));
+        tabel_TransaksiPenjualanBulanan1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID Transaksi", "ID Pemasok", "ID Pengguna", "Total Harga"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabel_TransaksiPenjualanBulanan1.setRowHeight(30);
+        tabel_TransaksiPenjualanBulanan1.setRowSelectionAllowed(false);
+        tabel_TransaksiPenjualanBulanan1.setSelectionBackground(new java.awt.Color(253, 144, 39));
+        tabel_TransaksiPenjualanBulanan1.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        jScrollPane9.setViewportView(tabel_TransaksiPenjualanBulanan1);
+        if (tabel_TransaksiPenjualanBulanan1.getColumnModel().getColumnCount() > 0) {
+            tabel_TransaksiPenjualanBulanan1.getColumnModel().getColumn(0).setResizable(false);
+            tabel_TransaksiPenjualanBulanan1.getColumnModel().getColumn(1).setResizable(false);
+            tabel_TransaksiPenjualanBulanan1.getColumnModel().getColumn(2).setResizable(false);
+            tabel_TransaksiPenjualanBulanan1.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        panel_catatanPembelianBulanan.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 660, 200));
+
+        jLabel30.setFont(new java.awt.Font("Quicksand", 1, 18)); // NOI18N
+        jLabel30.setText("Catatan Pembelian Bulanan");
+        panel_catatanPembelianBulanan.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 270, 30));
+
+        panel_Bulanan.add(panel_catatanPembelianBulanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 770, 720, 290));
+
+        panel_catatanPenjualanaBulanan.setBackground(new java.awt.Color(255, 255, 255));
+        panel_catatanPenjualanaBulanan.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(253, 144, 39), new java.awt.Color(253, 144, 39), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
+        panel_catatanPenjualanaBulanan.setRoundBottomLeft(10);
+        panel_catatanPenjualanaBulanan.setRoundBottomRight(10);
+        panel_catatanPenjualanaBulanan.setRoundTopLeft(10);
+        panel_catatanPenjualanaBulanan.setRoundTopRight(10);
+        panel_catatanPenjualanaBulanan.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tabel_TransaksiPenjualanBulanan.getTableHeader().setFont(new Font("Quicksand Medium", Font.PLAIN, 12));
+        tabel_TransaksiPenjualanBulanan.getTableHeader().setOpaque(false);
+        tabel_TransaksiPenjualanBulanan.getTableHeader().setBackground(new Color(255,144,39));
+        tabel_TransaksiPenjualanBulanan.getTableHeader().setForeground(new Color(255,255,255));
+        tabel_TransaksiPenjualanBulanan.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID Transaksi", "ID Pemasok", "ID Pengguna", "Total Harga"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabel_TransaksiPenjualanBulanan.setRowHeight(30);
+        tabel_TransaksiPenjualanBulanan.setRowSelectionAllowed(false);
+        tabel_TransaksiPenjualanBulanan.setSelectionBackground(new java.awt.Color(253, 144, 39));
+        tabel_TransaksiPenjualanBulanan.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        jScrollPane7.setViewportView(tabel_TransaksiPenjualanBulanan);
+        if (tabel_TransaksiPenjualanBulanan.getColumnModel().getColumnCount() > 0) {
+            tabel_TransaksiPenjualanBulanan.getColumnModel().getColumn(0).setResizable(false);
+            tabel_TransaksiPenjualanBulanan.getColumnModel().getColumn(1).setResizable(false);
+            tabel_TransaksiPenjualanBulanan.getColumnModel().getColumn(2).setResizable(false);
+            tabel_TransaksiPenjualanBulanan.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        panel_catatanPenjualanaBulanan.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 660, 200));
+
+        jLabel28.setFont(new java.awt.Font("Quicksand", 1, 18)); // NOI18N
+        jLabel28.setText("Catatan Penjualan Bulanan");
+        panel_catatanPenjualanaBulanan.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 270, 30));
+
+        panel_Bulanan.add(panel_catatanPenjualanaBulanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, 720, 290));
 
         panel_pendapatanHarian6.setBackground(new java.awt.Color(255, 255, 255));
         panel_pendapatanHarian6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 140, 29), new java.awt.Color(255, 140, 29), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
@@ -543,106 +721,7 @@ String AmbilBulanSekarang = Bulanan.format(Calendar.getInstance().getTime());
 
         panel_Bulanan.add(panel_pendapatanHarian9, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 270, 340, 110));
 
-        panel_pendapatanHarian10.setBackground(new java.awt.Color(255, 255, 255));
-        panel_pendapatanHarian10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(253, 144, 39), new java.awt.Color(253, 144, 39), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
-        panel_pendapatanHarian10.setRoundBottomLeft(10);
-        panel_pendapatanHarian10.setRoundBottomRight(10);
-        panel_pendapatanHarian10.setRoundTopLeft(10);
-        panel_pendapatanHarian10.setRoundTopRight(10);
-        panel_pendapatanHarian10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel25.setFont(new java.awt.Font("Quicksand", 1, 18)); // NOI18N
-        jLabel25.setText("Catatan Transaksi Penjualan");
-        panel_pendapatanHarian10.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 270, 30));
-
-        tabel_TransaksiPenjualanHarian.getTableHeader().setFont(new Font("Quicksand Medium", Font.PLAIN, 12));
-        tabel_TransaksiPenjualanHarian.getTableHeader().setOpaque(false);
-        tabel_TransaksiPenjualanHarian.getTableHeader().setBackground(new Color(255,144,39));
-        tabel_TransaksiPenjualanHarian.getTableHeader().setForeground(new Color(255,255,255));
-        tabel_TransaksiPenjualanHarian1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID Transaksi", "Diskon", "Total Harga", "ID Pengguna"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tabel_TransaksiPenjualanHarian1.setRowHeight(30);
-        tabel_TransaksiPenjualanHarian1.setRowSelectionAllowed(false);
-        tabel_TransaksiPenjualanHarian1.setSelectionBackground(new java.awt.Color(253, 144, 39));
-        tabel_TransaksiPenjualanHarian1.setSelectionForeground(new java.awt.Color(0, 0, 0));
-        jScrollPane4.setViewportView(tabel_TransaksiPenjualanHarian1);
-        if (tabel_TransaksiPenjualanHarian1.getColumnModel().getColumnCount() > 0) {
-            tabel_TransaksiPenjualanHarian1.getColumnModel().getColumn(0).setResizable(false);
-            tabel_TransaksiPenjualanHarian1.getColumnModel().getColumn(1).setResizable(false);
-            tabel_TransaksiPenjualanHarian1.getColumnModel().getColumn(2).setResizable(false);
-            tabel_TransaksiPenjualanHarian1.getColumnModel().getColumn(3).setResizable(false);
-        }
-
-        panel_pendapatanHarian10.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 660, 200));
-
-        panel_Bulanan.add(panel_pendapatanHarian10, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, 720, 290));
-
-        panel_pendapatanHarian11.setBackground(new java.awt.Color(255, 255, 255));
-        panel_pendapatanHarian11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(253, 144, 39), new java.awt.Color(253, 144, 39), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
-        panel_pendapatanHarian11.setRoundBottomLeft(10);
-        panel_pendapatanHarian11.setRoundBottomRight(10);
-        panel_pendapatanHarian11.setRoundTopLeft(10);
-        panel_pendapatanHarian11.setRoundTopRight(10);
-        panel_pendapatanHarian11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        tabel_TransaksiPembelianHarian.getTableHeader().setFont(new Font("Quicksand Medium", Font.PLAIN, 12));
-        tabel_TransaksiPembelianHarian.getTableHeader().setOpaque(false);
-        tabel_TransaksiPembelianHarian.getTableHeader().setBackground(new Color(255,144,39));
-        tabel_TransaksiPembelianHarian.getTableHeader().setForeground(new Color(255,255,255));
-        tabel_TransaksiPembelianHarian1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "ID Transaksi", "ID Pemasok", "ID Pengguna", "Total Harga"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tabel_TransaksiPembelianHarian1.setRowHeight(30);
-        tabel_TransaksiPembelianHarian1.setRowSelectionAllowed(false);
-        tabel_TransaksiPembelianHarian1.setSelectionBackground(new java.awt.Color(253, 144, 39));
-        tabel_TransaksiPembelianHarian1.setSelectionForeground(new java.awt.Color(0, 0, 0));
-        jScrollPane5.setViewportView(tabel_TransaksiPembelianHarian1);
-        if (tabel_TransaksiPembelianHarian1.getColumnModel().getColumnCount() > 0) {
-            tabel_TransaksiPembelianHarian1.getColumnModel().getColumn(0).setResizable(false);
-            tabel_TransaksiPembelianHarian1.getColumnModel().getColumn(1).setResizable(false);
-            tabel_TransaksiPembelianHarian1.getColumnModel().getColumn(2).setResizable(false);
-            tabel_TransaksiPembelianHarian1.getColumnModel().getColumn(3).setResizable(false);
-        }
-
-        panel_pendapatanHarian11.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 660, 200));
-
-        jLabel26.setFont(new java.awt.Font("Quicksand", 1, 18)); // NOI18N
-        jLabel26.setText("Catatan Transaksi Pembelian");
-        panel_pendapatanHarian11.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 270, 30));
-
-        panel_Bulanan.add(panel_pendapatanHarian11, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 770, 720, 290));
-
-        jPanel3.add(panel_Bulanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 862, 1460));
+        jPanel3.add(panel_Bulanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 862, 1800));
 
         panel_Harian.setBackground(new java.awt.Color(255, 255, 255));
         panel_Harian.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -926,10 +1005,11 @@ String AmbilBulanSekarang = Bulanan.format(Calendar.getInstance().getTime());
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -941,16 +1021,17 @@ String AmbilBulanSekarang = Bulanan.format(Calendar.getInstance().getTime());
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JPanel panel_Bulanan;
     private javax.swing.JPanel panel_Harian;
+    private Swing.PanelRound panel_PeringkatPemasokTerlaris;
+    private Swing.PanelRound panel_catatanPembelianBulanan;
+    private Swing.PanelRound panel_catatanPenjualanaBulanan;
     private Swing.PanelRound panel_pendapatanHarian;
     private Swing.PanelRound panel_pendapatanHarian1;
-    private Swing.PanelRound panel_pendapatanHarian10;
-    private Swing.PanelRound panel_pendapatanHarian11;
-    private Swing.PanelRound panel_pendapatanHarian12;
     private Swing.PanelRound panel_pendapatanHarian2;
     private Swing.PanelRound panel_pendapatanHarian3;
     private Swing.PanelRound panel_pendapatanHarian4;
@@ -959,11 +1040,13 @@ String AmbilBulanSekarang = Bulanan.format(Calendar.getInstance().getTime());
     private Swing.PanelRound panel_pendapatanHarian7;
     private Swing.PanelRound panel_pendapatanHarian8;
     private Swing.PanelRound panel_pendapatanHarian9;
+    private javax.swing.JTable tabel_PeringkatProduk;
+    private javax.swing.JTable tabel_PeringkatProduk1;
+    private Swing.PanelRound tabel_PeringkatProdukTerlaris;
     private javax.swing.JTable tabel_TransaksiPembelianHarian;
-    private javax.swing.JTable tabel_TransaksiPembelianHarian1;
-    private javax.swing.JTable tabel_TransaksiPembelianHarian2;
+    private javax.swing.JTable tabel_TransaksiPenjualanBulanan;
+    private javax.swing.JTable tabel_TransaksiPenjualanBulanan1;
     private javax.swing.JTable tabel_TransaksiPenjualanHarian;
-    private javax.swing.JTable tabel_TransaksiPenjualanHarian1;
     private javax.swing.JLabel txt_BulanHariIni1;
     private javax.swing.JLabel txt_PendapatanBulanan;
     private javax.swing.JLabel txt_PendapatanHarian;

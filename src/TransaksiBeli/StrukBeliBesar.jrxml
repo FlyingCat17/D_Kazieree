@@ -2,19 +2,29 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="212" pageHeight="625" columnWidth="192" leftMargin="10" rightMargin="10" topMargin="0" bottomMargin="0" uuid="7aa04c60-aee3-410e-89cd-88e6b84b5811">
 	<property name="ireport.zoom" value="3.4522712143931042"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="574"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="kodeTransaksi" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT tb_beli.id_transaksi AS ID_TRANSAKSII, tb_detailbeli.nama_produk AS NAMA_PRODUK_DIBELI, tb_beli.id_pengguna AS ID_PENGGUNAA, tb_beli.id_pemasok AS ID_PEMASOKK, tb_detailbeli.jumlah_produk AS TOTAL_PRODUK_DIBELI, tb_detailbeli.harga_beli AS HARGABELI, tb_detailbeli.total_harga AS Total_JIKA_Dikali_Jumlah, tb_beli.tgl_transaksi AS TANGGAL_TRANSAKSI, SUM(tb_beli.total_harga) AS TOTAL_KESELURUHAN
+		<![CDATA[SELECT tb_beli.id_transaksi AS ID_TRANSAKSII, tb_detailbeli.nama_produk AS NAMA_PRODUK_DIBELI, tb_beli.id_pengguna AS ID_PENGGUNAA, tb_pengguna.nama_pengguna AS NAMA_PENGGUNA, tb_pemasok.nama_pemasok AS NAMA_PEMASOK, tb_beli.id_pemasok AS ID_PEMASOKK, tb_detailbeli.jumlah_produk AS TOTAL_PRODUK_DIBELI, tb_detailbeli.harga_beli AS HARGABELI, tb_detailbeli.total_harga AS Total_JIKA_Dikali_Jumlah, tb_beli.tgl_transaksi AS TANGGAL_TRANSAKSI, SUM(tb_beli.total_harga) AS TOTAL_KESELURUHAN
 FROM tb_detailbeli
 JOIN tb_beli
 ON tb_detailbeli.id_transaksi = tb_beli.id_transaksi
+JOIN tb_pengguna
+ON tb_beli.id_pengguna = tb_pengguna.username
+JOIN tb_pemasok
+ON tb_beli.id_pemasok = tb_pemasok.id_pemasok
 WHERE tb_detailbeli.id_transaksi = $P{kodeTransaksi}
 GROUP BY tb_detailbeli.id_produk]]>
 	</queryString>
 	<field name="ID_TRANSAKSII" class="java.lang.String"/>
 	<field name="NAMA_PRODUK_DIBELI" class="java.lang.String"/>
 	<field name="ID_PENGGUNAA" class="java.lang.String"/>
+	<field name="NAMA_PENGGUNA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NAMA_PEMASOK" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="ID_PEMASOKK" class="java.lang.String"/>
 	<field name="TOTAL_PRODUK_DIBELI" class="java.lang.Integer"/>
 	<field name="HARGABELI" class="java.lang.Integer"/>
@@ -103,11 +113,11 @@ Telp. 085100053319]]></text>
 				<textFieldExpression><![CDATA[$F{ID_TRANSAKSII}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="a44f75bc-1426-4fc0-924e-282e7ff71bf6" x="78" y="28" width="114" height="12"/>
+				<reportElement uuid="272b9946-299d-4083-a0d2-b6526a3ae0a4" x="78" y="28" width="100" height="12"/>
 				<textElement>
 					<font fontName="Quicksand" size="7"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ID_PENGGUNAA}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NAMA_PENGGUNA}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -230,18 +240,18 @@ Telp. 085100053319]]></text>
 				<textFieldExpression><![CDATA[$F{TOTAL_KESELURUHAN}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="64" y="26" width="58" height="12"/>
+				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="49" y="26" width="73" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Quicksand" size="7" isBold="false"/>
 				</textElement>
-				<text><![CDATA[ID Pemasok]]></text>
+				<text><![CDATA[Nama Pemasok]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="7f4858f8-8c1e-4780-8edd-1dc22cd52115" x="122" y="26" width="63" height="12"/>
+				<reportElement uuid="aaeb0ec8-4a6b-4f25-a759-6162b2aac518" x="122" y="26" width="63" height="12"/>
 				<textElement textAlignment="Right">
 					<font fontName="Quicksand" size="7"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ID_PEMASOKK}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NAMA_PEMASOK}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

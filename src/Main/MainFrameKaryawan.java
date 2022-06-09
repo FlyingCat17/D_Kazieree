@@ -51,6 +51,7 @@ public class MainFrameKaryawan extends javax.swing.JFrame {
         dpanee = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("D'Kazieree (KARYAWAN)");
         setMinimumSize(new java.awt.Dimension(1233, 707));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
