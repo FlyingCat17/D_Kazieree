@@ -13,6 +13,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -30,6 +31,8 @@ String id;
 String id_produk;
 String id_produkjasa;
 int totalSemua;
+String total2 = null;
+private double subTotal = 0;
 private DefaultTableModel mod, mod2, mod3;
     public Transjual() {
         initComponents();
@@ -236,8 +239,6 @@ private DefaultTableModel mod, mod2, mod3;
             System.err.println("ERROR " + e.getMessage());
         }
     }
-    
-    
     public void a(){
         
         
@@ -285,9 +286,18 @@ private DefaultTableModel mod, mod2, mod3;
         }
 //        txTotalBayar.setText(String.valueOf(totalBiaya));
         System.out.println(totalBiaya);
+        total_harga.setText(NumberFormat.getNumberInstance().format(countSubtotal()));
         total_harga.setText("Rp"+ totalBiaya +"");
+        total2 = String.valueOf(totalBiaya);
         totalSemua = totalBiaya;
-        
+        System.out.println(countSubtotal());
+    }
+    public double countSubtotal(){
+        subTotal=0;
+        for (int i=0;i<jTable1.getRowCount();i++){
+            subTotal=subTotal+Double.parseDouble(jTable1.getValueAt(i, 3).toString());
+        }
+        return subTotal;
     }
     public void cari(){
         if (txt_KodeProduk.getText().equals("")) {
@@ -590,14 +600,6 @@ private DefaultTableModel mod, mod2, mod3;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        button10 = new Swing.Button();
-        FieldCariDataJasa = new Swing.TextField();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
-        button11 = new Swing.Button();
-        button12 = new Swing.Button();
-        jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         button9 = new Swing.Button();
         FieldCariProdukBarang = new Swing.TextField();
@@ -606,9 +608,17 @@ private DefaultTableModel mod, mod2, mod3;
         btn_pilihBarang = new Swing.Button();
         button7 = new Swing.Button();
         jLabel4 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        button10 = new Swing.Button();
+        FieldCariDataJasa = new Swing.TextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        button11 = new Swing.Button();
+        button12 = new Swing.Button();
+        jLabel5 = new javax.swing.JLabel();
         txt_diskonPersen = new Swing.TextField();
         txt_stok = new Swing.TextField();
-        button6 = new Swing.Button();
+        btn_transaksiBaru = new Swing.Button();
         button4 = new Swing.Button();
         total_harga = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -636,101 +646,6 @@ private DefaultTableModel mod, mod2, mod3;
         setMinimumSize(new java.awt.Dimension(960, 707));
         setPreferredSize(new java.awt.Dimension(960, 707));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        button10.setBackground(new java.awt.Color(0, 102, 0));
-        button10.setForeground(new java.awt.Color(255, 255, 255));
-        button10.setText("Cari Barang -->");
-        button10.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
-        button10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button10ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(button10, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 140, 120, 30));
-
-        FieldCariDataJasa.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
-        FieldCariDataJasa.setLabelText("Cari Produk");
-        FieldCariDataJasa.setLineColor(new java.awt.Color(255, 144, 39));
-        FieldCariDataJasa.setOpaque(false);
-        FieldCariDataJasa.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                FieldCariDataJasaKeyReleased(evt);
-            }
-        });
-        jPanel2.add(FieldCariDataJasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 400, 50));
-
-        jScrollPane3.setBorder(null);
-
-        jTable3.setFont(new java.awt.Font("Quicksand Medium", 0, 12)); // NOI18N
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Kode Produk", "Nama Produk", "Satuan", "Stok", "Harga Jual"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTable3.setGridColor(new java.awt.Color(102, 102, 102));
-        jTable3.setRowHeight(30);
-        jTable3.setSelectionBackground(new java.awt.Color(253, 144, 39));
-        jTable3.setShowVerticalLines(false);
-        jTable3.getTableHeader().setResizingAllowed(false);
-        jTable3.getTableHeader().setReorderingAllowed(false);
-        jTable3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable3MouseClicked(evt);
-            }
-        });
-        jScrollPane3.setViewportView(jTable3);
-        if (jTable3.getColumnModel().getColumnCount() > 0) {
-            jTable3.getColumnModel().getColumn(0).setResizable(false);
-            jTable3.getColumnModel().getColumn(1).setResizable(false);
-            jTable3.getColumnModel().getColumn(2).setResizable(false);
-            jTable3.getColumnModel().getColumn(3).setResizable(false);
-            jTable3.getColumnModel().getColumn(4).setResizable(false);
-        }
-
-        jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 860, 430));
-
-        button11.setBackground(new java.awt.Color(51, 249, 51));
-        button11.setForeground(new java.awt.Color(255, 255, 255));
-        button11.setText("Pilih");
-        button11.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
-        button11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button11ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(button11, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 630, 80, 30));
-
-        button12.setBackground(new java.awt.Color(255, 51, 51));
-        button12.setForeground(new java.awt.Color(255, 255, 255));
-        button12.setText("Batal");
-        button12.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
-        button12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button12ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(button12, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 630, 80, 30));
-
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiJual/CariJasa.png"))); // NOI18N
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 690));
-
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -827,6 +742,101 @@ private DefaultTableModel mod, mod2, mod3;
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        button10.setBackground(new java.awt.Color(0, 102, 0));
+        button10.setForeground(new java.awt.Color(255, 255, 255));
+        button10.setText("Cari Barang -->");
+        button10.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
+        button10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button10ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(button10, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 140, 120, 30));
+
+        FieldCariDataJasa.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
+        FieldCariDataJasa.setLabelText("Cari Produk");
+        FieldCariDataJasa.setLineColor(new java.awt.Color(255, 144, 39));
+        FieldCariDataJasa.setOpaque(false);
+        FieldCariDataJasa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                FieldCariDataJasaKeyReleased(evt);
+            }
+        });
+        jPanel2.add(FieldCariDataJasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 400, 50));
+
+        jScrollPane3.setBorder(null);
+
+        jTable3.setFont(new java.awt.Font("Quicksand Medium", 0, 12)); // NOI18N
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Kode Produk", "Nama Produk", "Satuan", "Stok", "Harga Jual"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable3.setGridColor(new java.awt.Color(102, 102, 102));
+        jTable3.setRowHeight(30);
+        jTable3.setSelectionBackground(new java.awt.Color(253, 144, 39));
+        jTable3.setShowVerticalLines(false);
+        jTable3.getTableHeader().setResizingAllowed(false);
+        jTable3.getTableHeader().setReorderingAllowed(false);
+        jTable3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable3MouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jTable3);
+        if (jTable3.getColumnModel().getColumnCount() > 0) {
+            jTable3.getColumnModel().getColumn(0).setResizable(false);
+            jTable3.getColumnModel().getColumn(1).setResizable(false);
+            jTable3.getColumnModel().getColumn(2).setResizable(false);
+            jTable3.getColumnModel().getColumn(3).setResizable(false);
+            jTable3.getColumnModel().getColumn(4).setResizable(false);
+        }
+
+        jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 860, 430));
+
+        button11.setBackground(new java.awt.Color(51, 249, 51));
+        button11.setForeground(new java.awt.Color(255, 255, 255));
+        button11.setText("Pilih");
+        button11.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
+        button11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button11ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(button11, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 630, 80, 30));
+
+        button12.setBackground(new java.awt.Color(255, 51, 51));
+        button12.setForeground(new java.awt.Color(255, 255, 255));
+        button12.setText("Batal");
+        button12.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
+        button12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button12ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(button12, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 630, 80, 30));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiJual/CariJasa.png"))); // NOI18N
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 690));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
         txt_diskonPersen.setDisabledTextColor(new java.awt.Color(0, 204, 153));
         txt_diskonPersen.setFont(new java.awt.Font("Quicksand Medium", 0, 13)); // NOI18N
         txt_diskonPersen.setLabelText("Diskon(%)");
@@ -855,17 +865,17 @@ private DefaultTableModel mod, mod2, mod3;
         });
         getContentPane().add(txt_stok, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 210, 120, 50));
 
-        button6.setBackground(new java.awt.Color(0, 51, 51));
-        button6.setForeground(new java.awt.Color(255, 255, 255));
-        button6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiJual/refresh.png"))); // NOI18N
-        button6.setText("Transaksi Baru");
-        button6.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
-        button6.addActionListener(new java.awt.event.ActionListener() {
+        btn_transaksiBaru.setBackground(new java.awt.Color(0, 51, 51));
+        btn_transaksiBaru.setForeground(new java.awt.Color(255, 255, 255));
+        btn_transaksiBaru.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TransaksiJual/refresh.png"))); // NOI18N
+        btn_transaksiBaru.setText("Transaksi Baru");
+        btn_transaksiBaru.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
+        btn_transaksiBaru.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button6ActionPerformed(evt);
+                btn_transaksiBaruActionPerformed(evt);
             }
         });
-        getContentPane().add(button6, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 610, 150, 40));
+        getContentPane().add(btn_transaksiBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 610, 150, 40));
 
         button4.setBackground(new java.awt.Color(0, 51, 51));
         button4.setForeground(new java.awt.Color(255, 255, 255));
@@ -1145,7 +1155,7 @@ private DefaultTableModel mod, mod2, mod3;
         bayar();
     }//GEN-LAST:event_button4ActionPerformed
 
-    private void button6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button6ActionPerformed
+    private void btn_transaksiBaruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_transaksiBaruActionPerformed
         // TODO add your handling code here:
         txt_KodeProduk.setText("");
             txt_KodeProduk.setText("");
@@ -1170,7 +1180,7 @@ private DefaultTableModel mod, mod2, mod3;
             }
             kode_transaksi();
             txt_KodeProduk.requestFocus();
-    }//GEN-LAST:event_button6ActionPerformed
+    }//GEN-LAST:event_btn_transaksiBaruActionPerformed
 
     private void txt_stokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_stokActionPerformed
         // TODO add your handling code here:
@@ -1265,11 +1275,13 @@ private DefaultTableModel mod, mod2, mod3;
         jPanel1.setVisible(true);
         jTable1.getTableHeader().disable();
         loadTableProduk();
+        btn_transaksiBaru.setVisible(false);
     }//GEN-LAST:event_button1ActionPerformed
 
     private void button7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button7ActionPerformed
         // TODO add your handling code here:
         jPanel1.setVisible(false);
+        btn_transaksiBaru.setVisible(true);
     }//GEN-LAST:event_button7ActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
@@ -1283,7 +1295,8 @@ private DefaultTableModel mod, mod2, mod3;
         // TODO add your handling code here:
         txt_KodeProduk.setText(id_produk);
         jPanel1.setVisible(false);
-        jTable1.getTableHeader().enable();
+        jTable1.getTableHeader().enable();btn_transaksiBaru.setVisible(true);
+        
     }//GEN-LAST:event_btn_pilihBarangActionPerformed
 
     private void button9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button9ActionPerformed
@@ -1310,11 +1323,13 @@ private DefaultTableModel mod, mod2, mod3;
         txt_KodeProduk.setText(id_produkjasa);
         jPanel2.setVisible(false);
         jTable1.getTableHeader().enable();
+        btn_transaksiBaru.setVisible(true);
     }//GEN-LAST:event_button11ActionPerformed
 
     private void button12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button12ActionPerformed
         // TODO add your handling code here:
         jPanel2.setVisible(false);
+        btn_transaksiBaru.setVisible(true);
     }//GEN-LAST:event_button12ActionPerformed
 
     private void txt_diskonRPKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_diskonRPKeyReleased
@@ -1363,6 +1378,10 @@ private DefaultTableModel mod, mod2, mod3;
         // TODO add your handling code here:
         char k = evt.getKeyChar();
         int panjang = txt_Jumlah.getText().length();
+        char c = evt.getKeyChar();
+        if ((this.txt_Jumlah.getText().isEmpty() && (!Character.isDigit(c) || c == '0')) || !(Character.isDigit(c)) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
         if (!(Character.isDigit(k) || k == KeyEvent.VK_BACK_SPACE || k == KeyEvent.VK_DELETE)) {
             evt.consume();
         }
@@ -1417,6 +1436,7 @@ private DefaultTableModel mod, mod2, mod3;
     private Swing.TextField FieldCariDataJasa;
     private Swing.TextField FieldCariProdukBarang;
     private Swing.Button btn_pilihBarang;
+    private Swing.Button btn_transaksiBaru;
     private Swing.Button button1;
     private Swing.Button button10;
     private Swing.Button button11;
@@ -1424,7 +1444,6 @@ private DefaultTableModel mod, mod2, mod3;
     private Swing.Button button2;
     private Swing.Button button3;
     private Swing.Button button4;
-    private Swing.Button button6;
     private Swing.Button button7;
     private Swing.Button button9;
     private javax.swing.JLabel jLabel1;

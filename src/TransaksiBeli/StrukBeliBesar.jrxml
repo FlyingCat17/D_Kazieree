@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="212" pageHeight="625" columnWidth="192" leftMargin="10" rightMargin="10" topMargin="0" bottomMargin="0" uuid="7aa04c60-aee3-410e-89cd-88e6b84b5811">
 	<property name="ireport.zoom" value="3.4522712143931042"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="574"/>
 	<parameter name="kodeTransaksi" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT tb_beli.id_transaksi AS ID_TRANSAKSII, tb_detailbeli.nama_produk AS NAMA_PRODUK_DIBELI, tb_beli.id_pengguna AS ID_PENGGUNAA, tb_pengguna.nama_pengguna AS NAMA_PENGGUNA, tb_pemasok.nama_pemasok AS NAMA_PEMASOK, tb_beli.id_pemasok AS ID_PEMASOKK, tb_detailbeli.jumlah_produk AS TOTAL_PRODUK_DIBELI, tb_detailbeli.harga_beli AS HARGABELI, tb_detailbeli.total_harga AS Total_JIKA_Dikali_Jumlah, tb_beli.tgl_transaksi AS TANGGAL_TRANSAKSI, SUM(tb_beli.total_harga) AS TOTAL_KESELURUHAN
@@ -196,34 +196,14 @@ Telp. 085100053319]]></text>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Quicksand" size="7" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Total Harga]]></text>
-			</staticText>
-			<line>
-				<reportElement uuid="abec96da-ffba-4153-a491-05403f01251e" x="77" y="38" width="108" height="1"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineStyle="Solid"/>
-				</graphicElement>
-			</line>
-			<staticText>
-				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="185" y="32" width="7" height="12"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Quicksand" size="8" isBold="false"/>
-				</textElement>
-				<text><![CDATA[=]]></text>
+				<text><![CDATA[Total Harga :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="0" y="111" width="192" height="25"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Quicksand" size="7" isBold="false"/>
 				</textElement>
-				<text><![CDATA[TERIMA KASIH TELAH BERBELANJA DI TOKO KAMI KONTOL!]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="49" y="44" width="73" height="12"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Quicksand" size="7" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Total Keseluruhan]]></text>
+				<text><![CDATA[TERIMA KASIH TELAH BERBELANJA DI TOKO KAMI]]></text>
 			</staticText>
 			<textField>
 				<reportElement uuid="63699666-eefd-49f8-977b-44fbe17024f7" x="122" y="7" width="63" height="12"/>
@@ -232,23 +212,16 @@ Telp. 085100053319]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{TOTAL_KESELURUHAN}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="63699666-eefd-49f8-977b-44fbe17024f7" x="122" y="44" width="63" height="12"/>
-				<textElement textAlignment="Right">
-					<font fontName="Quicksand" size="7"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{TOTAL_KESELURUHAN}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="49" y="26" width="73" height="12"/>
+				<reportElement uuid="55f015f9-2709-4289-8147-dd0c77491a20" x="59" y="25" width="63" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Quicksand" size="7" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Nama Pemasok]]></text>
+				<text><![CDATA[Nama Pemasok :]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="aaeb0ec8-4a6b-4f25-a759-6162b2aac518" x="122" y="26" width="63" height="12"/>
-				<textElement textAlignment="Right">
+				<reportElement uuid="aaeb0ec8-4a6b-4f25-a759-6162b2aac518" x="122" y="25" width="63" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Quicksand" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NAMA_PEMASOK}]]></textFieldExpression>
