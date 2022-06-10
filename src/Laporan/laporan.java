@@ -23,6 +23,11 @@ DateFormat Bulanan = new SimpleDateFormat("yyyyMM");
 String AmbilBulanSekarang = Bulanan.format(Calendar.getInstance().getTime());
 DateFormat Bulann = new SimpleDateFormat("yyyyMM");
 
+// bulanan
+DateFormat formatBulan = new SimpleDateFormat("MM");
+String formatBulan1 = formatBulan.format(Calendar.getInstance().getTime());
+DateFormat formatTahun = new SimpleDateFormat("YYYY");
+String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
     /**
      * Creates new form 
      */
@@ -37,7 +42,7 @@ DateFormat Bulann = new SimpleDateFormat("yyyyMM");
         panel_Harian.setVisible(true);
         panel_Bulanan.setVisible(false);
         loadDataHariIni();
-        
+        System.out.println(formatTahun1+formatBulan1);
     }
 //    
     public void loadDataHariIni(){
@@ -71,6 +76,10 @@ DateFormat Bulann = new SimpleDateFormat("yyyyMM");
             String loadTransaksiBeliHariIni = "SELECT tb_beli.id_transaksi, tb_beli.id_pemasok, tb_beli.total_harga\n"
                     + "FROM tb_beli\n"
                     + "WHERE tb_beli.tgl_transaksi = '"+a+"'";
+            String loadPemasukanHariIni = "SELECT EXTRACT(YEAR_MONTH FROM tb_pemasukan.tgl_pemasukan) AS year_and_month, SUM(tb_pemasukan.jumlah_pemasukan) AS PEMASUKAN_BULAN_INI\n"
+                    + "FROM tb_pemasukan\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_pemasukan.tgl_pemasukan) = '"+a+"'\n"
+                    + "GROUP BY EXTRACT(YEAR_MONTH FROM tb_pemasukan.tgl_pemasukan);";
             java.sql.Connection con = (Connection)konekdb.GetConnection();
             java.sql.Statement st = con.createStatement();
             java.sql.Statement st1 = con.createStatement();
@@ -189,10 +198,17 @@ DateFormat Bulann = new SimpleDateFormat("yyyyMM");
         TBPeringkatProduk.addColumn("ID Produk");
         TBPeringkatProduk.addColumn("Nama Produk");
         TBPeringkatProduk.addColumn("Total Terjual");
+        DefaultTableModel TBPeringkatPemasok = new DefaultTableModel();
+        TBPeringkatPemasok.addColumn("ID Pemasok");
+        TBPeringkatPemasok.addColumn("Nama Pemasok");
         DefaultTableModel transbeli = new DefaultTableModel();
         transbeli.addColumn("ID Transaksi");
         transbeli.addColumn("ID Pemasok");
         transbeli.addColumn("Total Harga");
+        DefaultTableModel transjual = new DefaultTableModel();
+        transjual.addColumn("tgl Transaksi");
+        transjual.addColumn("Total Harga");
+        transjual.addColumn("Laba");
         txt_BulanHariIni1.setText(AmbilBulanSekarang);
         try {
             String PendapatanBulanIni = "SELECT EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) AS year_and_month, SUM(tb_jual.total_harga) AS Pendapatan\n"
@@ -224,17 +240,41 @@ DateFormat Bulann = new SimpleDateFormat("yyyyMM");
                     + "WHERE EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) = '"+AmbilBulanSekarang+"'\n"
                     + "GROUP BY tb_detailjual.id_produk\n"
                     + "ORDER BY COUNT(tb_detailjual.jumlah_produk) DESC";
+            String PeringkatPemasok = "SELECT EXTRACT(YEAR_MONTH FROM tb_beli.tgl_transaksi) AS TANGGAL, tb_beli.id_pemasok, tb_pemasok.nama_pemasok, COUNT(tb_beli.id_pemasok) AS TOTAL\n"
+                    + "FROM tb_beli\n"
+                    + "JOIN tb_pemasok\n"
+                    + "ON tb_beli.id_pemasok = tb_pemasok.id_pemasok\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_beli.tgl_transaksi) = '"+AmbilBulanSekarang+"'\n"
+                    + "GROUP BY tb_beli.id_pemasok\n"
+                    + "ORDER BY COUNT(tb_beli.id_pemasok) DESC;";
+            String CatatanPenjualanBulanan = "SELECT  DATE_FORMAT(tb_jual.tgl_transaksi,'%d/%m/%Y'),tb_jual.total_harga, SUM((tb_produk.harga_jual - tb_produk.harga_beli)*tb_detailjual.jumlah_produk) AS Laba\n"
+                    + "FROM tb_jual\n"
+                    + "JOIN tb_detailjual ON tb_detailjual.id_transaksi = tb_jual.id_transaksi\n"
+                    + "JOIN tb_produk ON tb_detailjual.id_produk = tb_produk.id_produk\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) = '"+AmbilBulanSekarang+"'\n"
+                    + "GROUP BY tb_jual.tgl_transaksi";
+            String CatatanPembelianBulanan = "SELECT DATE_FORMAT(tb_beli.tgl_transaksi, '%d/%m/%Y'), tb_beli.total_harga\n"
+                    + "FROM tb_beli\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_beli.tgl_transaksi) = '"+formatTahun1+formatBulan1+"'";
             java.sql.Connection con = (Connection) konekdb.GetConnection();
             java.sql.Statement st = con.createStatement();
             java.sql.Statement st1 = con.createStatement();
             java.sql.Statement st2 = con.createStatement();
             java.sql.Statement st3 = con.createStatement();
             java.sql.Statement st4 = con.createStatement();
+            java.sql.Statement st5 = con.createStatement();
+            java.sql.Statement st6 = con.createStatement();
+            java.sql.Statement st7 = con.createStatement();
+            
             java.sql.ResultSet rs = st.executeQuery(PendapatanBulanIni);
             java.sql.ResultSet rs1 = st1.executeQuery(LabaBulanIni);
             java.sql.ResultSet rs2 = st2.executeQuery(PemasukanBulanIni);
             java.sql.ResultSet rs3 = st3.executeQuery(PengeluaranBulanIni);
             java.sql.ResultSet rs4 = st4.executeQuery(PeringkatProduk);
+            java.sql.ResultSet rs5 = st5.executeQuery(PeringkatPemasok);
+            java.sql.ResultSet rs6 = st6.executeQuery(CatatanPenjualanBulanan);
+            java.sql.ResultSet rs7 = st7.executeQuery(CatatanPembelianBulanan);
+            
             if (rs.next()) {
                 txt_PendapatanBulanan.setText("Rp"+rs.getString(2));
             }
@@ -254,6 +294,28 @@ DateFormat Bulann = new SimpleDateFormat("yyyyMM");
                     rs4.getString(4)
                 });
                 tabel_PeringkatProduk.setModel(TBPeringkatProduk);
+            }
+            while(rs5.next()){
+                TBPeringkatPemasok.addRow(new Object[]{
+                    rs5.getString(2),
+                    rs5.getString(3)
+            });
+                tabel_PeringkatPemasok.setModel(TBPeringkatPemasok);
+            }
+            while (rs6.next()) {                
+                transjual.addRow(new Object[]{
+                    rs6.getString(1),
+                    rs6.getString(2),
+                    rs6.getString(3)
+                });
+                tabel_TransaksiPenjualanBulanan.setModel(transjual);
+            }
+            while(rs7.next()){
+                transbeli.addRow(new Object[]{
+                    rs7.getString(1),
+                    rs7.getString(2)
+                });
+                tabel_TransaksiPembelianBulanan.setModel(transbeli);
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -281,7 +343,7 @@ DateFormat Bulann = new SimpleDateFormat("yyyyMM");
         jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
         panel_PeringkatPemasokTerlaris = new Swing.PanelRound();
         jScrollPane8 = new javax.swing.JScrollPane();
-        tabel_PeringkatProduk1 = new javax.swing.JTable(){
+        tabel_PeringkatPemasok = new javax.swing.JTable(){
             public boolean isCellEditable(int rowIndex, int colIndex)
             {
                 return false; //Disallow the editing of any cell
@@ -299,7 +361,7 @@ DateFormat Bulann = new SimpleDateFormat("yyyyMM");
         jLabel27 = new javax.swing.JLabel();
         panel_catatanPembelianBulanan = new Swing.PanelRound();
         jScrollPane9 = new javax.swing.JScrollPane();
-        tabel_TransaksiPenjualanBulanan1 = new javax.swing.JTable(){
+        tabel_TransaksiPembelianBulanan = new javax.swing.JTable(){
             public boolean isCellEditable(int rowIndex, int colIndex)
             {
                 return false; //Disallow the editing of any cell
@@ -331,6 +393,7 @@ DateFormat Bulann = new SimpleDateFormat("yyyyMM");
         jLabel23 = new javax.swing.JLabel();
         txt_pengeluaranmLainLainperTanggal1 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
+        jYearChooser1 = new com.toedter.calendar.JYearChooser();
         panel_Harian = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         txt_TanggalHariIni = new javax.swing.JLabel();
@@ -427,7 +490,7 @@ DateFormat Bulann = new SimpleDateFormat("yyyyMM");
 
         jMonthChooser1.setBackground(new java.awt.Color(253, 144, 39));
         jMonthChooser1.setFont(new java.awt.Font("Quicksand Medium", 0, 12)); // NOI18N
-        panel_Bulanan.add(jMonthChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 30, -1, 30));
+        panel_Bulanan.add(jMonthChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 30, -1, 30));
 
         panel_PeringkatPemasokTerlaris.setBackground(new java.awt.Color(255, 255, 255));
         panel_PeringkatPemasokTerlaris.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(253, 144, 39), new java.awt.Color(253, 144, 39), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
@@ -437,11 +500,11 @@ DateFormat Bulann = new SimpleDateFormat("yyyyMM");
         panel_PeringkatPemasokTerlaris.setRoundTopRight(10);
         panel_PeringkatPemasokTerlaris.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tabel_PeringkatProduk.getTableHeader().setFont(new Font("Quicksand Medium", Font.PLAIN, 12));
-        tabel_PeringkatProduk.getTableHeader().setOpaque(false);
-        tabel_PeringkatProduk.getTableHeader().setBackground(new Color(255,144,39));
-        tabel_PeringkatProduk.getTableHeader().setForeground(new Color(255,255,255));
-        tabel_PeringkatProduk1.setModel(new javax.swing.table.DefaultTableModel(
+        tabel_PeringkatPemasok.getTableHeader().setFont(new Font("Quicksand Medium", Font.PLAIN, 12));
+        tabel_PeringkatPemasok.getTableHeader().setOpaque(false);
+        tabel_PeringkatPemasok.getTableHeader().setBackground(new Color(255,144,39));
+        tabel_PeringkatPemasok.getTableHeader().setForeground(new Color(255,255,255));
+        tabel_PeringkatPemasok.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -460,16 +523,16 @@ DateFormat Bulann = new SimpleDateFormat("yyyyMM");
                 return canEdit [columnIndex];
             }
         });
-        tabel_PeringkatProduk1.setRowHeight(30);
-        tabel_PeringkatProduk1.setRowSelectionAllowed(false);
-        tabel_PeringkatProduk1.setSelectionBackground(new java.awt.Color(253, 144, 39));
-        tabel_PeringkatProduk1.setSelectionForeground(new java.awt.Color(0, 0, 0));
-        jScrollPane8.setViewportView(tabel_PeringkatProduk1);
-        if (tabel_PeringkatProduk1.getColumnModel().getColumnCount() > 0) {
-            tabel_PeringkatProduk1.getColumnModel().getColumn(0).setResizable(false);
-            tabel_PeringkatProduk1.getColumnModel().getColumn(1).setResizable(false);
-            tabel_PeringkatProduk1.getColumnModel().getColumn(2).setResizable(false);
-            tabel_PeringkatProduk1.getColumnModel().getColumn(3).setResizable(false);
+        tabel_PeringkatPemasok.setRowHeight(30);
+        tabel_PeringkatPemasok.setRowSelectionAllowed(false);
+        tabel_PeringkatPemasok.setSelectionBackground(new java.awt.Color(253, 144, 39));
+        tabel_PeringkatPemasok.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        jScrollPane8.setViewportView(tabel_PeringkatPemasok);
+        if (tabel_PeringkatPemasok.getColumnModel().getColumnCount() > 0) {
+            tabel_PeringkatPemasok.getColumnModel().getColumn(0).setResizable(false);
+            tabel_PeringkatPemasok.getColumnModel().getColumn(1).setResizable(false);
+            tabel_PeringkatPemasok.getColumnModel().getColumn(2).setResizable(false);
+            tabel_PeringkatPemasok.getColumnModel().getColumn(3).setResizable(false);
         }
 
         panel_PeringkatPemasokTerlaris.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 660, 200));
@@ -539,11 +602,11 @@ DateFormat Bulann = new SimpleDateFormat("yyyyMM");
         panel_catatanPembelianBulanan.setRoundTopRight(10);
         panel_catatanPembelianBulanan.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tabel_TransaksiPenjualanBulanan.getTableHeader().setFont(new Font("Quicksand Medium", Font.PLAIN, 12));
-        tabel_TransaksiPenjualanBulanan.getTableHeader().setOpaque(false);
-        tabel_TransaksiPenjualanBulanan.getTableHeader().setBackground(new Color(255,144,39));
-        tabel_TransaksiPenjualanBulanan.getTableHeader().setForeground(new Color(255,255,255));
-        tabel_TransaksiPenjualanBulanan1.setModel(new javax.swing.table.DefaultTableModel(
+        tabel_TransaksiPembelianBulanan.getTableHeader().setFont(new Font("Quicksand Medium", Font.PLAIN, 12));
+        tabel_TransaksiPembelianBulanan.getTableHeader().setOpaque(false);
+        tabel_TransaksiPembelianBulanan.getTableHeader().setBackground(new Color(255,144,39));
+        tabel_TransaksiPembelianBulanan.getTableHeader().setForeground(new Color(255,255,255));
+        tabel_TransaksiPembelianBulanan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -562,16 +625,16 @@ DateFormat Bulann = new SimpleDateFormat("yyyyMM");
                 return canEdit [columnIndex];
             }
         });
-        tabel_TransaksiPenjualanBulanan1.setRowHeight(30);
-        tabel_TransaksiPenjualanBulanan1.setRowSelectionAllowed(false);
-        tabel_TransaksiPenjualanBulanan1.setSelectionBackground(new java.awt.Color(253, 144, 39));
-        tabel_TransaksiPenjualanBulanan1.setSelectionForeground(new java.awt.Color(0, 0, 0));
-        jScrollPane9.setViewportView(tabel_TransaksiPenjualanBulanan1);
-        if (tabel_TransaksiPenjualanBulanan1.getColumnModel().getColumnCount() > 0) {
-            tabel_TransaksiPenjualanBulanan1.getColumnModel().getColumn(0).setResizable(false);
-            tabel_TransaksiPenjualanBulanan1.getColumnModel().getColumn(1).setResizable(false);
-            tabel_TransaksiPenjualanBulanan1.getColumnModel().getColumn(2).setResizable(false);
-            tabel_TransaksiPenjualanBulanan1.getColumnModel().getColumn(3).setResizable(false);
+        tabel_TransaksiPembelianBulanan.setRowHeight(30);
+        tabel_TransaksiPembelianBulanan.setRowSelectionAllowed(false);
+        tabel_TransaksiPembelianBulanan.setSelectionBackground(new java.awt.Color(253, 144, 39));
+        tabel_TransaksiPembelianBulanan.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        jScrollPane9.setViewportView(tabel_TransaksiPembelianBulanan);
+        if (tabel_TransaksiPembelianBulanan.getColumnModel().getColumnCount() > 0) {
+            tabel_TransaksiPembelianBulanan.getColumnModel().getColumn(0).setResizable(false);
+            tabel_TransaksiPembelianBulanan.getColumnModel().getColumn(1).setResizable(false);
+            tabel_TransaksiPembelianBulanan.getColumnModel().getColumn(2).setResizable(false);
+            tabel_TransaksiPembelianBulanan.getColumnModel().getColumn(3).setResizable(false);
         }
 
         panel_catatanPembelianBulanan.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 660, 200));
@@ -720,6 +783,7 @@ DateFormat Bulann = new SimpleDateFormat("yyyyMM");
         panel_pendapatanHarian9.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 160, 30));
 
         panel_Bulanan.add(panel_pendapatanHarian9, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 270, 340, 110));
+        panel_Bulanan.add(jYearChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 30, 60, 30));
 
         jPanel3.add(panel_Bulanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 862, 1800));
 
@@ -1025,6 +1089,7 @@ DateFormat Bulann = new SimpleDateFormat("yyyyMM");
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
+    private com.toedter.calendar.JYearChooser jYearChooser1;
     private javax.swing.JPanel panel_Bulanan;
     private javax.swing.JPanel panel_Harian;
     private Swing.PanelRound panel_PeringkatPemasokTerlaris;
@@ -1040,12 +1105,12 @@ DateFormat Bulann = new SimpleDateFormat("yyyyMM");
     private Swing.PanelRound panel_pendapatanHarian7;
     private Swing.PanelRound panel_pendapatanHarian8;
     private Swing.PanelRound panel_pendapatanHarian9;
+    private javax.swing.JTable tabel_PeringkatPemasok;
     private javax.swing.JTable tabel_PeringkatProduk;
-    private javax.swing.JTable tabel_PeringkatProduk1;
     private Swing.PanelRound tabel_PeringkatProdukTerlaris;
+    private javax.swing.JTable tabel_TransaksiPembelianBulanan;
     private javax.swing.JTable tabel_TransaksiPembelianHarian;
     private javax.swing.JTable tabel_TransaksiPenjualanBulanan;
-    private javax.swing.JTable tabel_TransaksiPenjualanBulanan1;
     private javax.swing.JTable tabel_TransaksiPenjualanHarian;
     private javax.swing.JLabel txt_BulanHariIni1;
     private javax.swing.JLabel txt_PendapatanBulanan;

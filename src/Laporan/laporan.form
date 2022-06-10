@@ -157,7 +157,7 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="700" y="30" width="-1" height="30"/>
+                      <AbsoluteConstraints x="640" y="30" width="-1" height="30"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -203,7 +203,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JTable" name="tabel_PeringkatProduk1">
+                        <Component class="javax.swing.JTable" name="tabel_PeringkatPemasok">
                           <Properties>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                               <Table columnCount="4" rowCount="4">
@@ -251,7 +251,7 @@
                           </Properties>
                           <AuxValues>
                             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(){&#xa;    public boolean isCellEditable(int rowIndex, int colIndex)&#xa;    {&#xa;        return false; //Disallow the editing of any cell&#xa;    }&#xa;}"/>
-                            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="tabel_PeringkatProduk.getTableHeader().setFont(new Font(&quot;Quicksand Medium&quot;, Font.PLAIN, 12));&#xa;tabel_PeringkatProduk.getTableHeader().setOpaque(false);&#xa;tabel_PeringkatProduk.getTableHeader().setBackground(new Color(255,144,39));&#xa;tabel_PeringkatProduk.getTableHeader().setForeground(new Color(255,255,255));"/>
+                            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="tabel_PeringkatPemasok.getTableHeader().setFont(new Font(&quot;Quicksand Medium&quot;, Font.PLAIN, 12));&#xa;tabel_PeringkatPemasok.getTableHeader().setOpaque(false);&#xa;tabel_PeringkatPemasok.getTableHeader().setBackground(new Color(255,144,39));&#xa;tabel_PeringkatPemasok.getTableHeader().setForeground(new Color(255,255,255));"/>
                           </AuxValues>
                         </Component>
                       </SubComponents>
@@ -423,7 +423,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JTable" name="tabel_TransaksiPenjualanBulanan1">
+                        <Component class="javax.swing.JTable" name="tabel_TransaksiPembelianBulanan">
                           <Properties>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                               <Table columnCount="4" rowCount="4">
@@ -471,7 +471,7 @@
                           </Properties>
                           <AuxValues>
                             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(){&#xa;    public boolean isCellEditable(int rowIndex, int colIndex)&#xa;    {&#xa;        return false; //Disallow the editing of any cell&#xa;    }&#xa;}"/>
-                            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="tabel_TransaksiPenjualanBulanan.getTableHeader().setFont(new Font(&quot;Quicksand Medium&quot;, Font.PLAIN, 12));&#xa;tabel_TransaksiPenjualanBulanan.getTableHeader().setOpaque(false);&#xa;tabel_TransaksiPenjualanBulanan.getTableHeader().setBackground(new Color(255,144,39));&#xa;tabel_TransaksiPenjualanBulanan.getTableHeader().setForeground(new Color(255,255,255));"/>
+                            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="tabel_TransaksiPembelianBulanan.getTableHeader().setFont(new Font(&quot;Quicksand Medium&quot;, Font.PLAIN, 12));&#xa;tabel_TransaksiPembelianBulanan.getTableHeader().setOpaque(false);&#xa;tabel_TransaksiPembelianBulanan.getTableHeader().setBackground(new Color(255,144,39));&#xa;tabel_TransaksiPembelianBulanan.getTableHeader().setForeground(new Color(255,255,255));"/>
                           </AuxValues>
                         </Component>
                       </SubComponents>
@@ -885,6 +885,13 @@
                     </Component>
                   </SubComponents>
                 </Container>
+                <Component class="com.toedter.calendar.JYearChooser" name="jYearChooser1">
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                      <AbsoluteConstraints x="760" y="30" width="60" height="30"/>
+                    </Constraint>
+                  </Constraints>
+                </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="panel_Harian">
