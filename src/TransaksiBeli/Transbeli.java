@@ -13,17 +13,21 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.NumberFormatter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import utils.CustomDocumentFilter;
 
 public class Transbeli extends javax.swing.JInternalFrame {
 
@@ -35,10 +39,12 @@ public class Transbeli extends javax.swing.JInternalFrame {
     private DefaultTableModel mod, mod2, mod3;
 
     public Transbeli() {
+
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI gui = (BasicInternalFrameUI) this.getUI();
         gui.setNorthPane(null);
+
         jTable1.getTableHeader().setFont(new Font("Quicksand Medium", Font.PLAIN, 12));
         jTable1.getTableHeader().setOpaque(false);
         jTable1.getTableHeader().setBackground(new Color(255, 144, 39));
@@ -49,7 +55,6 @@ public class Transbeli extends javax.swing.JInternalFrame {
         String nama = usr.getNama();
         txt_Kasir.setText(usr.getNama());
         mod = new DefaultTableModel();
-       
 
         jPanel1.setVisible(false);
         jPanel2.setVisible(false);
@@ -296,7 +301,6 @@ public class Transbeli extends javax.swing.JInternalFrame {
         System.out.println(totalBiaya);
         total_harga.setText("Rp" + totalBiaya + "");
         totalSemua = totalBiaya;
-       
 
     }
 
@@ -381,7 +385,7 @@ public class Transbeli extends javax.swing.JInternalFrame {
 //                    diskon_persen.setText("");
                 txt_namaPemasok.setText("");
                 txt_nominal.setText("");
-                txt_kembalian.setText("");
+//                txt_kembalian.setText("");
 
                 txt_KodeProduk.requestFocus();
 
@@ -412,6 +416,10 @@ public class Transbeli extends javax.swing.JInternalFrame {
 //            txt_kembalian.setText("-");
 //        }
 //    }
+    public void cetakStruk() {
+
+    }
+
     public void bayar() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         int jumlah_baris = jTable1.getRowCount();
@@ -419,82 +427,78 @@ public class Transbeli extends javax.swing.JInternalFrame {
         if (jumlah_baris == 0) {
             JOptionPane.showMessageDialog(rootPane, "Tabel Keranjang masih kosong!");
         } else {
+            try {
+                String sql = "INSERT INTO `tb_beli`(`id_transaksi`, "
+                        + "`tgl_transaksi`,`id_pengguna`, `id_pemasok`,"
+                        + "`total_harga`) VALUES ('" + txt_idTransaksi.getText() + "',"
+                        + "'" + txt_TanggalTransaksi.getText() + "', '" + txt_Kasir.getText() + "', '" + txt_idPemasok.getText() + "',"
+                        + "" + totalSemua + ")";
+
+                java.sql.Connection con = (Connection) konekdb.GetConnection();
+                java.sql.PreparedStatement pst = con.prepareStatement(sql);
+                pst.execute();
                 try {
-                    String sql = "INSERT INTO `tb_beli`(`id_transaksi`, "
-                            + "`tgl_transaksi`,`id_pengguna`, `id_pemasok`,"
-                            + "`total_harga`) VALUES ('" + txt_idTransaksi.getText() + "',"
-                            + "'" + txt_TanggalTransaksi.getText() + "', '" + txt_Kasir.getText() + "', '" + txt_idPemasok.getText() + "',"
-                            + ""+ totalSemua+ ")";
-                    
-                    java.sql.Connection con = (Connection) konekdb.GetConnection();
-                    java.sql.PreparedStatement pst = con.prepareStatement(sql);
-                    pst.execute();
-                    try {
-                        for (int i = 0; i < jumlah_baris; i++) {
+                    for (int i = 0; i < jumlah_baris; i++) {
 //                            String jumlah = (String) model.getValueAt(i, 4).toString();
 //                            String harga = (String) model.getValueAt(i, 5).toString();
 //                            String id_prodk = (String) model.getValueAt(i, 1).toString();
 //                            String nama_p = (String) model.getValueAt(i, 2).toString();
 //                            String har = (String) model.getValueAt(i, 3).toString();
-                            
-                            String idProduk = model.getValueAt(i, 1).toString();
-                            String namaProduk = model.getValueAt(i, 2).toString();
-                            String hargaSatuan = model.getValueAt(i, 3).toString();
-                            String Qty = model.getValueAt(i, 4).toString();
-                            String totalHarga = model.getValueAt(i, 5).toString();
-                            
-                            
-                            String sql1 = "INSERT INTO `tb_detailbeli`(`id_transaksi`, `id_produk`, `nama_produk`, `jumlah_produk`, `harga_beli`, `total_harga`) VALUES ("
-                                    + "'"+ txt_idTransaksi.getText() +"', '" + idProduk + "', '" + namaProduk + "', " + Qty + ", " + hargaSatuan + ", " + totalHarga + ")";
-                            java.sql.PreparedStatement ps1 = con.prepareStatement(sql1);
-                            ps1.execute();
-                       
-                          
-                            
-                        }
-                        JOptionPane.showMessageDialog(this, "Berhasil Tersimpan");
-                        try {
-                            String namaFile = "src" + File.separator + "TransaksiBeli" + File.separator + "StrukBeliKontol.jasper";
-                            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-                            Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost:3306/d'kazieree", "root", "");
-                            HashMap hash = new HashMap();
-                            hash.put("kodeTransaksi", txt_idTransaksi.getText());
-                            File file = new File(namaFile);
-                            JasperReport jasperReport = (JasperReport) JRLoader.loadObject(file.getPath());
-                            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, hash, koneksi);
-                            JasperViewer.viewReport(jasperPrint, false);
-                        } catch (Exception e) {
-                            System.err.println(e.getMessage());
 
-                        }
-                        for (int i = jumlah_baris - 1; i >= 0; i--) {
-                            model.removeRow(i);
-                        }
+                        String idProduk = model.getValueAt(i, 1).toString();
+                        String namaProduk = model.getValueAt(i, 2).toString();
+                        String hargaSatuan = model.getValueAt(i, 3).toString();
+                        String Qty = model.getValueAt(i, 4).toString();
+                        String totalHarga = model.getValueAt(i, 5).toString();
+                        String sql1 = "INSERT INTO `tb_detailbeli`(`id_transaksi`, `id_produk`, `nama_produk`, `jumlah_produk`, `harga_beli`, `total_harga`) VALUES ("
+                                + "'" + txt_idTransaksi.getText() + "', '" + idProduk + "', '" + namaProduk + "', " + Qty + ", " + hargaSatuan + ", " + totalHarga + ")";
+                        java.sql.PreparedStatement ps1 = con.prepareStatement(sql1);
+                        ps1.execute();
 
-                        //Hapus top
-                        txt_KodeProduk.setText("");
-                        txt_namaProduk.setText("");
-                        txt_hargaSatuan.setText("");
-                        txt_Jumlah.setText("");
+                    }
+                    JOptionPane.showMessageDialog(this, "Berhasil Tersimpan");
+                    try {
+                        String namaFile = "src" + File.separator + "TransaksiBeli" + File.separator + "StrukBeli.jasper";
+                        Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+                        Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost:3306/d'kazieree", "root", "");
+                        HashMap hash = new HashMap();
+                        hash.put("kodeTransaksi", txt_idTransaksi.getText());
+                        File file = new File(namaFile);
+                        JasperReport jasperReport = (JasperReport) JRLoader.loadObject(file.getPath());
+                        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, hash, koneksi);
+                        JasperViewer.viewReport(jasperPrint, false);
+                    } catch (Exception e) {
+                        System.err.println(e.getMessage());
+
+                    }
+                    for (int i = jumlah_baris - 1; i >= 0; i--) {
+                        model.removeRow(i);
+                    }
+
+                    //Hapus top
+                    txt_KodeProduk.setText("");
+                    txt_namaProduk.setText("");
+                    txt_hargaSatuan.setText("");
+                    txt_Jumlah.setText("");
 //                        txt_stok.setText("");
 
-                        //Hapus Bottom
-                        txt_idPemasok.setText("");
+                    //Hapus Bottom
+                    txt_idPemasok.setText("");
 //                        txt_diskonPersen.setText("");
-                        txt_namaPemasok.setText("");
-                        txt_nominal.setText("");
-                        txt_kembalian.setText("");
+                    txt_namaPemasok.setText("");
+                    txt_nominal.setText("");
+//                    txt_kembalian.setText("");
 
-                        txt_KodeProduk.requestFocus();
+                    txt_KodeProduk.requestFocus();
 
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(rootPane, "Gagal Menyimpan! Error : " + e);
-                    }
-                      
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(rootPane, e);
+                    JOptionPane.showMessageDialog(rootPane, "Gagal Menyimpan! Error : " + e);
                 }
-            
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, e);
+            }
+
         }
     }
 
@@ -629,12 +633,9 @@ public class Transbeli extends javax.swing.JInternalFrame {
         button4 = new Swing.Button();
         total_harga = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txt_kembalian = new javax.swing.JLabel();
         txt_nominal = new Swing.TextField();
         txt_namaPemasok = new Swing.TextField();
         txt_idPemasok = new Swing.TextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable(){
 
@@ -860,18 +861,18 @@ public class Transbeli extends javax.swing.JInternalFrame {
                 button5ActionPerformed(evt);
             }
         });
-        getContentPane().add(button5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 460, 120, 40));
+        getContentPane().add(button5, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 460, 120, 40));
 
         button4.setBackground(new java.awt.Color(0, 51, 51));
         button4.setForeground(new java.awt.Color(255, 255, 255));
-        button4.setText("Bayar dan Simpan");
+        button4.setText("Simpan");
         button4.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
         button4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button4ActionPerformed(evt);
             }
         });
-        getContentPane().add(button4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 610, 150, 40));
+        getContentPane().add(button4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 560, 150, 40));
 
         total_harga.setFont(new java.awt.Font("Quicksand Medium", 0, 40)); // NOI18N
         total_harga.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -883,10 +884,6 @@ public class Transbeli extends javax.swing.JInternalFrame {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("Total");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 460, 140, 30));
-
-        txt_kembalian.setFont(new java.awt.Font("Quicksand Medium", 0, 24)); // NOI18N
-        txt_kembalian.setText("0");
-        getContentPane().add(txt_kembalian, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 620, 220, 40));
 
         txt_nominal.setDisabledTextColor(new java.awt.Color(0, 204, 153));
         txt_nominal.setFont(new java.awt.Font("Quicksand Medium", 0, 13)); // NOI18N
@@ -931,15 +928,6 @@ public class Transbeli extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(txt_idPemasok, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 450, 240, 40));
-
-        jLabel3.setFont(new java.awt.Font("Quicksand Medium", 0, 12)); // NOI18N
-        jLabel3.setText("Rp");
-        jLabel3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 620, 20, 30));
-
-        jLabel2.setFont(new java.awt.Font("Quicksand Medium", 0, 12)); // NOI18N
-        jLabel2.setText("Total Kembalian");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 600, 110, 20));
 
         jScrollPane1.setBorder(null);
 
@@ -1002,6 +990,11 @@ public class Transbeli extends javax.swing.JInternalFrame {
         button2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button2ActionPerformed(evt);
+            }
+        });
+        button2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                button2KeyTyped(evt);
             }
         });
         getContentPane().add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 220, 190, 40));
@@ -1103,9 +1096,16 @@ public class Transbeli extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
 //        kolom();
 
-        auto_numberTable();
-        simpanKeranjang();
-        hitung();
+        if (txt_namaProduk.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Tekan Enter Setelah ID Produk Terisi");
+            txt_KodeProduk.requestFocus();
+        } else if (txt_Jumlah.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Jumlah produk tidak boleh kosong");
+        } else {
+            auto_numberTable();
+            simpanKeranjang();
+            hitung();
+        }
 
 
     }//GEN-LAST:event_button2ActionPerformed
@@ -1116,7 +1116,7 @@ public class Transbeli extends javax.swing.JInternalFrame {
         if (!(jTable1.getSelectedRow() < 0)) {
             int jawab = JOptionPane.showOptionDialog(this,
                     "Ingin menghapus tabel yang pilih?",
-                    "Keluar",
+                    "Hapus",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE, null, null, null);
 
@@ -1136,7 +1136,7 @@ public class Transbeli extends javax.swing.JInternalFrame {
 //                    diskon_persen.setText("");
                 txt_namaPemasok.setText("");
                 txt_nominal.setText("");
-                txt_kembalian.setText("");
+//                txt_kembalian.setText("");
 
                 txt_KodeProduk.requestFocus();
 
@@ -1147,35 +1147,69 @@ public class Transbeli extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_button3ActionPerformed
 
     private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
-         // TODO add your handling code here:
-        bayar();
+        // TODO add your handling code here:
+        int hitungTabel = jTable1.getRowCount();
+        int opsi1 = JOptionPane.showOptionDialog(this,
+                "Ingin menyimpan transaksi?",
+                "Pesan Konfirmasi",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+        if (hitungTabel == 0) {
+            JOptionPane.showMessageDialog(this, "Keranjang Masih Kosong");
+        } else if (txt_idPemasok.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "   Silahkan Pilih "
+                    + "Pemasok Terlebih Dahulu");
+
+        } else if (opsi1 == JOptionPane.YES_OPTION) {
+            bayar();
+
+        }
+
+
     }//GEN-LAST:event_button4ActionPerformed
 
     private void button6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button6ActionPerformed
         // TODO add your handling code here:
-        txt_KodeProduk.setText("");
-        txt_KodeProduk.setText("");
-        txt_namaProduk.setText("");
-        txt_Jumlah.setText("");
+        int baris = jTable1.getRowCount();
+        System.out.println(baris);
+        int opsi = JOptionPane.showOptionDialog(this,
+                "Ingin memulai transaksi baru lagi?",
+                "Konfirmasi",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+        if (baris < 1) {
+            JOptionPane.showMessageDialog(this, "Keranjang Kosong atau Tidak ada yang dibershikan");
+
+        } else if (opsi == JOptionPane.YES_OPTION) {
+            txt_KodeProduk.setText("");
+            txt_KodeProduk.setText("");
+            txt_namaProduk.setText("");
+            txt_Jumlah.setText("");
 //        txt_stok.setText("");
 
-        //Hapus Bottom
+            //Hapus Bottom
 //            txt_diskonPersen.setText("");
-        txt_idPemasok.setText("");
-        txt_namaPemasok.setText("");
-        txt_nominal.setText("");
-        txt_kembalian.setText("");
+            txt_idPemasok.setText("");
+            txt_namaPemasok.setText("");
+            txt_nominal.setText("");
+//            txt_kembalian.setText("");
 
-        //Hapus Tabel
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        int baris = jTable1.getRowCount();
-        if (!(baris < 0)) {
-            for (int i = baris - 1; i >= 0; i--) {
-                model.removeRow(i);
+            //Hapus Tabel
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+            if (!(baris < 0)) {
+                for (int i = baris - 1; i >= 0; i--) {
+                    model.removeRow(i);
+                }
             }
+            kode_transaksi();
+            txt_KodeProduk.requestFocus();
+
         }
-        kode_transaksi();
-        txt_KodeProduk.requestFocus();
+
+
     }//GEN-LAST:event_button6ActionPerformed
 
     private void txt_KodeProdukKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_KodeProdukKeyReleased
@@ -1283,12 +1317,12 @@ public class Transbeli extends javax.swing.JInternalFrame {
 
     private void button7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button7ActionPerformed
         // TODO add your handling code here:
-        int jawab = JOptionPane.showOptionDialog(this,
+        int opsi1 = JOptionPane.showOptionDialog(this,
                 "Ingin membatalkan memilih barang?",
                 "Konfirmasi Pilihan",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, null, null);
-        if (jawab == JOptionPane.YES_OPTION) {
+        if (opsi1 == JOptionPane.YES_OPTION) {
             jPanel1.setVisible(false);
         }
     }//GEN-LAST:event_button7ActionPerformed
@@ -1338,9 +1372,11 @@ public class Transbeli extends javax.swing.JInternalFrame {
 
     private void txt_JumlahKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_JumlahKeyTyped
         // TODO add your handling code here:
-        char k = evt.getKeyChar();
+//        ((AbstractDocument) txt_Jumlah.getDocument()).setDocumentFilter(new CustomDocumentFilter());
+
+        char c = evt.getKeyChar();
         int panjang = txt_Jumlah.getText().length();
-        if (!(Character.isDigit(k) || k == KeyEvent.VK_BACK_SPACE || k == KeyEvent.VK_DELETE)) {
+        if ((this.txt_Jumlah.getText().isEmpty() && (!Character.isDigit(c) || c == '0')) || !(Character.isDigit(c)) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE)) {
             evt.consume();
         }
         if (evt.getKeyChar() == KeyEvent.VK_SPACE) {
@@ -1404,7 +1440,17 @@ public class Transbeli extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_pilihPemasokActionPerformed
 
     private void button8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button8ActionPerformed
-        jPanel2.setVisible(false);
+
+        int opsi1 = JOptionPane.showOptionDialog(this,
+                "Batal Memilih Pemasok?",
+                "Pesan Konfirmasi",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, null, null);
+        if (opsi1 == JOptionPane.YES_OPTION) {
+            jPanel2.setVisible(false);
+        }
+
+
     }//GEN-LAST:event_button8ActionPerformed
 
     private void FieldCariPemasokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldCariPemasokActionPerformed
@@ -1429,6 +1475,10 @@ public class Transbeli extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_nominalActionPerformed
 
+    private void button2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_button2KeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button2KeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Swing.TextField FieldCariPemasok;
@@ -1444,8 +1494,6 @@ public class Transbeli extends javax.swing.JInternalFrame {
     private Swing.Button button7;
     private Swing.Button button8;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1465,7 +1513,6 @@ public class Transbeli extends javax.swing.JInternalFrame {
     private Swing.TextField txt_hargaSatuan;
     private Swing.TextField txt_idPemasok;
     private Swing.TextField txt_idTransaksi;
-    private javax.swing.JLabel txt_kembalian;
     private Swing.TextField txt_namaPemasok;
     private Swing.TextField txt_namaProduk;
     private Swing.TextField txt_nominal;
