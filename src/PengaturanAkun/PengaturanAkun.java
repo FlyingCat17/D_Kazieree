@@ -22,6 +22,8 @@ private DefaultTableModel mod, mod2, mod3;
         gui.setNorthPane(null);
         nama = usr.getNama();
         mod = new DefaultTableModel();
+        panel_akun.setVisible(false);
+        panel_Passwird.setVisible(false);
         txt_Alamat.setText("<html>"+al+"</html>");
         System.out.println(usr.getId_pengguna());
         loadData();
@@ -67,6 +69,14 @@ private DefaultTableModel mod, mod2, mod3;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panel_Passwird = new Swing.PanelRound();
+        panelRound5 = new Swing.PanelRound();
+        jLabel11 = new javax.swing.JLabel();
+        txt_KonfirmasiKataSandiBaru = new Swing.PasswordField();
+        txt_KataSandiBaru = new Swing.PasswordField();
+        btn_BatalKataSandiBaru = new Swing.Button();
+        btn_SimpanKatasandiBaru = new Swing.Button();
+        jLabel10 = new javax.swing.JLabel();
         panel_akun = new Swing.PanelRound();
         panelRound4 = new Swing.PanelRound();
         jLabel6 = new javax.swing.JLabel();
@@ -103,9 +113,66 @@ private DefaultTableModel mod, mod2, mod3;
         setPreferredSize(new java.awt.Dimension(960, 707));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        panel_Passwird.setBackground(new java.awt.Color(185, 185, 185));
+        panel_Passwird.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelRound5.setBackground(new java.awt.Color(255, 255, 255));
+        panelRound5.setRoundBottomLeft(15);
+        panelRound5.setRoundBottomRight(15);
+        panelRound5.setRoundTopLeft(15);
+        panelRound5.setRoundTopRight(15);
+        panelRound5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel11.setFont(new java.awt.Font("Quicksand", 1, 24)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(253, 144, 39));
+        jLabel11.setText("UBAH KATA SANDI");
+        panelRound5.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 250, 40));
+
+        txt_KonfirmasiKataSandiBaru.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txt_KonfirmasiKataSandiBaru.setLabelText("Konfirmasi Kata Sandi Baru");
+        txt_KonfirmasiKataSandiBaru.setLineColor(new java.awt.Color(253, 144, 39));
+        txt_KonfirmasiKataSandiBaru.setShowAndHide(true);
+        panelRound5.add(txt_KonfirmasiKataSandiBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 450, -1));
+
+        txt_KataSandiBaru.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txt_KataSandiBaru.setLabelText("Kata Sandi Baru");
+        txt_KataSandiBaru.setLineColor(new java.awt.Color(253, 144, 39));
+        txt_KataSandiBaru.setShowAndHide(true);
+        panelRound5.add(txt_KataSandiBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 450, -1));
+
+        btn_BatalKataSandiBaru.setBackground(new java.awt.Color(255, 102, 102));
+        btn_BatalKataSandiBaru.setForeground(new java.awt.Color(255, 255, 255));
+        btn_BatalKataSandiBaru.setText("BATAL");
+        btn_BatalKataSandiBaru.setFont(new java.awt.Font("Quicksand", 1, 12)); // NOI18N
+        btn_BatalKataSandiBaru.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_BatalKataSandiBaruActionPerformed(evt);
+            }
+        });
+        panelRound5.add(btn_BatalKataSandiBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, 80, 30));
+
+        btn_SimpanKatasandiBaru.setBackground(new java.awt.Color(0, 255, 0));
+        btn_SimpanKatasandiBaru.setForeground(new java.awt.Color(255, 255, 255));
+        btn_SimpanKatasandiBaru.setText("SIMPAN");
+        btn_SimpanKatasandiBaru.setFont(new java.awt.Font("Quicksand", 1, 12)); // NOI18N
+        btn_SimpanKatasandiBaru.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_SimpanKatasandiBaruActionPerformed(evt);
+            }
+        });
+        panelRound5.add(btn_SimpanKatasandiBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 240, 80, 30));
+
+        panel_Passwird.add(panelRound5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, 510, 300));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PengaturanAkun/form_gantiPassword.png"))); // NOI18N
+        panel_Passwird.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 690));
+
+        getContentPane().add(panel_Passwird, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 690));
+
         panel_akun.setBackground(new java.awt.Color(185, 185, 185));
         panel_akun.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        panelRound4.setBackground(new java.awt.Color(255, 255, 255));
         panelRound4.setRoundBottomLeft(15);
         panelRound4.setRoundBottomRight(15);
         panelRound4.setRoundTopLeft(15);
@@ -364,15 +431,31 @@ private DefaultTableModel mod, mod2, mod3;
 
     private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
         // TODO add your handling code here:
+        panel_Passwird.setVisible(true);
+        panel_akun.setVisible(false);
     }//GEN-LAST:event_button4ActionPerformed
+
+    private void btn_SimpanKatasandiBaruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SimpanKatasandiBaruActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_SimpanKatasandiBaruActionPerformed
+
+    private void btn_BatalKataSandiBaruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_BatalKataSandiBaruActionPerformed
+        // TODO add your handling code here:
+        panel_Passwird.setVisible(false);
+        panel_akun.setVisible(true);
+    }//GEN-LAST:event_btn_BatalKataSandiBaruActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private Swing.Button btn_BatalKataSandiBaru;
+    private Swing.Button btn_SimpanKatasandiBaru;
     private Swing.Button btn_simpanUbah;
     private Swing.Button button1;
     private Swing.Button button2;
     private Swing.Button button4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -383,11 +466,15 @@ private DefaultTableModel mod, mod2, mod3;
     private Swing.PanelRound panelRound1;
     private Swing.PanelRound panelRound2;
     private Swing.PanelRound panelRound4;
+    private Swing.PanelRound panelRound5;
+    private Swing.PanelRound panel_Passwird;
     private Swing.PanelRound panel_akun;
     private Swing.PanelRound panel_utama;
     private Swing.PasswordField passwordField1;
     private javax.swing.JLabel txt_Alamat;
     private javax.swing.JLabel txt_IDPengguna;
+    private Swing.PasswordField txt_KataSandiBaru;
+    private Swing.PasswordField txt_KonfirmasiKataSandiBaru;
     private Swing.TextField txt_UbahAlamat;
     private Swing.TextField txt_UbahIDPengguna;
     private Swing.TextField txt_UbahNamaLengkap;

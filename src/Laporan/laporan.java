@@ -1,4 +1,5 @@
 package Laporan;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.sql.Connection;
@@ -6,6 +7,7 @@ import db.konekdb;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
@@ -15,21 +17,31 @@ import javax.swing.table.DefaultTableModel;
  * @author Fathan
  */
 public class laporan extends javax.swing.JInternalFrame {
-DateFormat hari = new SimpleDateFormat("yyyy-MM-dd");
-DateFormat harii = new SimpleDateFormat("dd-MM-yyyy");
-String a = hari.format(Calendar.getInstance().getTime());
-String aa = harii.format(Calendar.getInstance().getTime());
-DateFormat Bulanan = new SimpleDateFormat("yyyyMM");
-String AmbilBulanSekarang = Bulanan.format(Calendar.getInstance().getTime());
-DateFormat Bulann = new SimpleDateFormat("yyyyMM");
+Connection connn;
+public Connection connnn(){
+    try {
+        connn = (Connection) konekdb.GetConnection();
+        return connn;
+    } catch (Exception e) {
+    }
+    return connn;
+}
+    DateFormat hari = new SimpleDateFormat("yyyy-MM-dd");
+    DateFormat harii = new SimpleDateFormat("dd-MM-yyyy");
+    String a = hari.format(Calendar.getInstance().getTime());
+    String aa = harii.format(Calendar.getInstance().getTime());
+    DateFormat Bulanan = new SimpleDateFormat("yyyyMM");
+    String AmbilBulanSekarang = Bulanan.format(Calendar.getInstance().getTime());
+    DateFormat Bulann = new SimpleDateFormat("yyyyMM");
 
 // bulanan
-DateFormat formatBulan = new SimpleDateFormat("MM");
-String formatBulan1 = formatBulan.format(Calendar.getInstance().getTime());
-DateFormat formatTahun = new SimpleDateFormat("YYYY");
-String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
+    DateFormat formatBulan = new SimpleDateFormat("MM");
+    String formatBulan1 = formatBulan.format(Calendar.getInstance().getTime());
+    DateFormat formatTahun = new SimpleDateFormat("Y");
+    String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
+
     /**
-     * Creates new form 
+     * Creates new form
      */
     public laporan() {
         initComponents();
@@ -42,10 +54,11 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
         panel_Harian.setVisible(true);
         panel_Bulanan.setVisible(false);
         loadDataHariIni();
-        System.out.println(formatTahun1+formatBulan1);
+        System.out.println(formatTahun1 + formatBulan1);
     }
 //    
-    public void loadDataHariIni(){
+
+    public void loadDataHariIni() {
         DefaultTableModel transjual = new DefaultTableModel();
         transjual.addColumn("ID Transaksi");
         transjual.addColumn("Diskon");
@@ -55,8 +68,9 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
         transbeli.addColumn("ID Transaksi");
         transbeli.addColumn("ID Pemasok");
         transbeli.addColumn("Total Harga");
-        
+        System.out.println(a);
         txt_TanggalHariIni.setText(aa);
+
         try {
             String loadPendapatandanLaba = "SELECT SUM(tb_jual.total_harga) AS Pendapatan, SUM((tb_produk.harga_jual - tb_produk.harga_beli)*tb_detailjual.jumlah_produk) AS Laba\n"
                     + "FROM tb_jual\n"
@@ -64,38 +78,38 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
                     + "ON tb_jual.id_transaksi = tb_detailjual.id_transaksi\n"
                     + "JOIN tb_produk\n"
                     + "ON tb_detailjual.id_produk = tb_produk.id_produk\n"
-                    + "WHERE tb_jual.tgl_transaksi = '"+a+"'\n"
+                    + "WHERE tb_jual.tgl_transaksi = '" + a + "'\n"
                     + "GROUP BY tb_jual.id_transaksi";
             String loadTransaksiJualHariIni = "SELECT tb_jual.id_transaksi, tb_jual.total_diskon, "
                     + "tb_jual.total_harga, tb_jual.id_pengguna\n"
                     + "FROM tb_jual\n"
-                    + "WHERE tb_jual.tgl_transaksi = '"+a+"'";
+                    + "WHERE tb_jual.tgl_transaksi = '" + a + "'";
             String loadPendapatanHarian = "SELECT SUM(tb_jual.total_harga) AS PENDAPATAN\n"
                     + "FROM tb_jual\n"
-                    + "WHERE tb_jual.tgl_transaksi = '"+a+"'";
+                    + "WHERE tb_jual.tgl_transaksi = '" + a + "'";
             String loadTransaksiBeliHariIni = "SELECT tb_beli.id_transaksi, tb_beli.id_pemasok, tb_beli.total_harga\n"
                     + "FROM tb_beli\n"
-                    + "WHERE tb_beli.tgl_transaksi = '"+a+"'";
-            String loadPemasukanHariIni = "SELECT EXTRACT(YEAR_MONTH FROM tb_pemasukan.tgl_pemasukan) AS year_and_month, SUM(tb_pemasukan.jumlah_pemasukan) AS PEMASUKAN_BULAN_INI\n"
-                    + "FROM tb_pemasukan\n"
-                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_pemasukan.tgl_pemasukan) = '"+a+"'\n"
-                    + "GROUP BY EXTRACT(YEAR_MONTH FROM tb_pemasukan.tgl_pemasukan);";
-            java.sql.Connection con = (Connection)konekdb.GetConnection();
+                    + "WHERE tb_beli.tgl_transaksi = '" + a + "'";
+            String loadPemasukanHariIni = "SELECT tb_pemasukan.tgl_pemasukan, SUM(tb_pemasukan.jumlah_pemasukan) AS PEMASUKAN FROM tb_pemasukan WHERE tb_pemasukan.tgl_pemasukan = '" + a + "'";
+            java.sql.Connection con = (Connection) konekdb.GetConnection();
+            java.sql.Connection con1 = (Connection) konekdb.GetConnection();
             java.sql.Statement st = con.createStatement();
             java.sql.Statement st1 = con.createStatement();
             java.sql.Statement st2 = con.createStatement();
             java.sql.Statement st3 = con.createStatement();
+            java.sql.Statement st4 = con1.createStatement();
             java.sql.ResultSet res = st.executeQuery(loadPendapatandanLaba);
             java.sql.ResultSet res1 = st1.executeQuery(loadTransaksiJualHariIni);
             java.sql.ResultSet res2 = st2.executeQuery(loadPendapatanHarian);
             java.sql.ResultSet res3 = st3.executeQuery(loadTransaksiBeliHariIni);
+            java.sql.ResultSet res4 = st4.executeQuery(loadPemasukanHariIni);
             if (res.next()) {
-                txt_labaHarian.setText("Rp"+res.getString("Laba"));
+                txt_labaHarian.setText("Rp" + res.getString("Laba"));
             }
-            while (res2.next()) {                
-                txt_PendapatanHarian.setText("Rp"+res2.getString("PENDAPATAN").toString());
+            while (res2.next()) {
+                txt_PendapatanHarian.setText("Rp" + res2.getString("PENDAPATAN").toString());
             }
-            while (res1.next()) {                
+            while (res1.next()) {
                 transjual.addRow(new Object[]{
                     res1.getString(1),
                     res1.getString(2),
@@ -104,7 +118,7 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
                 });
                 tabel_TransaksiPenjualanHarian.setModel(transjual);
             }
-            while (res3.next()) {                
+            while (res3.next()) {
                 transbeli.addRow(new Object[]{
                     res3.getString(1),
                     res3.getString(2),
@@ -112,11 +126,14 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
                 });
                 tabel_TransaksiPembelianHarian.setModel(transbeli);
             }
+
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }
-    public void loadDataperTanggal(){
+
+    public void loadDataperTanggal() {
+
         DefaultTableModel transjual = new DefaultTableModel();
         transjual.addColumn("ID Transaksi");
         transjual.addColumn("Diskon");
@@ -126,47 +143,51 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
         transbeli.addColumn("ID Transaksi");
         transbeli.addColumn("ID Pemasok");
         transbeli.addColumn("Total Harga");
+
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String date = sdf.format(jDateChooser1.getDate());
-        SimpleDateFormat sdff = new SimpleDateFormat("dd-MM-yyyy");
-        String datee = sdff.format(jDateChooser1.getDate());
-        
-        txt_TanggalHariIni.setText(datee);
+            String date = sdf.format(jDateChooser1.getDate());
+            SimpleDateFormat sdff = new SimpleDateFormat("dd-MM-yyyy");
+            String datee = sdff.format(jDateChooser1.getDate());
+
+            txt_TanggalHariIni.setText(datee);
             String loadPendapatandanLaba = "SELECT SUM(tb_jual.total_harga) AS Pendapatan, SUM((tb_produk.harga_jual - tb_produk.harga_beli)*tb_detailjual.jumlah_produk) AS Laba\n"
                     + "FROM tb_jual\n"
                     + "JOIN tb_detailjual\n"
                     + "ON tb_jual.id_transaksi = tb_detailjual.id_transaksi\n"
                     + "JOIN tb_produk\n"
                     + "ON tb_detailjual.id_produk = tb_produk.id_produk\n"
-                    + "WHERE tb_jual.tgl_transaksi = '"+date+"'\n"
+                    + "WHERE tb_jual.tgl_transaksi = '" + date + "'\n"
                     + "GROUP BY tb_jual.id_transaksi";
             String loadTransaksiJualHariIni = "SELECT tb_jual.id_transaksi, tb_jual.total_diskon, "
                     + "tb_jual.total_harga, tb_jual.id_pengguna\n"
                     + "FROM tb_jual\n"
-                    + "WHERE tb_jual.tgl_transaksi = '"+date+"'";
+                    + "WHERE tb_jual.tgl_transaksi = '" + date + "'";
             String loadPendapatanHarian = "SELECT SUM(tb_jual.total_harga) AS PENDAPATAN\n"
                     + "FROM tb_jual\n"
-                    + "WHERE tb_jual.tgl_transaksi = '"+date+"'";
+                    + "WHERE tb_jual.tgl_transaksi = '" + date + "'";
             String loadTransaksiBeliHariIni = "SELECT tb_beli.id_transaksi, tb_beli.id_pemasok, tb_beli.total_harga\n"
                     + "FROM tb_beli\n"
-                    + "WHERE tb_beli.tgl_transaksi = '"+date+"'";
-            java.sql.Connection con = (Connection)konekdb.GetConnection();
+                    + "WHERE tb_beli.tgl_transaksi = '" + date + "'";
+            String loadPemasukanHariIni = "SELECT tb_pemasukan.tgl_pemasukan, SUM(tb_pemasukan.jumlah_pemasukan) AS PEMASUKAN FROM tb_pemasukan WHERE tb_pemasukan.tgl_pemasukan = '" + date + "'";
+            java.sql.Connection con = (Connection) konekdb.GetConnection();
+            java.sql.Statement s = con.createStatement();
             java.sql.Statement st = con.createStatement();
             java.sql.Statement st1 = con.createStatement();
             java.sql.Statement st2 = con.createStatement();
             java.sql.Statement st3 = con.createStatement();
+            java.sql.ResultSet r = s.executeQuery(loadPemasukanHariIni);
             java.sql.ResultSet res = st.executeQuery(loadPendapatandanLaba);
             java.sql.ResultSet res1 = st1.executeQuery(loadTransaksiJualHariIni);
             java.sql.ResultSet res2 = st2.executeQuery(loadPendapatanHarian);
             java.sql.ResultSet res3 = st3.executeQuery(loadTransaksiBeliHariIni);
             if (res.next()) {
-                txt_labaHarian.setText("Rp"+res.getString("Laba"));
+                txt_labaHarian.setText("Rp" + res.getString("Laba"));
             }
-            while (res2.next()) {                
-                txt_PendapatanHarian.setText("Rp"+res2.getString("PENDAPATAN").toString());
+            while (res2.next()) {
+                txt_PendapatanHarian.setText("Rp" + res2.getString("PENDAPATAN").toString());
             }
-            while (res1.next()) {                
+            while (res1.next()) {
                 transjual.addRow(new Object[]{
                     res1.getString(1),
                     res1.getString(2),
@@ -175,7 +196,7 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
                 });
                 tabel_TransaksiPenjualanHarian.setModel(transjual);
             }
-            while (res3.next()) {                
+            while (res3.next()) {
                 transbeli.addRow(new Object[]{
                     res3.getString(1),
                     res3.getString(2),
@@ -187,13 +208,12 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
             System.err.println(e.getMessage());
             txt_PendapatanHarian.setText("Rp0");
             txt_labaHarian.setText("Rp0");
-            txt_pemasukanLainLainperTanggal.setText("Rp0");
-            txt_pengeluaranmLainLainperTanggal.setText("Rp0");
             tabel_TransaksiPembelianHarian.setModel(transbeli);
-            tabel_TransaksiPenjualanHarian.setModel(transjual); 
+            tabel_TransaksiPenjualanHarian.setModel(transjual);
         }
     }
-    public void loadDataBulainIni(){
+
+    public void loadDataBulainIni() {
         DefaultTableModel TBPeringkatProduk = new DefaultTableModel();
         TBPeringkatProduk.addColumn("ID Produk");
         TBPeringkatProduk.addColumn("Nama Produk");
@@ -203,7 +223,6 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
         TBPeringkatPemasok.addColumn("Nama Pemasok");
         DefaultTableModel transbeli = new DefaultTableModel();
         transbeli.addColumn("ID Transaksi");
-        transbeli.addColumn("ID Pemasok");
         transbeli.addColumn("Total Harga");
         DefaultTableModel transjual = new DefaultTableModel();
         transjual.addColumn("tgl Transaksi");
@@ -213,7 +232,7 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
         try {
             String PendapatanBulanIni = "SELECT EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) AS year_and_month, SUM(tb_jual.total_harga) AS Pendapatan\n"
                     + "FROM tb_jual\n"
-                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) = '"+AmbilBulanSekarang+"'\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) = '" + AmbilBulanSekarang + "'\n"
                     + "GROUP BY EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi)";
             String LabaBulanIni = "SELECT EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) AS year_and_month, SUM((tb_produk.harga_jual - tb_produk.harga_beli)*tb_detailjual.jumlah_produk) AS Laba\n"
                     + "FROM tb_jual\n"
@@ -221,15 +240,15 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
                     + "ON tb_jual.id_transaksi = tb_detailjual.id_transaksi\n"
                     + "JOIN tb_produk\n"
                     + "ON tb_detailjual.id_produk=tb_produk.id_produk\n"
-                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) = '"+AmbilBulanSekarang+"'\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) = '" + AmbilBulanSekarang + "'\n"
                     + "GROUP BY EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi)";
             String PemasukanBulanIni = "SELECT EXTRACT(YEAR_MONTH FROM tb_pemasukan.tgl_pemasukan) AS year_and_month, SUM(tb_pemasukan.jumlah_pemasukan) AS PEMASUKAN_BULAN_INI\n"
                     + "FROM tb_pemasukan\n"
-                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_pemasukan.tgl_pemasukan) = '"+AmbilBulanSekarang+"'\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_pemasukan.tgl_pemasukan) = '" + AmbilBulanSekarang + "'\n"
                     + "GROUP BY EXTRACT(YEAR_MONTH FROM tb_pemasukan.tgl_pemasukan);";
             String PengeluaranBulanIni = "SELECT EXTRACT(YEAR_MONTH FROM tb_pengeluaran.tgl_pengeluaran) AS year_and_month, SUM(tb_pengeluaran.jumlah_pengeluaran) AS PENGELUARAN_BULAN_INI\n"
                     + "FROM tb_pengeluaran\n"
-                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_pengeluaran.tgl_pengeluaran) = '"+AmbilBulanSekarang+"'\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_pengeluaran.tgl_pengeluaran) = '" + AmbilBulanSekarang + "'\n"
                     + "GROUP BY EXTRACT(YEAR_MONTH FROM tb_pengeluaran.tgl_pengeluaran);";
             String PeringkatProduk = "SELECT EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) AS TANGGAL, tb_detailjual.id_produk, tb_produk.nama_produk, COUNT(tb_detailjual.jumlah_produk) AS Total\n"
                     + "FROM tb_detailjual\n"
@@ -237,25 +256,25 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
                     + "ON tb_jual.id_transaksi = tb_detailjual.id_transaksi\n"
                     + "JOIN tb_produk\n"
                     + "ON tb_detailjual.id_produk = tb_produk.id_produk\n"
-                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) = '"+AmbilBulanSekarang+"'\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) = '" + AmbilBulanSekarang + "'\n"
                     + "GROUP BY tb_detailjual.id_produk\n"
                     + "ORDER BY COUNT(tb_detailjual.jumlah_produk) DESC";
             String PeringkatPemasok = "SELECT EXTRACT(YEAR_MONTH FROM tb_beli.tgl_transaksi) AS TANGGAL, tb_beli.id_pemasok, tb_pemasok.nama_pemasok, COUNT(tb_beli.id_pemasok) AS TOTAL\n"
                     + "FROM tb_beli\n"
                     + "JOIN tb_pemasok\n"
                     + "ON tb_beli.id_pemasok = tb_pemasok.id_pemasok\n"
-                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_beli.tgl_transaksi) = '"+AmbilBulanSekarang+"'\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_beli.tgl_transaksi) = '" + AmbilBulanSekarang + "'\n"
                     + "GROUP BY tb_beli.id_pemasok\n"
                     + "ORDER BY COUNT(tb_beli.id_pemasok) DESC;";
             String CatatanPenjualanBulanan = "SELECT  DATE_FORMAT(tb_jual.tgl_transaksi,'%d/%m/%Y'),tb_jual.total_harga, SUM((tb_produk.harga_jual - tb_produk.harga_beli)*tb_detailjual.jumlah_produk) AS Laba\n"
                     + "FROM tb_jual\n"
                     + "JOIN tb_detailjual ON tb_detailjual.id_transaksi = tb_jual.id_transaksi\n"
                     + "JOIN tb_produk ON tb_detailjual.id_produk = tb_produk.id_produk\n"
-                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) = '"+AmbilBulanSekarang+"'\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) = '" + AmbilBulanSekarang + "'\n"
                     + "GROUP BY tb_jual.tgl_transaksi";
             String CatatanPembelianBulanan = "SELECT DATE_FORMAT(tb_beli.tgl_transaksi, '%d/%m/%Y'), tb_beli.total_harga\n"
                     + "FROM tb_beli\n"
-                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_beli.tgl_transaksi) = '"+formatTahun1+formatBulan1+"'";
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_beli.tgl_transaksi) = '" + formatTahun1 + formatBulan1 + "'";
             java.sql.Connection con = (Connection) konekdb.GetConnection();
             java.sql.Statement st = con.createStatement();
             java.sql.Statement st1 = con.createStatement();
@@ -265,7 +284,7 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
             java.sql.Statement st5 = con.createStatement();
             java.sql.Statement st6 = con.createStatement();
             java.sql.Statement st7 = con.createStatement();
-            
+
             java.sql.ResultSet rs = st.executeQuery(PendapatanBulanIni);
             java.sql.ResultSet rs1 = st1.executeQuery(LabaBulanIni);
             java.sql.ResultSet rs2 = st2.executeQuery(PemasukanBulanIni);
@@ -274,18 +293,18 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
             java.sql.ResultSet rs5 = st5.executeQuery(PeringkatPemasok);
             java.sql.ResultSet rs6 = st6.executeQuery(CatatanPenjualanBulanan);
             java.sql.ResultSet rs7 = st7.executeQuery(CatatanPembelianBulanan);
-            
+
             if (rs.next()) {
-                txt_PendapatanBulanan.setText("Rp"+rs.getString(2));
+                txt_PendapatanBulanan.setText("Rp" + rs.getString(2));
             }
             if (rs1.next()) {
-                txt_labaHarian1.setText("Rp"+rs1.getString(2));
+                txt_labaHarian1.setText("Rp" + rs1.getString(2));
             }
             if (rs2.next()) {
-                txt_pemasukanLainLainperTanggal1.setText("Rp"+rs2.getString(2));
+                txt_pemasukanLainLainperTanggal1.setText("Rp" + rs2.getString(2));
             }
-            if(rs3.next()){
-                txt_pengeluaranmLainLainperTanggal1.setText("Rp"+rs3.getString(2));
+            if (rs3.next()) {
+                txt_pengeluaranmLainLainperTanggal1.setText("Rp" + rs3.getString(2));
             }
             while (rs4.next()) {
                 TBPeringkatProduk.addRow(new Object[]{
@@ -295,14 +314,14 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
                 });
                 tabel_PeringkatProduk.setModel(TBPeringkatProduk);
             }
-            while(rs5.next()){
+            while (rs5.next()) {
                 TBPeringkatPemasok.addRow(new Object[]{
                     rs5.getString(2),
                     rs5.getString(3)
-            });
+                });
                 tabel_PeringkatPemasok.setModel(TBPeringkatPemasok);
             }
-            while (rs6.next()) {                
+            while (rs6.next()) {
                 transjual.addRow(new Object[]{
                     rs6.getString(1),
                     rs6.getString(2),
@@ -310,7 +329,7 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
                 });
                 tabel_TransaksiPenjualanBulanan.setModel(transjual);
             }
-            while(rs7.next()){
+            while (rs7.next()) {
                 transbeli.addRow(new Object[]{
                     rs7.getString(1),
                     rs7.getString(2)
@@ -321,10 +340,187 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
             System.err.println(e.getMessage());
         }
     }
-    
+
+    public void loadDataPerBulan() {
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYYMM");
+        Date dateMonthChoose = jDateChooser2.getDate();
+        String dateMonth = sdf.format(dateMonthChoose);
+        DefaultTableModel TBPeringkatProduk = new DefaultTableModel();
+        TBPeringkatProduk.addColumn("ID Produk");
+        TBPeringkatProduk.addColumn("Nama Produk");
+        TBPeringkatProduk.addColumn("Total Terjual");
+        DefaultTableModel TBPeringkatPemasok = new DefaultTableModel();
+        TBPeringkatPemasok.addColumn("ID Pemasok");
+        TBPeringkatPemasok.addColumn("Nama Pemasok");
+        DefaultTableModel transbeli = new DefaultTableModel();
+        transbeli.addColumn("ID Transaksi");
+        transbeli.addColumn("Total Harga");
+        DefaultTableModel transjual = new DefaultTableModel();
+        transjual.addColumn("tgl Transaksi");
+        transjual.addColumn("Total Harga");
+        transjual.addColumn("Laba");
+        txt_BulanHariIni1.setText(dateMonth);
+        try {
+            System.out.println(dateMonth);
+            String PendapatanBulanIni = "SELECT EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) AS year_and_month, SUM(tb_jual.total_harga) AS Pendapatan\n"
+                    + "FROM tb_jual\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) = '" + dateMonth
+                    + "'\n"
+                    + "GROUP BY EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi)";
+            
+            java.sql.Connection con = (Connection) konekdb.GetConnection();
+            java.sql.Statement st = con.createStatement();
+            java.sql.Statement st7 = con.createStatement();
+            java.sql.ResultSet rs = st.executeQuery(PendapatanBulanIni);
+            
+
+            if (rs.next()) {
+                txt_PendapatanBulanan.setText("Rp" + rs.getString(2));
+            }
+            
+            
+        } catch (Exception e) {
+            System.err.println("ERROR"+e.getMessage());
+        }
+        // LabaBulanChoose
+        try {
+            String LabaBulanIni = "SELECT EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) AS year_and_month, SUM((tb_produk.harga_jual - tb_produk.harga_beli)*tb_detailjual.jumlah_produk) AS Laba\n"
+                    + "FROM tb_jual\n"
+                    + "JOIN tb_detailjual\n"
+                    + "ON tb_jual.id_transaksi = tb_detailjual.id_transaksi\n"
+                    + "JOIN tb_produk\n"
+                    + "ON tb_detailjual.id_produk=tb_produk.id_produk\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) = '" + dateMonth + "'\n"
+                    + "GROUP BY EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi)";
+            connn = (Connection)konekdb.GetConnection();
+            java.sql.Statement st1 = connn.createStatement();
+            java.sql.ResultSet rs1 = st1.executeQuery(LabaBulanIni);
+            if (rs1.next()) {
+                txt_labaHarian1.setText("Rp" + rs1.getString(2));
+            }
+        } catch (Exception e) {
+            System.err.println("ERRORLABA BULAN INI + "+e.getMessage());
+            txt_labaHarian1.setText("Rp0");
+        }
+        // PemasukanBulanChoose
+        try {
+             String PemasukanBulanIni = "SELECT EXTRACT(YEAR_MONTH FROM tb_pemasukan.tgl_pemasukan) AS year_and_month, SUM(tb_pemasukan.jumlah_pemasukan) AS PEMASUKAN_BULAN_INI\n"
+                    + "FROM tb_pemasukan\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_pemasukan.tgl_pemasukan) = '" + dateMonth + "'\n"
+                    + "GROUP BY EXTRACT(YEAR_MONTH FROM tb_pemasukan.tgl_pemasukan);";
+             
+             java.sql.Statement st2 = connn.createStatement();
+             java.sql.ResultSet rs2 = st2.executeQuery(PemasukanBulanIni);
+             if (rs2.next()) {
+                txt_pemasukanLainLainperTanggal1.setText("Rp" + rs2.getString(2));
+            }
+        } catch (Exception e) {
+            System.err.println("ERRORPEMASUKAN"+e.getMessage());
+            txt_pemasukanLainLainperTanggal1.setText("Rp0");
+        }
+        //PengeluaranBulanChoose
+        try {
+            String PengeluaranBulanIni = "SELECT EXTRACT(YEAR_MONTH FROM tb_pengeluaran.tgl_pengeluaran) AS year_and_month, SUM(tb_pengeluaran.jumlah_pengeluaran) AS PENGELUARAN_BULAN_INI\n"
+                    + "FROM tb_pengeluaran\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_pengeluaran.tgl_pengeluaran) = '" + dateMonth + "'\n"
+                    + "GROUP BY EXTRACT(YEAR_MONTH FROM tb_pengeluaran.tgl_pengeluaran);";
+            java.sql.Statement st3 = connn.createStatement();
+            java.sql.ResultSet res3 = st3.executeQuery(PengeluaranBulanIni);
+            if (res3.next()) {
+                txt_pengeluaranmLainLainperTanggal1.setText("Rp" + res3.getString(2));
+            }
+        } catch (Exception e) {
+            System.err.println("ERRORPENGELUARANBULANTERPILIH"+e.getMessage());
+            txt_pengeluaranmLainLainperTanggal1.setText("Rp0");
+        }
+        //PeringkatBulanaProduk
+        try {
+            String PeringkatProduk = "SELECT EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) AS TANGGAL, tb_detailjual.id_produk, tb_produk.nama_produk, COUNT(tb_detailjual.jumlah_produk) AS Total\n"
+                    + "FROM tb_detailjual\n"
+                    + "JOIN tb_jual\n"
+                    + "ON tb_jual.id_transaksi = tb_detailjual.id_transaksi\n"
+                    + "JOIN tb_produk\n"
+                    + "ON tb_detailjual.id_produk = tb_produk.id_produk\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) = '" + dateMonth + "'\n"
+                    + "GROUP BY tb_detailjual.id_produk\n"
+                    + "ORDER BY COUNT(tb_detailjual.jumlah_produk) DESC";
+            java.sql.Statement st4 = connn.createStatement();
+            java.sql.ResultSet rs4 = st4.executeQuery(PeringkatProduk);
+            while (rs4.next()) {
+                TBPeringkatProduk.addRow(new Object[]{
+                    rs4.getString(2),
+                    rs4.getString(3),
+                    rs4.getString(4)
+                });
+                tabel_PeringkatProduk.setModel(TBPeringkatProduk);
+            }
+        } catch (Exception e) {
+            System.err.println("ERRORPERINGKATPRODUKBULANTERPILIH"+e.getMessage());
+        }
+        //PeringkatPemasokBulanChoose
+        try {
+            String PeringkatPemasok = "SELECT EXTRACT(YEAR_MONTH FROM tb_beli.tgl_transaksi) AS TANGGAL, tb_beli.id_pemasok, tb_pemasok.nama_pemasok, COUNT(tb_beli.id_pemasok) AS TOTAL\n"
+                    + "FROM tb_beli\n"
+                    + "JOIN tb_pemasok\n"
+                    + "ON tb_beli.id_pemasok = tb_pemasok.id_pemasok\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_beli.tgl_transaksi) = '" + dateMonth + "'\n"
+                    + "GROUP BY tb_beli.id_pemasok\n"
+                    + "ORDER BY COUNT(tb_beli.id_pemasok) DESC;";
+            java.sql.Statement st5 = connn.createStatement();
+            java.sql.ResultSet rs5 = st5.executeQuery(PeringkatPemasok);
+            while (rs5.next()) {
+                TBPeringkatPemasok.addRow(new Object[]{
+                    rs5.getString(2),
+                    rs5.getString(3)
+                });
+                tabel_PeringkatPemasok.setModel(TBPeringkatPemasok);
+            }
+        } catch (Exception e) {
+            System.err.println("ERRORPERINGKATPEMASOKBULANTERPILIH"+e.getMessage());
+        }
+        //CatatanPEnjualanBulanTerepilih
+        try {
+            String CatatanPenjualanBulanan = "SELECT  DATE_FORMAT(tb_jual.tgl_transaksi,'%d/%m/%Y'),tb_jual.total_harga, SUM((tb_produk.harga_jual - tb_produk.harga_beli)*tb_detailjual.jumlah_produk) AS Laba\n"
+                    + "FROM tb_jual\n"
+                    + "JOIN tb_detailjual ON tb_detailjual.id_transaksi = tb_jual.id_transaksi\n"
+                    + "JOIN tb_produk ON tb_detailjual.id_produk = tb_produk.id_produk\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) = '" + dateMonth+ "'\n"
+                    + "GROUP BY tb_jual.tgl_transaksi";
+            java.sql.Statement st6 = connn.createStatement();
+            java.sql.ResultSet rs6 = st6.executeQuery(CatatanPenjualanBulanan);
+            while (rs6.next()) {
+                transjual.addRow(new Object[]{
+                    rs6.getString(1),
+                    rs6.getString(2),
+                    rs6.getString(3)
+                });
+                tabel_TransaksiPenjualanBulanan.setModel(transjual);
+            }
+        } catch (Exception e) {
+            System.err.println("ERRORPENJUALANBULANTERPILIH"+e.getMessage());
+        }
+        //CatatanPembelianBulanChoose
+        try {
+            String CatatanPembelianBulanan = "SELECT DATE_FORMAT(tb_beli.tgl_transaksi, '%d/%m/%Y'), tb_beli.total_harga\n"
+                    + "FROM tb_beli\n"
+                    + "WHERE EXTRACT(YEAR_MONTH FROM tb_beli.tgl_transaksi) = '" + dateMonth + "'";
+            java.sql.Statement st7= connn.createStatement();
+            java.sql.ResultSet rs7 = st7.executeQuery(CatatanPembelianBulanan);
+            while (rs7.next()) {
+                transbeli.addRow(new Object[]{
+                    rs7.getString(1),
+                    rs7.getString(2)
+                });
+                tabel_TransaksiPembelianBulanan.setModel(transbeli);
+            }
+        } catch (Exception e) {
+            System.err.println("ERRORPENJUALANBULANTERPILIH"+e.getMessage());
+        }
+    }
+
     /**
-     * 
-     * 
+     *
+     *
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
@@ -340,7 +536,6 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
         panel_Bulanan = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txt_BulanHariIni1 = new javax.swing.JLabel();
-        jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
         panel_PeringkatPemasokTerlaris = new Swing.PanelRound();
         jScrollPane8 = new javax.swing.JScrollPane();
         tabel_PeringkatPemasok = new javax.swing.JTable(){
@@ -393,7 +588,8 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
         jLabel23 = new javax.swing.JLabel();
         txt_pengeluaranmLainLainperTanggal1 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
-        jYearChooser1 = new com.toedter.calendar.JYearChooser();
+        button4 = new Swing.Button();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
         panel_Harian = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         txt_TanggalHariIni = new javax.swing.JLabel();
@@ -418,14 +614,6 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
                 return false; //Disallow the editing of any cell
             }
         };
-        panel_pendapatanHarian3 = new Swing.PanelRound();
-        jLabel15 = new javax.swing.JLabel();
-        txt_pengeluaranmLainLainperTanggal = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        panel_pendapatanHarian2 = new Swing.PanelRound();
-        jLabel12 = new javax.swing.JLabel();
-        txt_pemasukanLainLainperTanggal = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
         panel_pendapatanHarian1 = new Swing.PanelRound();
         jLabel9 = new javax.swing.JLabel();
         txt_labaHarian = new javax.swing.JLabel();
@@ -487,10 +675,6 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
         txt_BulanHariIni1.setText("--/----");
         txt_BulanHariIni1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         panel_Bulanan.add(txt_BulanHariIni1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 320, 50));
-
-        jMonthChooser1.setBackground(new java.awt.Color(253, 144, 39));
-        jMonthChooser1.setFont(new java.awt.Font("Quicksand Medium", 0, 12)); // NOI18N
-        panel_Bulanan.add(jMonthChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 30, -1, 30));
 
         panel_PeringkatPemasokTerlaris.setBackground(new java.awt.Color(255, 255, 255));
         panel_PeringkatPemasokTerlaris.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(253, 144, 39), new java.awt.Color(253, 144, 39), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
@@ -783,7 +967,15 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
         panel_pendapatanHarian9.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 160, 30));
 
         panel_Bulanan.add(panel_pendapatanHarian9, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 270, 340, 110));
-        panel_Bulanan.add(jYearChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 30, 60, 30));
+
+        button4.setText("Cari");
+        button4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button4ActionPerformed(evt);
+            }
+        });
+        panel_Bulanan.add(button4, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 60, 50, 20));
+        panel_Bulanan.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 30, 110, 30));
 
         jPanel3.add(panel_Bulanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 862, 1800));
 
@@ -867,7 +1059,7 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
         jLabel19.setText("Catatan Transaksi Pembelian");
         panel_pendapatanHarian5.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 270, 30));
 
-        panel_Harian.add(panel_pendapatanHarian5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 770, 720, 290));
+        panel_Harian.add(panel_pendapatanHarian5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 600, 720, 290));
 
         panel_pendapatanHarian4.setBackground(new java.awt.Color(255, 255, 255));
         panel_pendapatanHarian4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(253, 144, 39), new java.awt.Color(253, 144, 39), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
@@ -915,51 +1107,7 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
 
         panel_pendapatanHarian4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 660, 200));
 
-        panel_Harian.add(panel_pendapatanHarian4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, 720, 290));
-
-        panel_pendapatanHarian3.setBackground(new java.awt.Color(255, 255, 255));
-        panel_pendapatanHarian3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 63, 63), new java.awt.Color(255, 63, 63), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
-        panel_pendapatanHarian3.setRoundBottomLeft(10);
-        panel_pendapatanHarian3.setRoundBottomRight(10);
-        panel_pendapatanHarian3.setRoundTopLeft(10);
-        panel_pendapatanHarian3.setRoundTopRight(10);
-        panel_pendapatanHarian3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Laporan/iconMoneyred.png"))); // NOI18N
-        panel_pendapatanHarian3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 110));
-
-        txt_pengeluaranmLainLainperTanggal.setFont(new java.awt.Font("Quicksand", 1, 24)); // NOI18N
-        txt_pengeluaranmLainLainperTanggal.setText("Rp0");
-        panel_pendapatanHarian3.add(txt_pengeluaranmLainLainperTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 140, 30));
-
-        jLabel17.setFont(new java.awt.Font("Quicksand", 1, 15)); // NOI18N
-        jLabel17.setText("Pengeluaran");
-        panel_pendapatanHarian3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 160, 30));
-
-        panel_Harian.add(panel_pendapatanHarian3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 270, 340, 110));
-
-        panel_pendapatanHarian2.setBackground(new java.awt.Color(255, 255, 255));
-        panel_pendapatanHarian2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(54, 255, 74), new java.awt.Color(54, 255, 74), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
-        panel_pendapatanHarian2.setRoundBottomLeft(10);
-        panel_pendapatanHarian2.setRoundBottomRight(10);
-        panel_pendapatanHarian2.setRoundTopLeft(10);
-        panel_pendapatanHarian2.setRoundTopRight(10);
-        panel_pendapatanHarian2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Laporan/iconMoneygreen.png"))); // NOI18N
-        panel_pendapatanHarian2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 110));
-
-        txt_pemasukanLainLainperTanggal.setFont(new java.awt.Font("Quicksand", 1, 24)); // NOI18N
-        txt_pemasukanLainLainperTanggal.setText("Rp0");
-        panel_pendapatanHarian2.add(txt_pemasukanLainLainperTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 140, 30));
-
-        jLabel14.setFont(new java.awt.Font("Quicksand", 1, 15)); // NOI18N
-        jLabel14.setText("Pemasukan Lain-Lain");
-        panel_pendapatanHarian2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 160, 30));
-
-        panel_Harian.add(panel_pendapatanHarian2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, 340, 110));
+        panel_Harian.add(panel_pendapatanHarian4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, 720, 290));
 
         panel_pendapatanHarian1.setBackground(new java.awt.Color(255, 255, 255));
         panel_pendapatanHarian1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(105, 68, 255), new java.awt.Color(105, 68, 255), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
@@ -1029,7 +1177,7 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
         panel_Bulanan.setVisible(true);
         panel_Harian.setVisible(false);
         loadDataBulainIni();
-        
+
     }//GEN-LAST:event_button2ActionPerformed
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
@@ -1038,12 +1186,18 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
         bg_harianBulanan.setIcon(iic);
         panel_Harian.setVisible(true);
         panel_Bulanan.setVisible(false);
+        loadDataHariIni();
     }//GEN-LAST:event_button1ActionPerformed
 
     private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
-        loadDataperTanggal();   
-        
+        loadDataperTanggal();
+
     }//GEN-LAST:event_button3ActionPerformed
+
+    private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
+        
+        loadDataPerBulan();
+    }//GEN-LAST:event_button4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1051,16 +1205,14 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
     private Swing.Button button1;
     private Swing.Button button2;
     private Swing.Button button3;
+    private Swing.Button button4;
     private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -1080,7 +1232,6 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private com.toedter.calendar.JMonthChooser jMonthChooser1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1089,7 +1240,6 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
-    private com.toedter.calendar.JYearChooser jYearChooser1;
     private javax.swing.JPanel panel_Bulanan;
     private javax.swing.JPanel panel_Harian;
     private Swing.PanelRound panel_PeringkatPemasokTerlaris;
@@ -1097,8 +1247,6 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
     private Swing.PanelRound panel_catatanPenjualanaBulanan;
     private Swing.PanelRound panel_pendapatanHarian;
     private Swing.PanelRound panel_pendapatanHarian1;
-    private Swing.PanelRound panel_pendapatanHarian2;
-    private Swing.PanelRound panel_pendapatanHarian3;
     private Swing.PanelRound panel_pendapatanHarian4;
     private Swing.PanelRound panel_pendapatanHarian5;
     private Swing.PanelRound panel_pendapatanHarian6;
@@ -1118,9 +1266,7 @@ String formatTahun1 = formatTahun.format(Calendar.getInstance().getTime());
     private javax.swing.JLabel txt_TanggalHariIni;
     private javax.swing.JLabel txt_labaHarian;
     private javax.swing.JLabel txt_labaHarian1;
-    private javax.swing.JLabel txt_pemasukanLainLainperTanggal;
     private javax.swing.JLabel txt_pemasukanLainLainperTanggal1;
-    private javax.swing.JLabel txt_pengeluaranmLainLainperTanggal;
     private javax.swing.JLabel txt_pengeluaranmLainLainperTanggal1;
     // End of variables declaration//GEN-END:variables
 }
