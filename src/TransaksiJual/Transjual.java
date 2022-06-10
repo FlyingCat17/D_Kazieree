@@ -476,6 +476,7 @@ private DefaultTableModel mod, mod2, mod3;
                             ps1.execute();
                         }
                         JOptionPane.showMessageDialog(this, "Berhasil Tersimpan\nTotal Kembalian :"+txt_kembalian.getText());
+                        
                         try {
                             String namaFile = "src" + File.separator + "TransaksiJual" + File.separator + "StrukJualBesar.jasper";
                             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
@@ -488,9 +489,8 @@ private DefaultTableModel mod, mod2, mod3;
                             JasperViewer.viewReport(jasperPrint, false);
                         } catch (Exception e) {
                             System.err.println(e.getMessage());
-
                         }
-                        
+                        kode_transaksi();
                         for (int i = jumlah_baris - 1; i >= 0; i--) {
                             model.removeRow(i);
                         }

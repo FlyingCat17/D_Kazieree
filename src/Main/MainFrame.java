@@ -49,6 +49,7 @@ public class MainFrame extends javax.swing.JFrame {
         dpanee = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("D'Kazieree (ADMIN)");
         setMaximumSize(new java.awt.Dimension(1233, 707));
         setMinimumSize(new java.awt.Dimension(1233, 707));
         setPreferredSize(new java.awt.Dimension(1233, 707));

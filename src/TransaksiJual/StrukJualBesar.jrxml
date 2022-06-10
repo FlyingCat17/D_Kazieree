@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="212" pageHeight="625" columnWidth="192" leftMargin="10" rightMargin="10" topMargin="0" bottomMargin="0" uuid="7aa04c60-aee3-410e-89cd-88e6b84b5811">
 	<property name="ireport.zoom" value="3.4522712143931042"/>
-	<property name="ireport.x" value="36"/>
-	<property name="ireport.y" value="293"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="149"/>
 	<parameter name="kodeTransaksi" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT tb_jual.id_transaksi, tb_detailjual.nama_produk, tb_jual.id_pengguna, tb_detailjual.jumlah_produk, tb_detailjual.harga_jual, tb_detailjual.total_harga_brg, tb_jual.total_harga AS total_setelah_diskon, tb_jual.total_diskon, tb_jual.nominal_bayar, SUM(tb_jual.total_harga+tb_jual.total_diskon) AS total_sebelum_diskon, SUM(tb_jual.nominal_bayar - tb_jual.total_harga) AS kembalian, tb_jual.tgl_transaksi
+		<![CDATA[SELECT tb_jual.id_transaksi, tb_detailjual.nama_produk, tb_pengguna.nama_pengguna, tb_detailjual.jumlah_produk, tb_detailjual.harga_jual, tb_detailjual.total_harga_brg, tb_jual.total_harga AS total_setelah_diskon, tb_jual.total_diskon, tb_jual.nominal_bayar, SUM(tb_jual.total_harga+tb_jual.total_diskon) AS total_sebelum_diskon, SUM(tb_jual.nominal_bayar - tb_jual.total_harga) AS kembalian, tb_jual.tgl_transaksi
 FROM tb_detailjual
 JOIN tb_jual
 ON tb_jual.id_transaksi = tb_detailjual.id_transaksi
+JOIN tb_pengguna
+ON tb_jual.id_pengguna = tb_pengguna.username
 WHERE tb_detailjual.id_transaksi = $P{kodeTransaksi}
 GROUP BY tb_detailjual.id_produk]]>
 	</queryString>
@@ -18,7 +20,7 @@ GROUP BY tb_detailjual.id_produk]]>
 	<field name="nama_produk" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="id_pengguna" class="java.lang.String">
+	<field name="nama_pengguna" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="jumlah_produk" class="java.lang.Integer">
@@ -124,11 +126,11 @@ Telp. 085100053319]]></text>
 				<textFieldExpression><![CDATA[$F{tgl_transaksi}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="4a3447c1-ea65-43c5-a433-65c7c00c7f9f" x="78" y="28" width="107" height="12"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement uuid="383eb296-8cd7-40b7-91ff-c187ed56f079" x="78" y="28" width="100" height="12"/>
+				<textElement>
 					<font fontName="Quicksand" size="7"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{id_pengguna}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nama_pengguna}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

@@ -1,5 +1,4 @@
 package TransaksiBeli;
-
 import TransaksiJual.*;
 import Main.user;
 import static TransaksiJual.form_TransaksiJual.id_prod;
@@ -445,6 +444,7 @@ public class Transbeli extends javax.swing.JInternalFrame {
 //                            String nama_p = (String) model.getValueAt(i, 2).toString();
 //                            String har = (String) model.getValueAt(i, 3).toString();
 
+
                         String idProduk = model.getValueAt(i, 1).toString();
                         String namaProduk = model.getValueAt(i, 2).toString();
                         String hargaSatuan = model.getValueAt(i, 3).toString();
@@ -480,6 +480,48 @@ public class Transbeli extends javax.swing.JInternalFrame {
                     txt_namaProduk.setText("");
                     txt_hargaSatuan.setText("");
                     txt_Jumlah.setText("");
+
+                            
+                            String idProduk = model.getValueAt(i, 1).toString();
+                            String namaProduk = model.getValueAt(i, 2).toString();
+                            String hargaSatuan = model.getValueAt(i, 3).toString();
+                            String Qty = model.getValueAt(i, 4).toString();
+                            String totalHarga = model.getValueAt(i, 5).toString();
+                            
+                            
+                            String sql1 = "INSERT INTO `tb_detailbeli`(`id_transaksi`, `id_produk`, `nama_produk`, `jumlah_produk`, `harga_beli`, `total_harga`) VALUES ("
+                                    + "'"+ txt_idTransaksi.getText() +"', '" + idProduk + "', '" + namaProduk + "', " + Qty + ", " + hargaSatuan + ", " + totalHarga + ")";
+                            java.sql.PreparedStatement ps1 = con.prepareStatement(sql1);
+                            ps1.execute();
+                       
+                          
+                            
+                        }
+                        JOptionPane.showMessageDialog(this, "Berhasil Tersimpan");
+                        try {
+                            String namaFile = "src" + File.separator + "TransaksiBeli" + File.separator + "StrukBeliBesar.jasper";
+                            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+                            Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost:3306/d'kazieree", "root", "");
+                            HashMap hash = new HashMap();
+                            hash.put("kodeTransaksi", txt_idTransaksi.getText());
+                            File file = new File(namaFile);
+                            JasperReport jasperReport = (JasperReport) JRLoader.loadObject(file.getPath());
+                            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, hash, koneksi);
+                            JasperViewer.viewReport(jasperPrint, false);
+                        } catch (Exception e) {
+                            System.err.println(e.getMessage());
+
+                        }
+                        for (int i = jumlah_baris - 1; i >= 0; i--) {
+                            model.removeRow(i);
+                        }
+
+                        //Hapus top
+                        txt_KodeProduk.setText("");
+                        txt_namaProduk.setText("");
+                        txt_hargaSatuan.setText("");
+                        txt_Jumlah.setText("");
+
 //                        txt_stok.setText("");
 
                     //Hapus Bottom
