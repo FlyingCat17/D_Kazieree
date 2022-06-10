@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="212" pageHeight="625" columnWidth="192" leftMargin="10" rightMargin="10" topMargin="0" bottomMargin="0" uuid="7aa04c60-aee3-410e-89cd-88e6b84b5811">
 	<property name="ireport.zoom" value="3.4522712143931042"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="574"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="kodeTransaksi" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT tb_beli.id_transaksi AS ID_TRANSAKSII, tb_detailbeli.nama_produk AS NAMA_PRODUK_DIBELI, tb_beli.id_pengguna AS ID_PENGGUNAA, tb_pengguna.nama_pengguna AS NAMA_PENGGUNA, tb_pemasok.nama_pemasok AS NAMA_PEMASOK, tb_beli.id_pemasok AS ID_PEMASOKK, tb_detailbeli.jumlah_produk AS TOTAL_PRODUK_DIBELI, tb_detailbeli.harga_beli AS HARGABELI, tb_detailbeli.total_harga AS Total_JIKA_Dikali_Jumlah, tb_beli.tgl_transaksi AS TANGGAL_TRANSAKSI, SUM(tb_beli.total_harga) AS TOTAL_KESELURUHAN

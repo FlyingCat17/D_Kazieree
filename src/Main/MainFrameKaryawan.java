@@ -181,7 +181,7 @@ public class MainFrameKaryawan extends javax.swing.JFrame {
         sidebarr.setIcon(a);
         dpanee.removeAll();
         dpanee.repaint();
-        TransaksiBeli.form_TransaksiBeli home = new TransaksiBeli.form_TransaksiBeli();
+        TransaksiBeli.Transbeli home = new TransaksiBeli.Transbeli();
         dpanee.add(home);
         home.setVisible(true);
         
