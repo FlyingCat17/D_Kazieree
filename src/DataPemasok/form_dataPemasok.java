@@ -1,6 +1,5 @@
 package DataPemasok;
 
-
 import Beranda.*;
 import Main.MainFrame;
 import db.konekdb;
@@ -19,31 +18,63 @@ import javax.swing.JOptionPane;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author LenataHoma
  */
 public class form_dataPemasok extends javax.swing.JInternalFrame {
-Main.MainFrame n = new Main.MainFrame();
+    
+    Main.MainFrame n = new Main.MainFrame();
     Connection con;
     PreparedStatement pst;
     Statement st;
     ResultSet rs;
     String id_pemasok = null;
+
     /**
      * Creates new form Beranda
      */
     public form_dataPemasok() {
         initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
-        BasicInternalFrameUI gui = (BasicInternalFrameUI)this.getUI();
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        BasicInternalFrameUI gui = (BasicInternalFrameUI) this.getUI();
         gui.setNorthPane(null);
         loadDataPemasok();
-        System.out.println("ID Pemasok : "+id_pemasok);
+        System.out.println("ID Pemasok : " + id_pemasok);
+    }
+    
+    public void search() {
+        DefaultTableModel tab = new DefaultTableModel();
+        tab.addColumn("ID Supplier");
+        tab.addColumn("Nama_Supplier");
+        tab.addColumn("Usaha");
+        tab.addColumn("Alamat");
+        tab.addColumn("No HP");
+        tabelPemasok.setModel(tab);
+        if (txt_searchProduk.getText().equals("")) {
+            loadDataPemasok();
+        } else {
+            try {
+                String sql = "SELECT * FROM tb_pemasok WHERE nama_pemasok like '%" + txt_searchProduk.getText() + "%' "
+                        + "or nama_usaha like '%"+txt_searchProduk.getText()+"%'";
+                java.sql.Connection conn = (Connection) konekdb.GetConnection();
+                java.sql.Statement stm = conn.createStatement();
+                java.sql.ResultSet res = stm.executeQuery(sql);
+                while (res.next()) {
+                    tab.addRow(new Object[]{
+                        res.getString("id_pemasok"),
+                        res.getString("nama_pemasok"),
+                        res.getString("nama_usaha"),
+                        res.getString("alamat_usaha"),
+                        res.getString("no_telp_pemasok")
+                    });
+                    tabelPemasok.setModel(tab);
+                }
+            } catch (Exception e) {
+            }
+        }
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -149,6 +180,11 @@ Main.MainFrame n = new Main.MainFrame();
         txt_searchProduk.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
         txt_searchProduk.setBorder(null);
         txt_searchProduk.setOpaque(false);
+        txt_searchProduk.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_searchProdukKeyReleased(evt);
+            }
+        });
         getContentPane().add(txt_searchProduk, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 125, 290, 30));
 
         bgt_serachBox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataPemasok/searchBoxPemasok (1).png"))); // NOI18N
@@ -160,8 +196,8 @@ Main.MainFrame n = new Main.MainFrame();
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void loadDataPemasok(){
-    DefaultTableModel tab = new DefaultTableModel();
+    public void loadDataPemasok() {
+        DefaultTableModel tab = new DefaultTableModel();
         tab.addColumn("ID Supplier");
         tab.addColumn("Nama_Supplier");
         tab.addColumn("Usaha");
@@ -169,16 +205,16 @@ Main.MainFrame n = new Main.MainFrame();
         tab.addColumn("No HP");
         try {
             String sql = "SELECT * FROM tb_pemasok";
-            java.sql.Connection con = (Connection)konekdb.GetConnection();
+            java.sql.Connection con = (Connection) konekdb.GetConnection();
             java.sql.Statement stm = con.createStatement();
             java.sql.ResultSet rs = stm.executeQuery(sql);
-            while (rs.next()) {     
+            while (rs.next()) {
                 tab.addRow(new Object[]{
-                rs.getString("id_pemasok"),
-                rs.getString("nama_pemasok"),
-                rs.getString("nama_usaha"),
-                rs.getString("alamat_usaha"),
-                rs.getString("no_telp_pemasok")
+                    rs.getString("id_pemasok"),
+                    rs.getString("nama_pemasok"),
+                    rs.getString("nama_usaha"),
+                    rs.getString("alamat_usaha"),
+                    rs.getString("no_telp_pemasok")
                 });
                 tabelPemasok.setModel(tab);
             };
@@ -186,7 +222,7 @@ Main.MainFrame n = new Main.MainFrame();
             System.out.println("Gagal Mendapatkan Data!");
             System.err.println(e.getMessage());
         }
-    
+        
     }
     private void tabelPemasokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelPemasokMouseClicked
         // TODO add your handling code here:
@@ -203,17 +239,17 @@ Main.MainFrame n = new Main.MainFrame();
         //        mn.txt_kodeProdukJasa.setText(id_produk);
         int i = tabelPemasok.rowAtPoint(evt.getPoint());
         id_pemasok = tabelPemasok.getValueAt(i, 0).toString();
-        System.out.println("ID PEMASOK : "+ id_pemasok);
+        System.out.println("ID PEMASOK : " + id_pemasok);
         
-        
-    }//GEN-LAST:event_tabelPemasokMouseClicked
 
-    public String getIdPemasok(){
+    }//GEN-LAST:event_tabelPemasokMouseClicked
+    
+    public String getIdPemasok() {
         return id_pemasok;
     }
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
-        if (evt.getButton()==MouseEvent.BUTTON1){
+        if (evt.getButton() == MouseEvent.BUTTON1) {
             formTambahPemasok mn = new formTambahPemasok(n, true);
             loadDataPemasok();
             mn.setVisible(true);
@@ -225,8 +261,8 @@ Main.MainFrame n = new Main.MainFrame();
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
-        if (evt.getButton()==MouseEvent.BUTTON1){
-            if (getIdPemasok()==null) {
+        if (evt.getButton() == MouseEvent.BUTTON1) {
+            if (getIdPemasok() == null) {
                 JOptionPane.showMessageDialog(this, "Harap Pilih Salah Satu Pemasok");
             } else {
                 formUbahPemasok nn = new formUbahPemasok(n, true);
@@ -244,23 +280,23 @@ Main.MainFrame n = new Main.MainFrame();
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
-        if (getIdPemasok()==null) {
+        if (getIdPemasok() == null) {
             JOptionPane.showMessageDialog(this, "Harap Pilih Salah Satu Pemasok");
         } else {
             try {
-            int jawab = JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus Data Pemasok ini?", "Konfirmasi", JOptionPane.INFORMATION_MESSAGE);
-            switch(jawab){
-                case JOptionPane.YES_OPTION:
-                    String d = "DELETE FROM tb_pemasok WHERE id_pemasok = '"+getIdPemasok()+"';";
-                    con = (Connection)konekdb.GetConnection();
-                    pst = con.prepareStatement(d);
-                    pst.execute();
-                    JOptionPane.showMessageDialog(this, "Berhasil Terhapus", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
-                    loadDataPemasok();
-                    break;
-                case JOptionPane.NO_OPTION:
-                    break;
-            }
+                int jawab = JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus Data Pemasok ini?", "Konfirmasi", JOptionPane.INFORMATION_MESSAGE);
+                switch (jawab) {
+                    case JOptionPane.YES_OPTION:
+                        String d = "DELETE FROM tb_pemasok WHERE id_pemasok = '" + getIdPemasok() + "';";
+                        con = (Connection) konekdb.GetConnection();
+                        pst = con.prepareStatement(d);
+                        pst.execute();
+                        JOptionPane.showMessageDialog(this, "Berhasil Terhapus", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
+                        loadDataPemasok();
+                        break;
+                    case JOptionPane.NO_OPTION:
+                        break;
+                }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Gagal Menghapus Data!");
                 System.out.println("Gagal Menghapus Data");
@@ -268,6 +304,11 @@ Main.MainFrame n = new Main.MainFrame();
             }
         }
     }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void txt_searchProdukKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchProdukKeyReleased
+        // TODO add your handling code here:
+        search();
+    }//GEN-LAST:event_txt_searchProdukKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
