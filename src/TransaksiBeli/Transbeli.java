@@ -1,7 +1,5 @@
 package TransaksiBeli;
-import TransaksiJual.*;
 import Main.user;
-import static TransaksiJual.form_TransaksiJual.id_prod;
 import db.konekdb;
 import java.awt.Color;
 import java.awt.Font;
