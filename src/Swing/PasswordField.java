@@ -2,6 +2,7 @@ package Swing;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -84,7 +85,8 @@ public class PasswordField extends JPasswordField {
                     if (new Rectangle(x, 0, 30, 30).contains(me.getPoint())) {
                         hide = !hide;
                         if (hide) {
-                            setEchoChar('*');
+                            setEchoChar('●');
+                            setFont(new Font("Arial", Font.PLAIN, 14));
                         } else {
                             setEchoChar((char) 0);
                         }

@@ -4,13 +4,21 @@ import java.awt.Color;
 import java.awt.Font;
 import java.sql.Connection;
 import db.konekdb;
+import java.io.File;
+import java.sql.DriverManager;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import javax.swing.ImageIcon;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -26,6 +34,7 @@ public Connection connnn(){
     }
     return connn;
 }
+String IdTransaksi = null;
     DateFormat hari = new SimpleDateFormat("yyyy-MM-dd");
     DateFormat harii = new SimpleDateFormat("dd-MM-yyyy");
     String a = hari.format(Calendar.getInstance().getTime());
@@ -533,6 +542,38 @@ public Connection connnn(){
         jPanel3 = new javax.swing.JPanel();
         button2 = new Swing.Button();
         button1 = new Swing.Button();
+        panel_Harian = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        txt_TanggalHariIni = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        button3 = new Swing.Button();
+        panel_pendapatanHarian5 = new Swing.PanelRound();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tabel_TransaksiPembelianHarian = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex)
+            {
+                return false; //Disallow the editing of any cell
+            }
+        };
+        jLabel19 = new javax.swing.JLabel();
+        panel_pendapatanHarian4 = new Swing.PanelRound();
+        jLabel18 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabel_TransaksiPenjualanHarian = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex)
+            {
+                return false; //Disallow the editing of any cell
+            }
+        };
+        panel_pendapatanHarian1 = new Swing.PanelRound();
+        jLabel9 = new javax.swing.JLabel();
+        txt_labaHarian = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        panel_pendapatanHarian = new Swing.PanelRound();
+        jLabel6 = new javax.swing.JLabel();
+        txt_PendapatanHarian = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         panel_Bulanan = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txt_BulanHariIni1 = new javax.swing.JLabel();
@@ -590,38 +631,6 @@ public Connection connnn(){
         jLabel24 = new javax.swing.JLabel();
         button4 = new Swing.Button();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
-        panel_Harian = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        txt_TanggalHariIni = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        button3 = new Swing.Button();
-        panel_pendapatanHarian5 = new Swing.PanelRound();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tabel_TransaksiPembelianHarian = new javax.swing.JTable(){
-            public boolean isCellEditable(int rowIndex, int colIndex)
-            {
-                return false; //Disallow the editing of any cell
-            }
-        };
-        jLabel19 = new javax.swing.JLabel();
-        panel_pendapatanHarian4 = new Swing.PanelRound();
-        jLabel18 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tabel_TransaksiPenjualanHarian = new javax.swing.JTable(){
-            public boolean isCellEditable(int rowIndex, int colIndex)
-            {
-                return false; //Disallow the editing of any cell
-            }
-        };
-        panel_pendapatanHarian1 = new Swing.PanelRound();
-        jLabel9 = new javax.swing.JLabel();
-        txt_labaHarian = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        panel_pendapatanHarian = new Swing.PanelRound();
-        jLabel6 = new javax.swing.JLabel();
-        txt_PendapatanHarian = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         bg_harianBulanan = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -660,6 +669,187 @@ public Connection connnn(){
             }
         });
         jPanel3.add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 120, 100, 30));
+
+        panel_Harian.setBackground(new java.awt.Color(255, 255, 255));
+        panel_Harian.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel5.setFont(new java.awt.Font("Quicksand", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(253, 144, 39));
+        jLabel5.setText("Pilih Tanggal");
+        panel_Harian.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 30, 100, 30));
+
+        txt_TanggalHariIni.setFont(new java.awt.Font("Quicksand", 1, 36)); // NOI18N
+        txt_TanggalHariIni.setForeground(new java.awt.Color(102, 102, 102));
+        txt_TanggalHariIni.setText("--/--/----");
+        txt_TanggalHariIni.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        panel_Harian.add(txt_TanggalHariIni, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, 320, 50));
+
+        jLabel2.setFont(new java.awt.Font("Quicksand", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(253, 144, 39));
+        jLabel2.setText("LAPORAN HARIAN");
+        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        panel_Harian.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 210, 50));
+        panel_Harian.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 30, 120, 30));
+
+        button3.setText("Cari");
+        button3.setEffectColor(new java.awt.Color(253, 144, 39));
+        button3.setFont(new java.awt.Font("Quicksand", 1, 14)); // NOI18N
+        button3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button3ActionPerformed(evt);
+            }
+        });
+        panel_Harian.add(button3, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 60, 50, 30));
+
+        panel_pendapatanHarian5.setBackground(new java.awt.Color(255, 255, 255));
+        panel_pendapatanHarian5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(253, 144, 39), new java.awt.Color(253, 144, 39), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
+        panel_pendapatanHarian5.setRoundBottomLeft(10);
+        panel_pendapatanHarian5.setRoundBottomRight(10);
+        panel_pendapatanHarian5.setRoundTopLeft(10);
+        panel_pendapatanHarian5.setRoundTopRight(10);
+        panel_pendapatanHarian5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tabel_TransaksiPembelianHarian.getTableHeader().setFont(new Font("Quicksand Medium", Font.PLAIN, 12));
+        tabel_TransaksiPembelianHarian.getTableHeader().setOpaque(false);
+        tabel_TransaksiPembelianHarian.getTableHeader().setBackground(new Color(255,144,39));
+        tabel_TransaksiPembelianHarian.getTableHeader().setForeground(new Color(255,255,255));
+        tabel_TransaksiPembelianHarian.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID Transaksi", "ID Pemasok", "ID Pengguna", "Total Harga"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabel_TransaksiPembelianHarian.setRowHeight(30);
+        tabel_TransaksiPembelianHarian.setRowSelectionAllowed(false);
+        tabel_TransaksiPembelianHarian.setSelectionBackground(new java.awt.Color(253, 144, 39));
+        tabel_TransaksiPembelianHarian.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        jScrollPane3.setViewportView(tabel_TransaksiPembelianHarian);
+        if (tabel_TransaksiPembelianHarian.getColumnModel().getColumnCount() > 0) {
+            tabel_TransaksiPembelianHarian.getColumnModel().getColumn(0).setResizable(false);
+            tabel_TransaksiPembelianHarian.getColumnModel().getColumn(1).setResizable(false);
+            tabel_TransaksiPembelianHarian.getColumnModel().getColumn(2).setResizable(false);
+            tabel_TransaksiPembelianHarian.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        panel_pendapatanHarian5.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 660, 200));
+
+        jLabel19.setFont(new java.awt.Font("Quicksand", 1, 18)); // NOI18N
+        jLabel19.setText("Catatan Transaksi Pembelian");
+        panel_pendapatanHarian5.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 270, 30));
+
+        panel_Harian.add(panel_pendapatanHarian5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 600, 720, 290));
+
+        panel_pendapatanHarian4.setBackground(new java.awt.Color(255, 255, 255));
+        panel_pendapatanHarian4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(253, 144, 39), new java.awt.Color(253, 144, 39), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
+        panel_pendapatanHarian4.setRoundBottomLeft(10);
+        panel_pendapatanHarian4.setRoundBottomRight(10);
+        panel_pendapatanHarian4.setRoundTopLeft(10);
+        panel_pendapatanHarian4.setRoundTopRight(10);
+        panel_pendapatanHarian4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel18.setFont(new java.awt.Font("Quicksand", 1, 18)); // NOI18N
+        jLabel18.setText("Catatan Transaksi Penjualan");
+        panel_pendapatanHarian4.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 270, 30));
+
+        tabel_TransaksiPenjualanHarian.getTableHeader().setFont(new Font("Quicksand Medium", Font.PLAIN, 12));
+        tabel_TransaksiPenjualanHarian.getTableHeader().setOpaque(false);
+        tabel_TransaksiPenjualanHarian.getTableHeader().setBackground(new Color(255,144,39));
+        tabel_TransaksiPenjualanHarian.getTableHeader().setForeground(new Color(255,255,255));
+        tabel_TransaksiPenjualanHarian.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID Transaksi", "Diskon", "Total Harga", "ID Pengguna"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabel_TransaksiPenjualanHarian.setRowHeight(30);
+        tabel_TransaksiPenjualanHarian.setRowSelectionAllowed(false);
+        tabel_TransaksiPenjualanHarian.setSelectionBackground(new java.awt.Color(253, 144, 39));
+        tabel_TransaksiPenjualanHarian.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        tabel_TransaksiPenjualanHarian.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabel_TransaksiPenjualanHarianMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tabel_TransaksiPenjualanHarian);
+        if (tabel_TransaksiPenjualanHarian.getColumnModel().getColumnCount() > 0) {
+            tabel_TransaksiPenjualanHarian.getColumnModel().getColumn(0).setResizable(false);
+            tabel_TransaksiPenjualanHarian.getColumnModel().getColumn(1).setResizable(false);
+            tabel_TransaksiPenjualanHarian.getColumnModel().getColumn(2).setResizable(false);
+            tabel_TransaksiPenjualanHarian.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        panel_pendapatanHarian4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 660, 200));
+
+        panel_Harian.add(panel_pendapatanHarian4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, 720, 290));
+
+        panel_pendapatanHarian1.setBackground(new java.awt.Color(255, 255, 255));
+        panel_pendapatanHarian1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(105, 68, 255), new java.awt.Color(105, 68, 255), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
+        panel_pendapatanHarian1.setRoundBottomLeft(10);
+        panel_pendapatanHarian1.setRoundBottomRight(10);
+        panel_pendapatanHarian1.setRoundTopLeft(10);
+        panel_pendapatanHarian1.setRoundTopRight(10);
+        panel_pendapatanHarian1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Laporan/iconMoneypurple.png"))); // NOI18N
+        panel_pendapatanHarian1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 110));
+
+        txt_labaHarian.setFont(new java.awt.Font("Quicksand", 1, 24)); // NOI18N
+        txt_labaHarian.setText("Rp0");
+        panel_pendapatanHarian1.add(txt_labaHarian, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 140, 30));
+
+        jLabel11.setFont(new java.awt.Font("Quicksand", 1, 15)); // NOI18N
+        jLabel11.setText("Laba per Hari");
+        panel_pendapatanHarian1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 100, 30));
+
+        panel_Harian.add(panel_pendapatanHarian1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 120, 340, 110));
+
+        panel_pendapatanHarian.setBackground(new java.awt.Color(255, 255, 255));
+        panel_pendapatanHarian.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 140, 29), new java.awt.Color(255, 140, 29), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
+        panel_pendapatanHarian.setRoundBottomLeft(10);
+        panel_pendapatanHarian.setRoundBottomRight(10);
+        panel_pendapatanHarian.setRoundTopLeft(10);
+        panel_pendapatanHarian.setRoundTopRight(10);
+        panel_pendapatanHarian.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Laporan/iconMoney.png"))); // NOI18N
+        panel_pendapatanHarian.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 110));
+
+        txt_PendapatanHarian.setFont(new java.awt.Font("Quicksand", 1, 24)); // NOI18N
+        txt_PendapatanHarian.setText("Rp0");
+        panel_pendapatanHarian.add(txt_PendapatanHarian, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 140, 30));
+
+        jLabel8.setFont(new java.awt.Font("Quicksand", 1, 15)); // NOI18N
+        jLabel8.setText("Pendapatan");
+        panel_pendapatanHarian.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 100, 30));
+
+        panel_Harian.add(panel_pendapatanHarian, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 340, 110));
+
+        jPanel3.add(panel_Harian, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 862, 1190));
 
         panel_Bulanan.setBackground(new java.awt.Color(255, 255, 255));
         panel_Bulanan.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -979,182 +1169,6 @@ public Connection connnn(){
 
         jPanel3.add(panel_Bulanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 862, 1800));
 
-        panel_Harian.setBackground(new java.awt.Color(255, 255, 255));
-        panel_Harian.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel5.setFont(new java.awt.Font("Quicksand", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(253, 144, 39));
-        jLabel5.setText("Pilih Tanggal");
-        panel_Harian.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 30, 100, 30));
-
-        txt_TanggalHariIni.setFont(new java.awt.Font("Quicksand", 1, 36)); // NOI18N
-        txt_TanggalHariIni.setForeground(new java.awt.Color(102, 102, 102));
-        txt_TanggalHariIni.setText("--/--/----");
-        txt_TanggalHariIni.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        panel_Harian.add(txt_TanggalHariIni, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, 320, 50));
-
-        jLabel2.setFont(new java.awt.Font("Quicksand", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(253, 144, 39));
-        jLabel2.setText("LAPORAN HARIAN");
-        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        panel_Harian.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 210, 50));
-        panel_Harian.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 30, 120, 30));
-
-        button3.setText("Cari");
-        button3.setEffectColor(new java.awt.Color(253, 144, 39));
-        button3.setFont(new java.awt.Font("Quicksand", 1, 14)); // NOI18N
-        button3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button3ActionPerformed(evt);
-            }
-        });
-        panel_Harian.add(button3, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 60, 50, 30));
-
-        panel_pendapatanHarian5.setBackground(new java.awt.Color(255, 255, 255));
-        panel_pendapatanHarian5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(253, 144, 39), new java.awt.Color(253, 144, 39), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
-        panel_pendapatanHarian5.setRoundBottomLeft(10);
-        panel_pendapatanHarian5.setRoundBottomRight(10);
-        panel_pendapatanHarian5.setRoundTopLeft(10);
-        panel_pendapatanHarian5.setRoundTopRight(10);
-        panel_pendapatanHarian5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        tabel_TransaksiPembelianHarian.getTableHeader().setFont(new Font("Quicksand Medium", Font.PLAIN, 12));
-        tabel_TransaksiPembelianHarian.getTableHeader().setOpaque(false);
-        tabel_TransaksiPembelianHarian.getTableHeader().setBackground(new Color(255,144,39));
-        tabel_TransaksiPembelianHarian.getTableHeader().setForeground(new Color(255,255,255));
-        tabel_TransaksiPembelianHarian.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "ID Transaksi", "ID Pemasok", "ID Pengguna", "Total Harga"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tabel_TransaksiPembelianHarian.setRowHeight(30);
-        tabel_TransaksiPembelianHarian.setRowSelectionAllowed(false);
-        tabel_TransaksiPembelianHarian.setSelectionBackground(new java.awt.Color(253, 144, 39));
-        tabel_TransaksiPembelianHarian.setSelectionForeground(new java.awt.Color(0, 0, 0));
-        jScrollPane3.setViewportView(tabel_TransaksiPembelianHarian);
-        if (tabel_TransaksiPembelianHarian.getColumnModel().getColumnCount() > 0) {
-            tabel_TransaksiPembelianHarian.getColumnModel().getColumn(0).setResizable(false);
-            tabel_TransaksiPembelianHarian.getColumnModel().getColumn(1).setResizable(false);
-            tabel_TransaksiPembelianHarian.getColumnModel().getColumn(2).setResizable(false);
-            tabel_TransaksiPembelianHarian.getColumnModel().getColumn(3).setResizable(false);
-        }
-
-        panel_pendapatanHarian5.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 660, 200));
-
-        jLabel19.setFont(new java.awt.Font("Quicksand", 1, 18)); // NOI18N
-        jLabel19.setText("Catatan Transaksi Pembelian");
-        panel_pendapatanHarian5.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 270, 30));
-
-        panel_Harian.add(panel_pendapatanHarian5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 600, 720, 290));
-
-        panel_pendapatanHarian4.setBackground(new java.awt.Color(255, 255, 255));
-        panel_pendapatanHarian4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(253, 144, 39), new java.awt.Color(253, 144, 39), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
-        panel_pendapatanHarian4.setRoundBottomLeft(10);
-        panel_pendapatanHarian4.setRoundBottomRight(10);
-        panel_pendapatanHarian4.setRoundTopLeft(10);
-        panel_pendapatanHarian4.setRoundTopRight(10);
-        panel_pendapatanHarian4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel18.setFont(new java.awt.Font("Quicksand", 1, 18)); // NOI18N
-        jLabel18.setText("Catatan Transaksi Penjualan");
-        panel_pendapatanHarian4.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 270, 30));
-
-        tabel_TransaksiPenjualanHarian.getTableHeader().setFont(new Font("Quicksand Medium", Font.PLAIN, 12));
-        tabel_TransaksiPenjualanHarian.getTableHeader().setOpaque(false);
-        tabel_TransaksiPenjualanHarian.getTableHeader().setBackground(new Color(255,144,39));
-        tabel_TransaksiPenjualanHarian.getTableHeader().setForeground(new Color(255,255,255));
-        tabel_TransaksiPenjualanHarian.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID Transaksi", "Diskon", "Total Harga", "ID Pengguna"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tabel_TransaksiPenjualanHarian.setRowHeight(30);
-        tabel_TransaksiPenjualanHarian.setRowSelectionAllowed(false);
-        tabel_TransaksiPenjualanHarian.setSelectionBackground(new java.awt.Color(253, 144, 39));
-        tabel_TransaksiPenjualanHarian.setSelectionForeground(new java.awt.Color(0, 0, 0));
-        jScrollPane2.setViewportView(tabel_TransaksiPenjualanHarian);
-        if (tabel_TransaksiPenjualanHarian.getColumnModel().getColumnCount() > 0) {
-            tabel_TransaksiPenjualanHarian.getColumnModel().getColumn(0).setResizable(false);
-            tabel_TransaksiPenjualanHarian.getColumnModel().getColumn(1).setResizable(false);
-            tabel_TransaksiPenjualanHarian.getColumnModel().getColumn(2).setResizable(false);
-            tabel_TransaksiPenjualanHarian.getColumnModel().getColumn(3).setResizable(false);
-        }
-
-        panel_pendapatanHarian4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 660, 200));
-
-        panel_Harian.add(panel_pendapatanHarian4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, 720, 290));
-
-        panel_pendapatanHarian1.setBackground(new java.awt.Color(255, 255, 255));
-        panel_pendapatanHarian1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(105, 68, 255), new java.awt.Color(105, 68, 255), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
-        panel_pendapatanHarian1.setRoundBottomLeft(10);
-        panel_pendapatanHarian1.setRoundBottomRight(10);
-        panel_pendapatanHarian1.setRoundTopLeft(10);
-        panel_pendapatanHarian1.setRoundTopRight(10);
-        panel_pendapatanHarian1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Laporan/iconMoneypurple.png"))); // NOI18N
-        panel_pendapatanHarian1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 110));
-
-        txt_labaHarian.setFont(new java.awt.Font("Quicksand", 1, 24)); // NOI18N
-        txt_labaHarian.setText("Rp0");
-        panel_pendapatanHarian1.add(txt_labaHarian, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 140, 30));
-
-        jLabel11.setFont(new java.awt.Font("Quicksand", 1, 15)); // NOI18N
-        jLabel11.setText("Laba per Hari");
-        panel_pendapatanHarian1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 100, 30));
-
-        panel_Harian.add(panel_pendapatanHarian1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 120, 340, 110));
-
-        panel_pendapatanHarian.setBackground(new java.awt.Color(255, 255, 255));
-        panel_pendapatanHarian.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 140, 29), new java.awt.Color(255, 140, 29), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
-        panel_pendapatanHarian.setRoundBottomLeft(10);
-        panel_pendapatanHarian.setRoundBottomRight(10);
-        panel_pendapatanHarian.setRoundTopLeft(10);
-        panel_pendapatanHarian.setRoundTopRight(10);
-        panel_pendapatanHarian.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Laporan/iconMoney.png"))); // NOI18N
-        panel_pendapatanHarian.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 110));
-
-        txt_PendapatanHarian.setFont(new java.awt.Font("Quicksand", 1, 24)); // NOI18N
-        txt_PendapatanHarian.setText("Rp0");
-        panel_pendapatanHarian.add(txt_PendapatanHarian, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 140, 30));
-
-        jLabel8.setFont(new java.awt.Font("Quicksand", 1, 15)); // NOI18N
-        jLabel8.setText("Pendapatan");
-        panel_pendapatanHarian.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 100, 30));
-
-        panel_Harian.add(panel_pendapatanHarian, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 340, 110));
-
-        jPanel3.add(panel_Harian, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 862, 1190));
-
         bg_harianBulanan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Laporan/bg_laporanHarian.png"))); // NOI18N
         jPanel3.add(bg_harianBulanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 890, 420));
         jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 990, 960, 40));
@@ -1199,6 +1213,31 @@ public Connection connnn(){
         loadDataPerBulan();
     }//GEN-LAST:event_button4ActionPerformed
 
+    private void tabel_TransaksiPenjualanHarianMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_TransaksiPenjualanHarianMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount()==2) {
+            int baris = tabel_TransaksiPembelianHarian.rowAtPoint(evt.getPoint());
+            IdTransaksi = tabel_TransaksiPenjualanHarian.getValueAt(baris, 0).toString();
+            System.out.println(IdTransaksi);
+            try {
+                String namaFile = "src" + File.separator + "TransaksiJual" + File.separator + "StrukJualBesar.jasper";
+                Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+                Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost:3306/d'kazieree", "root", "");
+                HashMap hash = new HashMap();
+                hash.put("kodeTransaksi", IdTransaksi);
+                File file = new File(namaFile);
+                JasperReport jasperReport = (JasperReport) JRLoader.loadObject(file.getPath());
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, hash, koneksi);
+                JasperViewer.viewReport(jasperPrint, false);
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_tabel_TransaksiPenjualanHarianMouseClicked
+
+    public String getIdTransjual(){
+        return IdTransaksi;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bg_harianBulanan;

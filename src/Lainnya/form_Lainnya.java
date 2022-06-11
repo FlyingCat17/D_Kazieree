@@ -4,6 +4,7 @@ package Lainnya;
 import DataStok.*;
 import Beranda.*;
 import Login.LoginPage;
+import Login.LoginPageNew;
 import java.awt.event.MouseEvent;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import Main.MainFrame;
@@ -43,7 +44,9 @@ Main.MainFrame n = new Main.MainFrame();
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        button2 = new Swing.Button();
+        button5 = new Swing.Button();
+        button4 = new Swing.Button();
+        button3 = new Swing.Button();
         button1 = new Swing.Button();
         jLabel1 = new javax.swing.JLabel();
 
@@ -52,29 +55,59 @@ Main.MainFrame n = new Main.MainFrame();
         setMinimumSize(new java.awt.Dimension(960, 710));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        button2.setBackground(new java.awt.Color(245, 245, 245));
-        button2.setForeground(new java.awt.Color(253, 144, 39));
-        button2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Lainnya/ic_baseline-log-out.png"))); // NOI18N
-        button2.setText("    Keluar");
-        button2.setFont(new java.awt.Font("Quicksand SemiBold", 0, 28)); // NOI18N
-        button2.addActionListener(new java.awt.event.ActionListener() {
+        button5.setBackground(new java.awt.Color(245, 245, 245));
+        button5.setForeground(new java.awt.Color(253, 144, 39));
+        button5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Lainnya/fluent_money-20-regular.png"))); // NOI18N
+        button5.setText("   Pengeluaran");
+        button5.setEffectColor(new java.awt.Color(253, 144, 39));
+        button5.setFont(new java.awt.Font("Quicksand SemiBold", 0, 28)); // NOI18N
+        button5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button2ActionPerformed(evt);
+                button5ActionPerformed(evt);
             }
         });
-        getContentPane().add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 120, 390, 110));
+        getContentPane().add(button5, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 120, 390, 110));
+
+        button4.setBackground(new java.awt.Color(245, 245, 245));
+        button4.setForeground(new java.awt.Color(253, 144, 39));
+        button4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Lainnya/fluent_money-20-regular.png"))); // NOI18N
+        button4.setText("    Pemasukan");
+        button4.setEffectColor(new java.awt.Color(253, 144, 39));
+        button4.setFont(new java.awt.Font("Quicksand SemiBold", 0, 28)); // NOI18N
+        button4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        button4.setIconTextGap(6);
+        button4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button4ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(button4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 390, 110));
+
+        button3.setBackground(new java.awt.Color(245, 245, 245));
+        button3.setForeground(new java.awt.Color(253, 144, 39));
+        button3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Lainnya/codicon_account.png"))); // NOI18N
+        button3.setText("  Pengaturan Akun");
+        button3.setEffectColor(new java.awt.Color(253, 144, 39));
+        button3.setFont(new java.awt.Font("Quicksand SemiBold", 0, 28)); // NOI18N
+        button3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(button3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 270, 390, 110));
 
         button1.setBackground(new java.awt.Color(245, 245, 245));
         button1.setForeground(new java.awt.Color(253, 144, 39));
         button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Lainnya/bi_people-fill.png"))); // NOI18N
         button1.setText("    Data Pengguna");
+        button1.setEffectColor(new java.awt.Color(253, 144, 39));
         button1.setFont(new java.awt.Font("Quicksand SemiBold", 0, 28)); // NOI18N
         button1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button1ActionPerformed(evt);
             }
         });
-        getContentPane().add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 390, 110));
+        getContentPane().add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, 390, 110));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Lainnya/Group 95.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 680));
@@ -87,30 +120,25 @@ Main.MainFrame n = new Main.MainFrame();
         this.getDesktopPane().add(new dataPengguna.formDataPenggunaa()).setVisible(true);
     }//GEN-LAST:event_button1ActionPerformed
 
-    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+    private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
+        // TODO add your handling code here:addddddddddddddddsdsdsdsdsdaddad
+        this.getDesktopPane().add(new PengaturanAkun.PengaturanAkun()).setVisible(true);
+    }//GEN-LAST:event_button3ActionPerformed
+
+    private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
         // TODO add your handling code here:
-        int jawab = JOptionPane.showConfirmDialog(this, "Yakin Ingin Keluar?", "Keluar Akun", JOptionPane.INFORMATION_MESSAGE);
-            switch(jawab){
-                case JOptionPane.YES_OPTION:
-                    LoginPage lp = new LoginPage();
-                    lp.dispatchEvent(new WindowEvent(lp, WindowEvent.WINDOW_OPENED));
-                    n.dispatchEvent(new WindowEvent(n, WindowEvent.WINDOW_CLOSING));
-//                    n.setVisible(false);
-//                    n.logOut();
-                    
-                    
-//                    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    break;
-                case JOptionPane.NO_OPTION:
-                    break;
-            
-            }
-    }//GEN-LAST:event_button2ActionPerformed
+    }//GEN-LAST:event_button4ActionPerformed
+
+    private void button5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Swing.Button button1;
-    private Swing.Button button2;
+    private Swing.Button button3;
+    private Swing.Button button4;
+    private Swing.Button button5;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
