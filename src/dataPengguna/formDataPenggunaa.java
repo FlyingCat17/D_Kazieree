@@ -234,6 +234,8 @@ public class formDataPenggunaa extends javax.swing.JInternalFrame {
     public String getStatus(){
         return status;
     }
+    
+    
     private void filterAksesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterAksesActionPerformed
         // TODO add your handling code here:
         String tipe = (String)filterAkses.getSelectedItem();

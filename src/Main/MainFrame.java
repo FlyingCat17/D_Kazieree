@@ -25,7 +25,7 @@ public class MainFrame extends javax.swing.JFrame {
         dpanee.removeAll();
         Beranda.form_Beranda home = new Beranda.form_Beranda();
         dpanee.add(home);
-        home.setVisible(true);
+        home.setVisible(true);panel_logout.setVisible(false);
     }
 
     /**
@@ -37,6 +37,10 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panel_logout = new Swing.PanelRound();
+        button2 = new Swing.Button();
+        button1 = new Swing.Button();
+        button3 = new Swing.Button();
         btn_Lainnya = new javax.swing.JLabel();
         btn_laporan = new javax.swing.JLabel();
         btn_dataPemasok = new javax.swing.JLabel();
@@ -55,6 +59,48 @@ public class MainFrame extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(1233, 707));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panel_logout.setBackground(new java.awt.Color(255, 255, 255));
+        panel_logout.setRoundBottomLeft(10);
+        panel_logout.setRoundBottomRight(10);
+        panel_logout.setRoundTopLeft(10);
+        panel_logout.setRoundTopRight(10);
+        panel_logout.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        button2.setForeground(new java.awt.Color(253, 144, 39));
+        button2.setText("Tutup Aplikasi");
+        button2.setEffectColor(new java.awt.Color(253, 144, 39));
+        button2.setFont(new java.awt.Font("Quicksand", 1, 13)); // NOI18N
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
+        panel_logout.add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 120, -1));
+
+        button1.setForeground(new java.awt.Color(253, 144, 39));
+        button1.setText("KeluarAkun");
+        button1.setEffectColor(new java.awt.Color(253, 144, 39));
+        button1.setFont(new java.awt.Font("Quicksand", 1, 13)); // NOI18N
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
+        panel_logout.add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 120, -1));
+
+        getContentPane().add(panel_logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 200, 130));
+
+        button3.setBackground(new java.awt.Color(253, 144, 39));
+        button3.setForeground(new java.awt.Color(255, 255, 255));
+        button3.setText("Keluar");
+        button3.setFont(new java.awt.Font("Quicksand", 0, 11)); // NOI18N
+        button3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(button3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, 50, -1));
 
         btn_Lainnya.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_Lainnya.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -121,6 +167,11 @@ public class MainFrame extends javax.swing.JFrame {
         getContentPane().add(btn_beranda, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 240, 50));
 
         sidebarr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Sidebar/sidebar_beranda.png"))); // NOI18N
+        sidebarr.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sidebarrMouseClicked(evt);
+            }
+        });
         getContentPane().add(sidebarr, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, 710));
 
         javax.swing.GroupLayout dpaneeLayout = new javax.swing.GroupLayout(dpanee);
@@ -148,9 +199,7 @@ public class MainFrame extends javax.swing.JFrame {
         Beranda.form_Beranda home = new Beranda.form_Beranda();
         dpanee.add(home);
         home.setVisible(true);
-        
-        
-        
+        panel_logout.setVisible(false);
     }//GEN-LAST:event_btn_berandaMouseClicked
 
     private void btn_dataProdukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dataProdukMouseClicked
@@ -161,6 +210,7 @@ public class MainFrame extends javax.swing.JFrame {
         DataProduk.form_DataProduk home = new DataProduk.form_DataProduk();
         dpanee.add(home);
         home.setVisible(true);
+        panel_logout.setVisible(false);
     }//GEN-LAST:event_btn_dataProdukMouseClicked
 
     private void btn_dataStokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dataStokMouseClicked
@@ -172,6 +222,7 @@ public class MainFrame extends javax.swing.JFrame {
         DataStok.form_DataStok home = new DataStok.form_DataStok();
         dpanee.add(home);
         home.setVisible(true);
+        panel_logout.setVisible(false);
         
     }//GEN-LAST:event_btn_dataStokMouseClicked
 
@@ -184,7 +235,7 @@ public class MainFrame extends javax.swing.JFrame {
         TransaksiBeli.Transbeli home = new TransaksiBeli.Transbeli();
         dpanee.add(home);
         home.setVisible(true);
-        
+        panel_logout.setVisible(false);
     }//GEN-LAST:event_btn_TransaBeliMouseClicked
 
     private void btn_transJualMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_transJualMouseClicked
@@ -197,7 +248,7 @@ public class MainFrame extends javax.swing.JFrame {
         TransaksiJual.Transjual home = new TransaksiJual.Transjual();
         dpanee.add(home);
         home.setVisible(true);
-        
+        panel_logout.setVisible(false);
     }//GEN-LAST:event_btn_transJualMouseClicked
 
     private void btn_dataPemasokMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_dataPemasokMouseClicked
@@ -209,7 +260,7 @@ public class MainFrame extends javax.swing.JFrame {
         home.setVisible(true);
         ImageIcon a = new ImageIcon("src/Sidebar/side_dataPemasok.png");
         sidebarr.setIcon(a);
-        
+        panel_logout.setVisible(false);
     }//GEN-LAST:event_btn_dataPemasokMouseClicked
 
     private void btn_laporanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_laporanMouseClicked
@@ -221,6 +272,7 @@ public class MainFrame extends javax.swing.JFrame {
         home.setVisible(true);
         ImageIcon a = new ImageIcon("src/Sidebar/sidebar_laporan.png");
         sidebarr.setIcon(a);
+        panel_logout.setVisible(false);
     }//GEN-LAST:event_btn_laporanMouseClicked
 
     private void btn_LainnyaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_LainnyaMouseClicked
@@ -233,8 +285,35 @@ public class MainFrame extends javax.swing.JFrame {
         dpanee.add(home);
         home.setVisible(true);
         
-        
+        panel_logout.setVisible(false);
     }//GEN-LAST:event_btn_LainnyaMouseClicked
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_button2ActionPerformed
+
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        Login.LoginPageNew ln = new Login.LoginPageNew();
+        ln.setVisible(true);
+    }//GEN-LAST:event_button1ActionPerformed
+
+    private void sidebarrMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sidebarrMouseClicked
+        // TODO add your handling code here:
+        panel_logout.setVisible(false);
+    }//GEN-LAST:event_sidebarrMouseClicked
+
+    private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
+        // TODO add your handling code here:
+        if (panel_logout.isVisible()) {
+            panel_logout.setVisible(false);
+        } else {
+            panel_logout.setVisible(true);
+        }
+        
+    }//GEN-LAST:event_button3ActionPerformed
     public void logOut(){
         this.dispose();
         dispose();
@@ -291,7 +370,11 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel btn_dataStok;
     private javax.swing.JLabel btn_laporan;
     private javax.swing.JLabel btn_transJual;
+    private Swing.Button button1;
+    private Swing.Button button2;
+    private Swing.Button button3;
     public javax.swing.JDesktopPane dpanee;
+    private Swing.PanelRound panel_logout;
     private javax.swing.JLabel sidebarr;
     // End of variables declaration//GEN-END:variables
 }

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="212" pageHeight="625" columnWidth="192" leftMargin="10" rightMargin="10" topMargin="0" bottomMargin="0" uuid="7aa04c60-aee3-410e-89cd-88e6b84b5811">
 	<property name="ireport.zoom" value="3.4522712143931042"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="149"/>
+	<property name="ireport.y" value="53"/>
 	<parameter name="kodeTransaksi" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT tb_jual.id_transaksi, tb_detailjual.nama_produk, tb_pengguna.nama_pengguna, tb_detailjual.jumlah_produk, tb_detailjual.harga_jual, tb_detailjual.total_harga_brg, tb_jual.total_harga AS total_setelah_diskon, tb_jual.total_diskon, tb_jual.nominal_bayar, SUM(tb_jual.total_harga+tb_jual.total_diskon) AS total_sebelum_diskon, SUM(tb_jual.nominal_bayar - tb_jual.total_harga) AS kembalian, tb_jual.tgl_transaksi
@@ -118,7 +118,7 @@ Telp. 085100053319]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{id_transaksi}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="dd-MM-YYYY">
 				<reportElement uuid="4a1b8123-bc21-4bcc-8ae4-be1f59f885c4" x="78" y="0" width="107" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Quicksand" size="7"/>

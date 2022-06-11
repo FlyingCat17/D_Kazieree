@@ -73,9 +73,9 @@ private DefaultTableModel mod, mod2, mod3;
         panelRound5 = new Swing.PanelRound();
         jLabel11 = new javax.swing.JLabel();
         txt_KonfirmasiKataSandiBaru = new Swing.PasswordField();
-        txt_KataSandiBaru = new Swing.PasswordField();
         btn_BatalKataSandiBaru = new Swing.Button();
         btn_SimpanKatasandiBaru = new Swing.Button();
+        txt_KataSandiBaru = new Swing.PasswordField();
         jLabel10 = new javax.swing.JLabel();
         panel_akun = new Swing.PanelRound();
         panelRound4 = new Swing.PanelRound();
@@ -129,16 +129,10 @@ private DefaultTableModel mod, mod2, mod3;
         panelRound5.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 250, 40));
 
         txt_KonfirmasiKataSandiBaru.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txt_KonfirmasiKataSandiBaru.setLabelText("Konfirmasi Kata Sandi Baru");
+        txt_KonfirmasiKataSandiBaru.setLabelText("Konfirmasi Kata Sandi");
         txt_KonfirmasiKataSandiBaru.setLineColor(new java.awt.Color(253, 144, 39));
         txt_KonfirmasiKataSandiBaru.setShowAndHide(true);
         panelRound5.add(txt_KonfirmasiKataSandiBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 450, -1));
-
-        txt_KataSandiBaru.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txt_KataSandiBaru.setLabelText("Kata Sandi Baru");
-        txt_KataSandiBaru.setLineColor(new java.awt.Color(253, 144, 39));
-        txt_KataSandiBaru.setShowAndHide(true);
-        panelRound5.add(txt_KataSandiBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 450, -1));
 
         btn_BatalKataSandiBaru.setBackground(new java.awt.Color(255, 102, 102));
         btn_BatalKataSandiBaru.setForeground(new java.awt.Color(255, 255, 255));
@@ -162,7 +156,13 @@ private DefaultTableModel mod, mod2, mod3;
         });
         panelRound5.add(btn_SimpanKatasandiBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 240, 80, 30));
 
-        panel_Passwird.add(panelRound5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, 510, 300));
+        txt_KataSandiBaru.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txt_KataSandiBaru.setLabelText("Kata Sandi");
+        txt_KataSandiBaru.setLineColor(new java.awt.Color(253, 144, 39));
+        txt_KataSandiBaru.setShowAndHide(true);
+        panelRound5.add(txt_KataSandiBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 450, -1));
+
+        panel_Passwird.add(panelRound5, new org.netbeans.lib.awtextra.AbsoluteConstraints(223, 240, 510, 300));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PengaturanAkun/form_gantiPassword.png"))); // NOI18N
         panel_Passwird.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 690));
@@ -437,6 +437,33 @@ private DefaultTableModel mod, mod2, mod3;
 
     private void btn_SimpanKatasandiBaruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SimpanKatasandiBaruActionPerformed
         // TODO add your handling code here:
+        String pass = txt_KataSandiBaru.getText();
+        String pass2 = txt_KonfirmasiKataSandiBaru.getText();
+        
+        if (pass.equals("")) {
+            JOptionPane.showMessageDialog(this, "Harap Isi Kolom Kata Sandi Baru!", "PERINGATAN", JOptionPane.INFORMATION_MESSAGE);
+            txt_KataSandiBaru.requestFocus();
+        } else if(pass2.equals("")){
+            JOptionPane.showMessageDialog(this, "Harap Konfirmasi Kata Sandi terlebih Dahulu!", "PERINGATAN", JOptionPane.INFORMATION_MESSAGE);
+            txt_KonfirmasiKataSandiBaru.requestFocus();
+        } else if(pass.length() < 8){
+            JOptionPane.showMessageDialog(this, "Kata Sandi minimal 8 Karakter", "PERINGATAN", JOptionPane.INFORMATION_MESSAGE);
+            txt_KataSandiBaru.requestFocus();
+        } else {
+            try {
+                String update = "UPDATE tb_pengguna SET kata_sandi = '"+pass2+"' WHERE id_pengguna = '"+id_penggunaa+"';";
+                java.sql.Connection con = (Connection)konekdb.GetConnection();
+                java.sql.Statement stm = con.createStatement();
+                stm.execute(update);
+                JOptionPane.showMessageDialog(this, "BERHASIL");
+                panel_Passwird.setVisible(false);
+                panel_akun.setVisible(true);
+                panel_utama.setVisible(true);
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
+            
+        }
     }//GEN-LAST:event_btn_SimpanKatasandiBaruActionPerformed
 
     private void btn_BatalKataSandiBaruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_BatalKataSandiBaruActionPerformed
