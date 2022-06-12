@@ -59,9 +59,11 @@ public class LoginPageNew extends javax.swing.JFrame {
                 }else {
                     JOptionPane.showMessageDialog(this, ". Masuk!!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Nama Pengguna Atau Katasandi Salah!!");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Username Atau Katasandi Salah!!");
+            JOptionPane.showMessageDialog(null, "Nama Pengguna Atau Katasandi Salah!!");
         }
     }
 
@@ -74,6 +76,13 @@ public class LoginPageNew extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
+        KataSandiPengguna = new Swing.PasswordField();
+        button2 = new Swing.Button();
+        button1 = new Swing.Button();
+        UsernamePengguna = new Swing.TextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         panelRound1 = new Swing.PanelRound();
         jLabel4 = new javax.swing.JLabel();
@@ -82,18 +91,61 @@ public class LoginPageNew extends javax.swing.JFrame {
         button4 = new Swing.Button();
         button3 = new Swing.Button();
         jLabel3 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        KataSandiPengguna = new Swing.PasswordField();
-        button2 = new Swing.Button();
-        button1 = new Swing.Button();
-        UsernamePengguna = new Swing.TextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1153, 707));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        KataSandiPengguna.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        KataSandiPengguna.setLabelText("Kata Sandi");
+        KataSandiPengguna.setLineColor(new java.awt.Color(253, 144, 39));
+        KataSandiPengguna.setOpaque(false);
+        KataSandiPengguna.setShowAndHide(true);
+        jPanel2.add(KataSandiPengguna, new org.netbeans.lib.awtextra.AbsoluteConstraints(688, 340, 320, 50));
+
+        button2.setBackground(new java.awt.Color(238, 238, 238));
+        button2.setText("Lupa Kata Sandi?");
+        button2.setFont(new java.awt.Font("Quicksand", 0, 12)); // NOI18N
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 390, 110, -1));
+
+        button1.setBackground(new java.awt.Color(253, 144, 39));
+        button1.setForeground(new java.awt.Color(255, 255, 255));
+        button1.setText("MASUK");
+        button1.setFont(new java.awt.Font("Quicksand", 1, 15)); // NOI18N
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 440, 100, 40));
+
+        UsernamePengguna.setBackground(new java.awt.Color(238, 238, 238));
+        UsernamePengguna.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        UsernamePengguna.setLabelText("Nama Pengguna");
+        UsernamePengguna.setLineColor(new java.awt.Color(253, 144, 39));
+        UsernamePengguna.setOpaque(false);
+        UsernamePengguna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UsernamePenggunaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(UsernamePengguna, new org.netbeans.lib.awtextra.AbsoluteConstraints(688, 270, 320, 50));
+
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 430, 100, 70));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Login/loginPagenoTxtField.png"))); // NOI18N
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, 690));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, 680));
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -149,56 +201,6 @@ public class LoginPageNew extends javax.swing.JFrame {
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, 690));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, 680));
-
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        KataSandiPengguna.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        KataSandiPengguna.setLabelText("Kata Sandi");
-        KataSandiPengguna.setLineColor(new java.awt.Color(253, 144, 39));
-        KataSandiPengguna.setOpaque(false);
-        KataSandiPengguna.setShowAndHide(true);
-        jPanel2.add(KataSandiPengguna, new org.netbeans.lib.awtextra.AbsoluteConstraints(688, 340, 320, 50));
-
-        button2.setBackground(new java.awt.Color(238, 238, 238));
-        button2.setText("Lupa Kata Sandi?");
-        button2.setFont(new java.awt.Font("Quicksand", 0, 12)); // NOI18N
-        button2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button2ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 390, 110, -1));
-
-        button1.setBackground(new java.awt.Color(253, 144, 39));
-        button1.setForeground(new java.awt.Color(255, 255, 255));
-        button1.setText("MASUK");
-        button1.setFont(new java.awt.Font("Quicksand", 1, 15)); // NOI18N
-        button1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 440, 100, 40));
-
-        UsernamePengguna.setBackground(new java.awt.Color(238, 238, 238));
-        UsernamePengguna.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        UsernamePengguna.setLabelText("Nama Pengguna");
-        UsernamePengguna.setLineColor(new java.awt.Color(253, 144, 39));
-        UsernamePengguna.setOpaque(false);
-        UsernamePengguna.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UsernamePenggunaActionPerformed(evt);
-            }
-        });
-        jPanel2.add(UsernamePengguna, new org.netbeans.lib.awtextra.AbsoluteConstraints(688, 270, 320, 50));
-
-        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 430, 100, 70));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Login/loginPagenoTxtField.png"))); // NOI18N
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, 690));
-
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, 680));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
