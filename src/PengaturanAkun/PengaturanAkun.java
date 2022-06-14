@@ -3,6 +3,7 @@ package PengaturanAkun;
 
 import Main.user;
 import db.konekdb;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
@@ -69,27 +70,6 @@ private DefaultTableModel mod, mod2, mod3;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panel_Passwird = new Swing.PanelRound();
-        panelRound5 = new Swing.PanelRound();
-        jLabel11 = new javax.swing.JLabel();
-        txt_KonfirmasiKataSandiBaru = new Swing.PasswordField();
-        btn_BatalKataSandiBaru = new Swing.Button();
-        btn_SimpanKatasandiBaru = new Swing.Button();
-        txt_KataSandiBaru = new Swing.PasswordField();
-        jLabel10 = new javax.swing.JLabel();
-        panel_akun = new Swing.PanelRound();
-        panelRound4 = new Swing.PanelRound();
-        jLabel6 = new javax.swing.JLabel();
-        passwordField1 = new Swing.PasswordField();
-        button4 = new Swing.Button();
-        btn_simpanUbah = new Swing.Button();
-        button2 = new Swing.Button();
-        txt_UbahNoTelp = new Swing.TextField();
-        txt_UbahAlamat = new Swing.TextField();
-        txt_UbahNamaPengguna = new Swing.TextField();
-        txt_UbahNamaLengkap = new Swing.TextField();
-        txt_UbahIDPengguna = new Swing.TextField();
-        jLabel4 = new javax.swing.JLabel();
         panel_utama = new Swing.PanelRound();
         panelRound1 = new Swing.PanelRound();
         txt_noTelp = new javax.swing.JLabel();
@@ -106,168 +86,33 @@ private DefaultTableModel mod, mod2, mod3;
         txt_namaLengkap = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        panel_akun = new Swing.PanelRound();
+        panelRound4 = new Swing.PanelRound();
+        jLabel6 = new javax.swing.JLabel();
+        passwordField1 = new Swing.PasswordField();
+        button4 = new Swing.Button();
+        btn_simpanUbah = new Swing.Button();
+        button2 = new Swing.Button();
+        txt_UbahNoTelp = new Swing.TextField();
+        txt_UbahAlamat = new Swing.TextField();
+        txt_UbahNamaPengguna = new Swing.TextField();
+        txt_UbahNamaLengkap = new Swing.TextField();
+        txt_UbahIDPengguna = new Swing.TextField();
+        jLabel4 = new javax.swing.JLabel();
+        panel_Passwird = new Swing.PanelRound();
+        panelRound5 = new Swing.PanelRound();
+        jLabel11 = new javax.swing.JLabel();
+        txt_KonfirmasiKataSandiBaru = new Swing.PasswordField();
+        btn_BatalKataSandiBaru = new Swing.Button();
+        btn_SimpanKatasandiBaru = new Swing.Button();
+        txt_KataSandiBaru = new Swing.PasswordField();
+        jLabel10 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(185, 185, 185));
         setMaximumSize(new java.awt.Dimension(960, 707));
         setMinimumSize(new java.awt.Dimension(960, 707));
         setPreferredSize(new java.awt.Dimension(960, 707));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        panel_Passwird.setBackground(new java.awt.Color(185, 185, 185));
-        panel_Passwird.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        panelRound5.setBackground(new java.awt.Color(255, 255, 255));
-        panelRound5.setRoundBottomLeft(15);
-        panelRound5.setRoundBottomRight(15);
-        panelRound5.setRoundTopLeft(15);
-        panelRound5.setRoundTopRight(15);
-        panelRound5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel11.setFont(new java.awt.Font("Quicksand", 1, 24)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(253, 144, 39));
-        jLabel11.setText("UBAH KATA SANDI");
-        panelRound5.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 250, 40));
-
-        txt_KonfirmasiKataSandiBaru.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txt_KonfirmasiKataSandiBaru.setLabelText("Konfirmasi Kata Sandi");
-        txt_KonfirmasiKataSandiBaru.setLineColor(new java.awt.Color(253, 144, 39));
-        txt_KonfirmasiKataSandiBaru.setShowAndHide(true);
-        panelRound5.add(txt_KonfirmasiKataSandiBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 450, -1));
-
-        btn_BatalKataSandiBaru.setBackground(new java.awt.Color(255, 102, 102));
-        btn_BatalKataSandiBaru.setForeground(new java.awt.Color(255, 255, 255));
-        btn_BatalKataSandiBaru.setText("BATAL");
-        btn_BatalKataSandiBaru.setFont(new java.awt.Font("Quicksand", 1, 12)); // NOI18N
-        btn_BatalKataSandiBaru.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_BatalKataSandiBaruActionPerformed(evt);
-            }
-        });
-        panelRound5.add(btn_BatalKataSandiBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, 80, 30));
-
-        btn_SimpanKatasandiBaru.setBackground(new java.awt.Color(0, 255, 0));
-        btn_SimpanKatasandiBaru.setForeground(new java.awt.Color(255, 255, 255));
-        btn_SimpanKatasandiBaru.setText("SIMPAN");
-        btn_SimpanKatasandiBaru.setFont(new java.awt.Font("Quicksand", 1, 12)); // NOI18N
-        btn_SimpanKatasandiBaru.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_SimpanKatasandiBaruActionPerformed(evt);
-            }
-        });
-        panelRound5.add(btn_SimpanKatasandiBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 240, 80, 30));
-
-        txt_KataSandiBaru.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txt_KataSandiBaru.setLabelText("Kata Sandi");
-        txt_KataSandiBaru.setLineColor(new java.awt.Color(253, 144, 39));
-        txt_KataSandiBaru.setShowAndHide(true);
-        panelRound5.add(txt_KataSandiBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 450, -1));
-
-        panel_Passwird.add(panelRound5, new org.netbeans.lib.awtextra.AbsoluteConstraints(223, 240, 510, 300));
-
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PengaturanAkun/form_gantiPassword.png"))); // NOI18N
-        panel_Passwird.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 690));
-
-        getContentPane().add(panel_Passwird, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 690));
-
-        panel_akun.setBackground(new java.awt.Color(185, 185, 185));
-        panel_akun.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        panelRound4.setBackground(new java.awt.Color(255, 255, 255));
-        panelRound4.setRoundBottomLeft(15);
-        panelRound4.setRoundBottomRight(15);
-        panelRound4.setRoundTopLeft(15);
-        panelRound4.setRoundTopRight(15);
-        panelRound4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel6.setFont(new java.awt.Font("Quicksand", 1, 24)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(253, 144, 39));
-        jLabel6.setText("UBAH PROFIL AKUN");
-        panelRound4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 250, 40));
-
-        passwordField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        passwordField1.setLabelText("Konfirmasi Kata Sandi");
-        passwordField1.setLineColor(new java.awt.Color(253, 144, 39));
-        passwordField1.setOpaque(false);
-        passwordField1.setShowAndHide(true);
-        panelRound4.add(passwordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 470, -1));
-
-        button4.setBackground(new java.awt.Color(240, 240, 240));
-        button4.setForeground(new java.awt.Color(115, 115, 115));
-        button4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PengaturanAkun/bx_edit (1).png"))); // NOI18N
-        button4.setText("UBAH KATA SANDI");
-        button4.setEffectColor(new java.awt.Color(253, 144, 39));
-        button4.setFont(new java.awt.Font("Quicksand Medium", 0, 12)); // NOI18N
-        button4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button4ActionPerformed(evt);
-            }
-        });
-        panelRound4.add(button4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 140, 30));
-
-        btn_simpanUbah.setBackground(new java.awt.Color(51, 255, 51));
-        btn_simpanUbah.setForeground(new java.awt.Color(255, 255, 255));
-        btn_simpanUbah.setText("SIMPAN");
-        btn_simpanUbah.setFont(new java.awt.Font("Quicksand Medium", 0, 12)); // NOI18N
-        btn_simpanUbah.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_simpanUbahActionPerformed(evt);
-            }
-        });
-        panelRound4.add(btn_simpanUbah, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 450, 80, 30));
-
-        button2.setBackground(new java.awt.Color(255, 51, 51));
-        button2.setForeground(new java.awt.Color(255, 255, 255));
-        button2.setText("BATAL");
-        button2.setFont(new java.awt.Font("Quicksand Medium", 0, 12)); // NOI18N
-        button2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button2ActionPerformed(evt);
-            }
-        });
-        panelRound4.add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 450, 80, 30));
-
-        txt_UbahNoTelp.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
-        txt_UbahNoTelp.setLabelText("Nomor Telepon");
-        txt_UbahNoTelp.setLineColor(new java.awt.Color(253, 144, 39));
-        txt_UbahNoTelp.setOpaque(false);
-        txt_UbahNoTelp.setSelectionColor(new java.awt.Color(153, 153, 153));
-        panelRound4.add(txt_UbahNoTelp, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 470, 50));
-
-        txt_UbahAlamat.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
-        txt_UbahAlamat.setLabelText("Alamat");
-        txt_UbahAlamat.setLineColor(new java.awt.Color(253, 144, 39));
-        txt_UbahAlamat.setOpaque(false);
-        txt_UbahAlamat.setSelectionColor(new java.awt.Color(153, 153, 153));
-        panelRound4.add(txt_UbahAlamat, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 470, 50));
-
-        txt_UbahNamaPengguna.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
-        txt_UbahNamaPengguna.setLabelText("Nama Pengguna (Username)");
-        txt_UbahNamaPengguna.setLineColor(new java.awt.Color(253, 144, 39));
-        txt_UbahNamaPengguna.setOpaque(false);
-        txt_UbahNamaPengguna.setSelectionColor(new java.awt.Color(153, 153, 153));
-        panelRound4.add(txt_UbahNamaPengguna, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 470, 50));
-
-        txt_UbahNamaLengkap.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
-        txt_UbahNamaLengkap.setLabelText("Nama Lengkap");
-        txt_UbahNamaLengkap.setLineColor(new java.awt.Color(253, 144, 39));
-        txt_UbahNamaLengkap.setOpaque(false);
-        txt_UbahNamaLengkap.setSelectionColor(new java.awt.Color(153, 153, 153));
-        panelRound4.add(txt_UbahNamaLengkap, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 470, 50));
-
-        txt_UbahIDPengguna.setEnabled(false);
-        txt_UbahIDPengguna.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
-        txt_UbahIDPengguna.setLabelText("ID Pengguna");
-        txt_UbahIDPengguna.setLineColor(new java.awt.Color(253, 144, 39));
-        txt_UbahIDPengguna.setOpaque(false);
-        txt_UbahIDPengguna.setSelectionColor(new java.awt.Color(153, 153, 153));
-        panelRound4.add(txt_UbahIDPengguna, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 230, 50));
-
-        panel_akun.add(panelRound4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 530, 510));
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PengaturanAkun/form_editAkun (1).png"))); // NOI18N
-        panel_akun.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 690));
-
-        getContentPane().add(panel_akun, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 690));
 
         panel_utama.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -361,6 +206,167 @@ private DefaultTableModel mod, mod2, mod3;
         panel_utama.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 680));
 
         getContentPane().add(panel_utama, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 690));
+
+        panel_akun.setBackground(new java.awt.Color(185, 185, 185));
+        panel_akun.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelRound4.setBackground(new java.awt.Color(255, 255, 255));
+        panelRound4.setRoundBottomLeft(15);
+        panelRound4.setRoundBottomRight(15);
+        panelRound4.setRoundTopLeft(15);
+        panelRound4.setRoundTopRight(15);
+        panelRound4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel6.setFont(new java.awt.Font("Quicksand", 1, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(253, 144, 39));
+        jLabel6.setText("UBAH PROFIL AKUN");
+        panelRound4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 250, 40));
+
+        passwordField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        passwordField1.setLabelText("Konfirmasi Kata Sandi");
+        passwordField1.setLineColor(new java.awt.Color(253, 144, 39));
+        passwordField1.setOpaque(false);
+        passwordField1.setShowAndHide(true);
+        panelRound4.add(passwordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 470, -1));
+
+        button4.setBackground(new java.awt.Color(240, 240, 240));
+        button4.setForeground(new java.awt.Color(115, 115, 115));
+        button4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PengaturanAkun/bx_edit (1).png"))); // NOI18N
+        button4.setText("UBAH KATA SANDI");
+        button4.setEffectColor(new java.awt.Color(253, 144, 39));
+        button4.setFont(new java.awt.Font("Quicksand Medium", 0, 12)); // NOI18N
+        button4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button4ActionPerformed(evt);
+            }
+        });
+        panelRound4.add(button4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 140, 30));
+
+        btn_simpanUbah.setBackground(new java.awt.Color(51, 255, 51));
+        btn_simpanUbah.setForeground(new java.awt.Color(255, 255, 255));
+        btn_simpanUbah.setText("SIMPAN");
+        btn_simpanUbah.setFont(new java.awt.Font("Quicksand Medium", 0, 12)); // NOI18N
+        btn_simpanUbah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_simpanUbahActionPerformed(evt);
+            }
+        });
+        panelRound4.add(btn_simpanUbah, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 450, 80, 30));
+
+        button2.setBackground(new java.awt.Color(255, 51, 51));
+        button2.setForeground(new java.awt.Color(255, 255, 255));
+        button2.setText("BATAL");
+        button2.setFont(new java.awt.Font("Quicksand Medium", 0, 12)); // NOI18N
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
+        panelRound4.add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 450, 80, 30));
+
+        txt_UbahNoTelp.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
+        txt_UbahNoTelp.setLabelText("Nomor Telepon");
+        txt_UbahNoTelp.setLineColor(new java.awt.Color(253, 144, 39));
+        txt_UbahNoTelp.setOpaque(false);
+        txt_UbahNoTelp.setSelectionColor(new java.awt.Color(153, 153, 153));
+        txt_UbahNoTelp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_UbahNoTelpKeyTyped(evt);
+            }
+        });
+        panelRound4.add(txt_UbahNoTelp, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 470, 50));
+
+        txt_UbahAlamat.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
+        txt_UbahAlamat.setLabelText("Alamat");
+        txt_UbahAlamat.setLineColor(new java.awt.Color(253, 144, 39));
+        txt_UbahAlamat.setOpaque(false);
+        txt_UbahAlamat.setSelectionColor(new java.awt.Color(153, 153, 153));
+        panelRound4.add(txt_UbahAlamat, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 470, 50));
+
+        txt_UbahNamaPengguna.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
+        txt_UbahNamaPengguna.setLabelText("Nama Pengguna (Username)");
+        txt_UbahNamaPengguna.setLineColor(new java.awt.Color(253, 144, 39));
+        txt_UbahNamaPengguna.setOpaque(false);
+        txt_UbahNamaPengguna.setSelectionColor(new java.awt.Color(153, 153, 153));
+        panelRound4.add(txt_UbahNamaPengguna, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 470, 50));
+
+        txt_UbahNamaLengkap.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
+        txt_UbahNamaLengkap.setLabelText("Nama Lengkap");
+        txt_UbahNamaLengkap.setLineColor(new java.awt.Color(253, 144, 39));
+        txt_UbahNamaLengkap.setOpaque(false);
+        txt_UbahNamaLengkap.setSelectionColor(new java.awt.Color(153, 153, 153));
+        panelRound4.add(txt_UbahNamaLengkap, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 470, 50));
+
+        txt_UbahIDPengguna.setEnabled(false);
+        txt_UbahIDPengguna.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
+        txt_UbahIDPengguna.setLabelText("ID Pengguna");
+        txt_UbahIDPengguna.setLineColor(new java.awt.Color(253, 144, 39));
+        txt_UbahIDPengguna.setOpaque(false);
+        txt_UbahIDPengguna.setSelectionColor(new java.awt.Color(153, 153, 153));
+        panelRound4.add(txt_UbahIDPengguna, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 230, 50));
+
+        panel_akun.add(panelRound4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 530, 510));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PengaturanAkun/form_editAkun (1).png"))); // NOI18N
+        panel_akun.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 690));
+
+        getContentPane().add(panel_akun, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 690));
+
+        panel_Passwird.setBackground(new java.awt.Color(185, 185, 185));
+        panel_Passwird.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelRound5.setBackground(new java.awt.Color(255, 255, 255));
+        panelRound5.setRoundBottomLeft(15);
+        panelRound5.setRoundBottomRight(15);
+        panelRound5.setRoundTopLeft(15);
+        panelRound5.setRoundTopRight(15);
+        panelRound5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel11.setFont(new java.awt.Font("Quicksand", 1, 24)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(253, 144, 39));
+        jLabel11.setText("UBAH KATA SANDI");
+        panelRound5.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 250, 40));
+
+        txt_KonfirmasiKataSandiBaru.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txt_KonfirmasiKataSandiBaru.setLabelText("Konfirmasi Kata Sandi");
+        txt_KonfirmasiKataSandiBaru.setLineColor(new java.awt.Color(253, 144, 39));
+        txt_KonfirmasiKataSandiBaru.setShowAndHide(true);
+        panelRound5.add(txt_KonfirmasiKataSandiBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 450, -1));
+
+        btn_BatalKataSandiBaru.setBackground(new java.awt.Color(255, 102, 102));
+        btn_BatalKataSandiBaru.setForeground(new java.awt.Color(255, 255, 255));
+        btn_BatalKataSandiBaru.setText("BATAL");
+        btn_BatalKataSandiBaru.setFont(new java.awt.Font("Quicksand", 1, 12)); // NOI18N
+        btn_BatalKataSandiBaru.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_BatalKataSandiBaruActionPerformed(evt);
+            }
+        });
+        panelRound5.add(btn_BatalKataSandiBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, 80, 30));
+
+        btn_SimpanKatasandiBaru.setBackground(new java.awt.Color(0, 255, 0));
+        btn_SimpanKatasandiBaru.setForeground(new java.awt.Color(255, 255, 255));
+        btn_SimpanKatasandiBaru.setText("SIMPAN");
+        btn_SimpanKatasandiBaru.setFont(new java.awt.Font("Quicksand", 1, 12)); // NOI18N
+        btn_SimpanKatasandiBaru.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_SimpanKatasandiBaruActionPerformed(evt);
+            }
+        });
+        panelRound5.add(btn_SimpanKatasandiBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 240, 80, 30));
+
+        txt_KataSandiBaru.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txt_KataSandiBaru.setLabelText("Kata Sandi");
+        txt_KataSandiBaru.setLineColor(new java.awt.Color(253, 144, 39));
+        txt_KataSandiBaru.setShowAndHide(true);
+        panelRound5.add(txt_KataSandiBaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 450, -1));
+
+        panel_Passwird.add(panelRound5, new org.netbeans.lib.awtextra.AbsoluteConstraints(223, 240, 510, 300));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PengaturanAkun/form_gantiPassword.png"))); // NOI18N
+        panel_Passwird.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 690));
+
+        getContentPane().add(panel_Passwird, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 690));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -471,6 +477,14 @@ private DefaultTableModel mod, mod2, mod3;
         panel_Passwird.setVisible(false);
         panel_akun.setVisible(true);
     }//GEN-LAST:event_btn_BatalKataSandiBaruActionPerformed
+
+    private void txt_UbahNoTelpKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_UbahNoTelpKeyTyped
+        // TODO add your handling code here:
+        char k = evt.getKeyChar();
+        if (!(Character.isDigit(k) || k == KeyEvent.VK_BACK_SPACE || k == KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_UbahNoTelpKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

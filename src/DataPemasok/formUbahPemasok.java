@@ -7,6 +7,7 @@ package DataPemasok;
 
 import db.konekdb;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.Random;
@@ -87,6 +88,11 @@ form_dataPemasok daata = new form_dataPemasok();
         txt_noTelp.setFont(new java.awt.Font("Quicksand Medium", 0, 16)); // NOI18N
         txt_noTelp.setBorder(null);
         txt_noTelp.setOpaque(false);
+        txt_noTelp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_noTelpKeyTyped(evt);
+            }
+        });
         getContentPane().add(txt_noTelp, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 450, 410, 40));
 
         jScrollPane1.setBackground(new java.awt.Color(196, 196, 196));
@@ -209,6 +215,14 @@ form_dataPemasok daata = new form_dataPemasok();
             }
         }
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void txt_noTelpKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_noTelpKeyTyped
+        // TODO add your handling code here:
+        char k = evt.getKeyChar();
+        if (!(Character.isDigit(k) || k == KeyEvent.VK_BACK_SPACE || k == KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_noTelpKeyTyped
 
     /**
      * @param args the command line arguments

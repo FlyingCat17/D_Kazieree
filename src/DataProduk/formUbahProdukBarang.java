@@ -1,9 +1,10 @@
-    /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package DataProduk;
+
 
 import db.konekdb;
 import java.awt.Color;
@@ -18,21 +19,22 @@ import javax.swing.JOptionPane;
 public class formUbahProdukBarang extends javax.swing.JDialog {
 int x, y;
 
+
     /**
      * Creates new form formTambahProdukBarang
      */
-    
+
     public formUbahProdukBarang(java.awt.Frame parent, boolean modal) {
         
         super(parent, modal);
         initComponents();
-        this.setBackground(new Color(0,0,0,0));
+        this.setBackground(new Color(0, 0, 0, 0));
         this.setLocationRelativeTo(null);
         form_DataProduk nm  = new form_DataProduk();
         loadDataBarang();
         System.out.println(txt_kodeProdukBarang.getText());
+
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -151,13 +153,12 @@ int x, y;
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    
+
     private void btn_simpanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_simpanMouseClicked
         // TODO add your handling code here:
-        
-        String kp, np, sp, hb, hj,ib;
-        int b,j;
+
+        String kp, np, sp, hb, hj, ib;
+        int b, j;
         ib = txt_kodeProdukBarang.getText().toString();
         kp = txt_kodeProdukBarang.getText().toString();
         np = txt_namaProduk.getText().toString();
@@ -184,7 +185,7 @@ int x, y;
         }
         } else {
             JOptionPane.showMessageDialog(null, "Harga jual harus lebih besar dari harga beli");
-    }
+        }
     }//GEN-LAST:event_btn_simpanMouseClicked
 
     private void btn_batalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_batalMouseClicked
@@ -211,33 +212,33 @@ int x, y;
         x = evt.getX();
         y = evt.getY();
     }//GEN-LAST:event_jLabel2MousePressed
-   
+
     private void jLabel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseDragged
         // TODO add your handling code here:
         int ex = evt.getXOnScreen();
         int ye = evt.getYOnScreen();
 
-        this.setLocation(ex-x, ye-y);
+        this.setLocation(ex - x, ye - y);
     }//GEN-LAST:event_jLabel2MouseDragged
 
     private void txt_hargaBeliKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_hargaBeliKeyTyped
         // TODO add your handling code here:
-         char k = evt.getKeyChar();
+        char k = evt.getKeyChar();
         if (!(Character.isDigit(k) || k == KeyEvent.VK_BACK_SPACE || k == KeyEvent.VK_DELETE)) {
             evt.consume();
         }
-        if (txt_hargaBeli.getText().length()>=12){
+        if (txt_hargaBeli.getText().length() >= 12) {
             evt.consume();
         }
     }//GEN-LAST:event_txt_hargaBeliKeyTyped
 
     private void txt_hargaJualKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_hargaJualKeyTyped
         // TODO add your handling code here:
-         char k = evt.getKeyChar();
+        char k = evt.getKeyChar();
         if (!(Character.isDigit(k) || k == KeyEvent.VK_BACK_SPACE || k == KeyEvent.VK_DELETE)) {
             evt.consume();
         }
-        if (txt_hargaJual.getText().length()>=12){
+        if (txt_hargaJual.getText().length() >= 12) {
             evt.consume();
         }
     }//GEN-LAST:event_txt_hargaJualKeyTyped

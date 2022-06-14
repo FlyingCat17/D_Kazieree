@@ -11,22 +11,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
 
-
 /**
  *
  * @author LenataHoma
  */
 public class formUbahJasa extends javax.swing.JDialog {
-int x, y;
-DataProduk.form_DataProduk vm = new DataProduk.form_DataProduk();
+
+    int x, y;
+    DataProduk.form_DataProduk vm = new DataProduk.form_DataProduk();
+
     /**
      * Creates new form formTambahJasa
      */
-    
+
     public formUbahJasa(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setBackground(new Color(0,0,0,0));  //Make the frame Transparent
+        this.setBackground(new Color(0, 0, 0, 0));  //Make the frame Transparent
         this.setLocationRelativeTo(null);
 //        txt_kodeProdukJasa.setText(bn.lbl_id.getText());
 //        System.out.println(bn.lbl_id.getText());
@@ -131,7 +132,7 @@ DataProduk.form_DataProduk vm = new DataProduk.form_DataProduk();
         int ex = evt.getXOnScreen();
         int ye = evt.getYOnScreen();
 
-        this.setLocation(ex-x, ye-y);
+        this.setLocation(ex - x, ye - y);
     }//GEN-LAST:event_jLabel2MouseDragged
 
     private void jLabel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MousePressed
@@ -142,29 +143,30 @@ DataProduk.form_DataProduk vm = new DataProduk.form_DataProduk();
 
     private void btn_simpanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_simpanMouseClicked
         // TODO add your handling code here:
-                String kp, np, sp, ib;
-                ib = txt_kodeProdukJasa.getText().toString();
-                kp = txt_kodeProdukJasa.getText().toString();
-                np = txt_namaJasa.getText().toString();
-                sp = txt_hargaJasa.getText();
-            if (kp.equals("")) {
-                JOptionPane.showMessageDialog(this, "Harap isi Kode Produk Jasa");
-            } else if(np.equals("")){
-               JOptionPane.showMessageDialog(this, "Nama Produk Jasa Harap diisi");
-            } else if(sp.equals("")){
-                JOptionPane.showMessageDialog(this, "Harga Jasa Harap diisi");
-            } else {
-                try {
-                String update = "UPDATE tb_produk SET id_produk = '"+ kp +"', nama_produk = '"+ np +
-                        "', harga_jual = '"+ sp +
-                    "' WHERE id_produk = '"+ ib +"'";
-                    Connection con = (Connection) konekdb.GetConnection();
-                    PreparedStatement pst = con.prepareStatement(update);
+        String kp, np, sp, ib;
+        ib = txt_kodeProdukJasa.getText().toString();
+        kp = txt_kodeProdukJasa.getText().toString();
+        np = txt_namaJasa.getText().toString();
+        sp = txt_hargaJasa.getText();
+        if (kp.equals("")) {
+            JOptionPane.showMessageDialog(this, "Harap isi Kode Produk Jasa");
+        } else if (np.equals("")) {
+            JOptionPane.showMessageDialog(this, "Nama Produk Jasa Harap diisi");
+        } else if (sp.equals("")) {
+            JOptionPane.showMessageDialog(this, "Harga Jasa Harap diisi");
+        } else {
+            try {
+                String update = "UPDATE tb_produk SET id_produk = '" + kp + "', nama_produk = '" + np
+                        + "', harga_jual = '" + sp
+                        + "' WHERE id_produk = '" + ib + "'";
+                Connection con = (Connection) konekdb.GetConnection();
+                PreparedStatement pst = con.prepareStatement(update);
                 pst.execute();
                 JOptionPane.showMessageDialog(this, "Berhasil Tersimpan!");
                 form_DataProduk dp = new form_DataProduk();
                 dp.loadTableProduk();
                 this.dispose();
+
                 txt_kodeProdukJasa.setText("");
                 txt_namaJasa.setText("");
                 txt_hargaJasa.setText("");
@@ -176,7 +178,7 @@ DataProduk.form_DataProduk vm = new DataProduk.form_DataProduk();
 
     private void btn_batalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_batalMouseClicked
         // TODO add your handling code here:
-        
+
         vm.setIdProdukJasanull(null);
         vm.setKategorinull(null);
         vm.loadTableProduk();
