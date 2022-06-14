@@ -145,6 +145,8 @@ Connection con;
                 pst.execute();
                 JOptionPane.showMessageDialog(this, "Berhasil Tersimpan!");
                 form_DataProduk.loadTableProduk();
+                form_DataProduk c = new form_DataProduk();
+                new Main.MainFrame().dpanee.add(c).setVisible(true);
                 this.dispose();
                 txt_kodeProduk.setText("");
                 txt_namaJasa.setText("");

@@ -197,7 +197,9 @@ public class TambahStok extends javax.swing.JDialog {
             pst.execute();
             JOptionPane.showMessageDialog(null, "Berhasil Ditambahkan");
             form_DataStok j = new form_DataStok();
+            new Main.MainFrame().dpanee.add(j).setVisible(true);
             j.loadTableStok();
+            j.setVisible(true);
             this.dispose();
         } catch (Exception e) {
             System.out.println("Error !");

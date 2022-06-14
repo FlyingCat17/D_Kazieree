@@ -2,6 +2,7 @@ package PengeluaranPemasukanKaryawan;
 
 
 import db.konekdb;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.text.DateFormat;
@@ -124,6 +125,11 @@ String IDPengeluaran = null;
 
         txt_nominal.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
         txt_nominal.setLabelText("Nominal");
+        txt_nominal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_nominalKeyTyped(evt);
+            }
+        });
         jPanel1.add(txt_nominal, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 380, 410, 50));
 
         txt_keterangan.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
@@ -174,6 +180,14 @@ String IDPengeluaran = null;
             System.err.println(e.getMessage());
         }
     }//GEN-LAST:event_button1ActionPerformed
+
+    private void txt_nominalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nominalKeyTyped
+        // TODO add your handling code here:
+        char k = evt.getKeyChar();
+        if (!(Character.isDigit(k) || k == KeyEvent.VK_BACK_SPACE || k == KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_nominalKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
