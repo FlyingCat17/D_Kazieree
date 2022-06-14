@@ -1,10 +1,8 @@
-package PengeluaranPemasukanKaryawan;
-
+package PengeluaranPemasukanAdmin;
 
 
 import Main.user;
 import db.konekdb;
-import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.text.DateFormat;
@@ -24,14 +22,14 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  *
  * @author LenataHoma
  */
-public class form_tambahPemasukan extends javax.swing.JInternalFrame {
+public class form_tambahPemasukanAdmin extends javax.swing.JInternalFrame {
 String IDPemasukan = null;
 String IDPengguna = null;
 user usr = new user();
     /**
      * Creates new form Beranda
      */
-    public form_tambahPemasukan() {
+    public form_tambahPemasukanAdmin() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI gui = (BasicInternalFrameUI)this.getUI();
@@ -50,27 +48,29 @@ user usr = new user();
     public void generateIDPemasukan(){
         DateFormat vblnth = new SimpleDateFormat("yyyyMMdd");
         String blnth = vblnth.format(Calendar.getInstance().getTime());
-
+        
         DateFormat hari = new SimpleDateFormat("yyyy-MM-dd");
         String a = hari.format(Calendar.getInstance().getTime());
-        try {
+    try {
             String sql = "SELECT MAX(RIGHT(id_pemasukan,6)) AS kode_unik\n"
-                    + "FROM tb_pemasukan WHERE tgl_pemasukan LIKE '" + a + "';";
-            java.sql.Connection con = (Connection) konekdb.GetConnection();
+                + "FROM tb_pemasukan WHERE tgl_pemasukan LIKE '"+a+"';";
+            java.sql.Connection con = (Connection)konekdb.GetConnection();
             java.sql.Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             java.sql.ResultSet rs = st.executeQuery(sql);
-            while (rs.next()) {
-                if (rs.last()) {
-                    int autoId = rs.getInt(1) + 1;
+            while (rs.next()) {                
+                if (rs.last()){
+                    int autoId = rs.getInt(1)+1;
                     String no = String.valueOf(autoId);
                     int noLong = no.length();
-                    for (int i = 0; i < 6 - noLong; i++) {
-                        no = "0" + no;
+                    for (int i = 0; i < 6-noLong; i++) {
+                        no = "0"+no;
                     }
-                    IDPemasukan = "IN/" + blnth + "/" + no;
-                    System.out.println("ID PEMASUKAN : IN/" + blnth + "/" + no);
+                    IDPemasukan="IN/"+blnth+"/"+no;
+                    System.out.println("ID PEMASUKAN : IN/"+blnth+"/"+no);
+                    
+                    
                 }
-
+                
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -86,6 +86,7 @@ user usr = new user();
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        button2 = new Swing.Button();
         button1 = new Swing.Button();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
@@ -103,6 +104,17 @@ user usr = new user();
 
         jPanel1.setBackground(new java.awt.Color(185, 185, 185));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        button2.setBackground(new java.awt.Color(255, 51, 51));
+        button2.setForeground(new java.awt.Color(255, 255, 255));
+        button2.setText("KEMBALI");
+        button2.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 490, 90, 30));
 
         button1.setBackground(new java.awt.Color(0, 255, 51));
         button1.setForeground(new java.awt.Color(255, 255, 255));
@@ -132,11 +144,6 @@ user usr = new user();
 
         txt_nominal.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
         txt_nominal.setLabelText("Nominal");
-        txt_nominal.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_nominalKeyTyped(evt);
-            }
-        });
         jPanel1.add(txt_nominal, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 380, 410, 50));
 
         txt_keterangan.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
@@ -169,10 +176,10 @@ user usr = new user();
         String tampilan = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(tampilan);
         String tanggal = String.valueOf(sdf.format(jDateChooser1.getDate()));
-        System.out.println("INSERT INTO `tb_pemasukan`(`id_pemasukan`, `tgl_pemasukan`, `keterangan`, `jumlah_pemasukan`, `cashbox`) "
-                    + "VALUES ('"+IDPemasukan+"','"+tanggal+"','"+txt_keterangan.getText()+"','"+txt_nominal.getText()+"','Default')");
+        System.out.println("INSERT INTO `tb_pemasukan`(`id_pemasukan`, `tgl_pemasukan`, `id_pengguna`, `keterangan`, `jumlah_pemasukan`, `cashbox`) "
+                + "VALUES ('"+IDPemasukan+"','"+tanggal+"','"+IDPengguna+"','"+txt_keterangan.getText()+"','"+txt_nominal.getText()+"','Default')");
         try {
-            String sqla = "INSERT INTO `tb_pemasukan`(`id_pemasukan`, `tgl_pemasukan`, `keterangan`, `jumlah_pemasukan`, `cashbox`) "
+            String saql = "INSERT INTO `tb_pemasukan`(`id_pemasukan`, `tgl_pemasukan`, `keterangan`, `jumlah_pemasukan`, `cashbox`) "
                     + "VALUES ('"+IDPemasukan+"','"+tanggal+"','"+txt_keterangan.getText()+"','"+txt_nominal.getText()+"','Default')";
             String sql = "INSERT INTO `tb_pemasukan`(`id_pemasukan`, `tgl_pemasukan`, `id_pengguna`, `keterangan`, `jumlah_pemasukan`, `cashbox`) "
                 + "VALUES ('"+IDPemasukan+"','"+tanggal+"','"+IDPengguna+"','"+txt_keterangan.getText()+"','"+txt_nominal.getText()+"','Default')";
@@ -190,17 +197,15 @@ user usr = new user();
         }
     }//GEN-LAST:event_button1ActionPerformed
 
-    private void txt_nominalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nominalKeyTyped
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         // TODO add your handling code here:
-        char k = evt.getKeyChar();
-        if (!(Character.isDigit(k) || k == KeyEvent.VK_BACK_SPACE || k == KeyEvent.VK_DELETE)) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txt_nominalKeyTyped
+        this.dispose();
+    }//GEN-LAST:event_button2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Swing.Button button1;
+    private Swing.Button button2;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

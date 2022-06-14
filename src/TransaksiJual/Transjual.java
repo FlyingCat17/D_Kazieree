@@ -49,7 +49,7 @@ private DefaultTableModel mod, mod2, mod3;
         String nama = usr.getNama();
         txt_Kasir.setText(usr.getNama());
         mod = new DefaultTableModel();
-        
+        txt_KodeProduk.requestFocus();
         jPanel1.setVisible(false);
         jPanel2.setVisible(false);
         jTable1.setModel(mod);

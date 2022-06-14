@@ -368,28 +368,25 @@ public class formDataPenggunaa extends javax.swing.JInternalFrame {
             loadDataPengguna();
             ua.loadDataAdmin();
             ua.setVisible(true);
+            loadDataPengguna();
             ua.loadDataAdmin();
             ua.txt_IDPengguna.setText(getIdPengguna());
-            loadDataPengguna();
+            
         } else if (hakAkses.equals("KARYAWAN")&&status.equals("LUPA")) {
             form_UbahKaryawanReset ukr = new form_UbahKaryawanReset(vm, true);
             ukr.txt_IDPengguna.setText(getIdPengguna());
             ukr.loadDataKaryawan();
-            loadDataPengguna();
             ukr.setVisible(true);
             loadDataPengguna();
             ukr.loadDataKaryawan();
             ukr.txt_IDPengguna.setText(getIdPengguna());
-            loadDataPengguna();
         } else if(hakAkses.equals("KARYAWAN")){
             form_UbahKaryawan uk = new form_UbahKaryawan(vm, true);
             uk.txt_IDPengguna.setText(getIdPengguna());
             uk.loadDataLKaryawan();
-            loadDataPengguna();
             uk.setVisible(true);
             loadDataPengguna();
             uk.txt_IDPengguna.setText(getIdPengguna());
-            loadDataPengguna();
         }
         
     }//GEN-LAST:event_jLabel4MouseClicked
@@ -429,7 +426,7 @@ public class formDataPenggunaa extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JTable TabelPengguna;
+    public javax.swing.JTable TabelPengguna;
     private javax.swing.JComboBox<String> filterAkses;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

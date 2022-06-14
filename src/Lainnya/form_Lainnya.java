@@ -1,17 +1,11 @@
 package Lainnya;
 
 
-import DataStok.*;
-import Beranda.*;
-import Login.LoginPage;
-import Login.LoginPageNew;
-import java.awt.event.MouseEvent;
+
+import PengeluaranPemasukanAdmin.form_tambahPemasukanAdmin;
+import PengeluaranPemasukanAdmin.form_tambahPengeluaranAdmin;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
-import Main.MainFrame;
-import java.awt.event.WindowEvent;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -127,10 +121,12 @@ Main.MainFrame n = new Main.MainFrame();
 
     private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
         // TODO add your handling code here:
+        this.getDesktopPane().add(new form_tambahPemasukanAdmin()).setVisible(true);
     }//GEN-LAST:event_button4ActionPerformed
 
     private void button5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button5ActionPerformed
         // TODO add your handling code here:
+        this.getDesktopPane().add(new form_tambahPengeluaranAdmin()).setVisible(true);
     }//GEN-LAST:event_button5ActionPerformed
 
 

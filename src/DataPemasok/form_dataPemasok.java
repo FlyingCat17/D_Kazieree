@@ -1,7 +1,6 @@
 package DataPemasok;
-
-import Beranda.*;
 import Main.MainFrame;
+import Main.user;
 import db.konekdb;
 import java.sql.Connection;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
@@ -23,14 +22,14 @@ import javax.swing.JOptionPane;
  * @author LenataHoma
  */
 public class form_dataPemasok extends javax.swing.JInternalFrame {
-    
+    user usr = new user();
     Main.MainFrame n = new Main.MainFrame();
     Connection con;
     PreparedStatement pst;
     Statement st;
     ResultSet rs;
     String id_pemasok = null;
-
+    String hakAkses = null;
     /**
      * Creates new form Beranda
      */
@@ -40,6 +39,7 @@ public class form_dataPemasok extends javax.swing.JInternalFrame {
         BasicInternalFrameUI gui = (BasicInternalFrameUI) this.getUI();
         gui.setNorthPane(null);
         loadDataPemasok();
+        hakAkses = usr.getHak_akses();
         System.out.println("ID Pemasok : " + id_pemasok);
     }
     
@@ -251,7 +251,6 @@ public class form_dataPemasok extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         if (evt.getButton() == MouseEvent.BUTTON1) {
             formTambahPemasok mn = new formTambahPemasok(n, true);
-            loadDataPemasok();
             mn.setVisible(true);
             loadDataPemasok();
             System.out.println("Membuka Form Tambah Pemasok");
@@ -262,7 +261,9 @@ public class form_dataPemasok extends javax.swing.JInternalFrame {
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
         if (evt.getButton() == MouseEvent.BUTTON1) {
-            if (getIdPemasok() == null) {
+            if (hakAkses.equals("KARYAWAN")) {
+                JOptionPane.showMessageDialog(this, "Tidak dapat mengubah data Pemasok");
+            } else if (getIdPemasok() == null) {
                 JOptionPane.showMessageDialog(this, "Harap Pilih Salah Satu Pemasok");
             } else {
                 formUbahPemasok nn = new formUbahPemasok(n, true);
@@ -273,14 +274,16 @@ public class form_dataPemasok extends javax.swing.JInternalFrame {
                 loadDataPemasok();
                 nn.setVisible(true);
                 loadDataPemasok();
-                
+
             }
         }
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
-        if (getIdPemasok() == null) {
+        if (hakAkses.equals("KARYAWAN")) {
+            JOptionPane.showMessageDialog(this, "Tidak dapat Menghapus data Pemasok");
+        } else if (getIdPemasok() == null) {
             JOptionPane.showMessageDialog(this, "Harap Pilih Salah Satu Pemasok");
         } else {
             try {
@@ -317,7 +320,7 @@ public class form_dataPemasok extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    public static javax.swing.JTable tabelPemasok;
+    public javax.swing.JTable tabelPemasok;
     private javax.swing.JScrollPane tb_pemaasok;
     private javax.swing.JTextField txt_searchProduk;
     // End of variables declaration//GEN-END:variables

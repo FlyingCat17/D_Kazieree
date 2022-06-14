@@ -185,6 +185,7 @@ form_dataPemasok daata = new form_dataPemasok();
                 txt_alamat.setText("");
                 txt_usaha.setText("");
                 txt_noTelp.setText("");
+                this.dispose();
                 daata.loadDataPemasok();
             } catch (Exception e) {
                 System.out.println("Something Wrong. You can check it below");
