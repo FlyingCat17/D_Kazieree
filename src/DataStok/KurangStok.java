@@ -197,6 +197,7 @@ public class KurangStok extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Berhasil Dikurangi");
             form_DataStok j = new form_DataStok();
             j.loadTableStok();
+            new Main.MainFrame().dpanee.add(j).setVisible(true);
             this.dispose();
         } catch (Exception e) {
             System.out.println("Error !");
