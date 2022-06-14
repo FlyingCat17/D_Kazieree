@@ -371,7 +371,8 @@ String IdTransaksi = null;
         txt_BulanHariIni1.setText(dateMonth);
         try {
             System.out.println(dateMonth);
-            String PendapatanBulanIni = "SELECT EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) AS year_and_month, SUM(tb_jual.total_harga) AS Pendapatan\n"
+            String PendapatanBulanIni = "SELECT EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) "
+                    + "AS year_and_month, SUM(tb_jual.total_harga) AS Pendapatan\n"
                     + "FROM tb_jual\n"
                     + "WHERE EXTRACT(YEAR_MONTH FROM tb_jual.tgl_transaksi) = '" + dateMonth
                     + "'\n"

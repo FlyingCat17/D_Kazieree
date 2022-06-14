@@ -1,5 +1,4 @@
-package PengeluaranPemasukanKaryawan;
-
+package PengeluaranPemasukanAdmin;
 
 
 import Main.user;
@@ -23,25 +22,25 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  *
  * @author LenataHoma
  */
-public class form_tambahPemasukan extends javax.swing.JInternalFrame {
-String IDPemasukan = null;
+public class form_tambahPengeluaranAdmin extends javax.swing.JInternalFrame {
+String IDPengeluaran = null;
 String IDPengguna = null;
 user usr = new user();
     /**
      * Creates new form Beranda
      */
-    public form_tambahPemasukan() {
+    public form_tambahPengeluaranAdmin() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI gui = (BasicInternalFrameUI)this.getUI();
         gui.setNorthPane(null);
-        System.out.println(IDPemasukan);
+        System.out.println(IDPengeluaran);
         generateIDPemasukan();
         jDateChooser1.setDateFormatString("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
         jDateChooser1.setDate(cal.getTime());
         IDPengguna = usr.getId_pengguna();
-        System.out.println("ID PENGGUNA : "+IDPengguna);
+        System.out.println("ID PENGGUNA : " + IDPengguna);
     }
 
     
@@ -49,27 +48,26 @@ user usr = new user();
     public void generateIDPemasukan(){
         DateFormat vblnth = new SimpleDateFormat("yyyyMMdd");
         String blnth = vblnth.format(Calendar.getInstance().getTime());
-
+        
         DateFormat hari = new SimpleDateFormat("yyyy-MM-dd");
         String a = hari.format(Calendar.getInstance().getTime());
-        try {
-            String sql = "SELECT MAX(RIGHT(id_pemasukan,6)) AS kode_unik\n"
-                    + "FROM tb_pemasukan WHERE tgl_pemasukan LIKE '" + a + "';";
-            java.sql.Connection con = (Connection) konekdb.GetConnection();
+    try {
+            String sql = "SELECT MAX(RIGHT(id_pengeluaran,6)) AS kode_unik\n"
+                + "FROM tb_pengeluaran WHERE tgl_pengeluaran LIKE '"+a+"'";
+            java.sql.Connection con = (Connection)konekdb.GetConnection();
             java.sql.Statement st = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             java.sql.ResultSet rs = st.executeQuery(sql);
-            while (rs.next()) {
+            while (rs.next()) {                
                 if (rs.last()) {
-                    int autoId = rs.getInt(1) + 1;
+                    int autoId = rs.getInt(1)+1;
                     String no = String.valueOf(autoId);
                     int noLong = no.length();
-                    for (int i = 0; i < 6 - noLong; i++) {
-                        no = "0" + no;
+                    for (int i = 0; i < 6-noLong; i++) {
+                        no = "0"+no;
                     }
-                    IDPemasukan = "IN/" + blnth + "/" + no;
-                    System.out.println("ID PEMASUKAN : IN/" + blnth + "/" + no);
-                }
-
+                    IDPengeluaran="OUT/"+blnth+"/"+no;
+                    System.out.println("ID PENGELUARAN : OUT/"+blnth+"/"+no);
+                } 
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -85,6 +83,7 @@ user usr = new user();
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        button2 = new Swing.Button();
         button1 = new Swing.Button();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
@@ -103,6 +102,17 @@ user usr = new user();
         jPanel1.setBackground(new java.awt.Color(185, 185, 185));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        button2.setBackground(new java.awt.Color(255, 51, 51));
+        button2.setForeground(new java.awt.Color(255, 255, 255));
+        button2.setText("KEMBALI");
+        button2.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 510, 90, 30));
+
         button1.setBackground(new java.awt.Color(0, 255, 51));
         button1.setForeground(new java.awt.Color(255, 255, 255));
         button1.setText("SIMPAN");
@@ -112,7 +122,7 @@ user usr = new user();
                 button1ActionPerformed(evt);
             }
         });
-        jPanel1.add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 490, 90, 30));
+        jPanel1.add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 510, 90, 30));
 
         jDateChooser1.setEnabled(false);
         jDateChooser1.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
@@ -126,7 +136,7 @@ user usr = new user();
 
         jLabel2.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel2.setText("Tanggal Pemasukan");
+        jLabel2.setText("Tanggal Pengeluaran");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 215, 180, 20));
 
         txt_nominal.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
@@ -134,10 +144,10 @@ user usr = new user();
         jPanel1.add(txt_nominal, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 380, 410, 50));
 
         txt_keterangan.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
-        txt_keterangan.setLabelText("Keterangan Pemasukan");
+        txt_keterangan.setLabelText("Keterangan Pengeluaran");
         jPanel1.add(txt_keterangan, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 300, 410, 50));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PengeluaranPemasukanKaryawan/TambahPemasukanKaryawan.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/PengeluaranPemasukanKaryawan/TambahPengeluaranKaryawan.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 970, 700));
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 894, 60, 30));
 
@@ -163,13 +173,14 @@ user usr = new user();
         String tampilan = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(tampilan);
         String tanggal = String.valueOf(sdf.format(jDateChooser1.getDate()));
-        System.out.println("INSERT INTO `tb_pemasukan`(`id_pemasukan`, `tgl_pemasukan`, `keterangan`, `jumlah_pemasukan`, `cashbox`) "
-                    + "VALUES ('"+IDPemasukan+"','"+tanggal+"','"+txt_keterangan.getText()+"','"+txt_nominal.getText()+"','Default')");
+        
+        System.out.println("INSERT INTO `tb_pengeluaran`(`id_pengeluaran`, `tgl_pengeluaran`, `id_pengguna`, `keterangan`, `jumlah_pengeluaran`, `cashbox`) "
+                + "VALUES ('"+IDPengeluaran+"','"+tanggal+"','"+IDPengguna+"','"+txt_keterangan.getText()+"','"+txt_nominal.getText()+"','Default')");
         try {
-            String sqla = "INSERT INTO `tb_pemasukan`(`id_pemasukan`, `tgl_pemasukan`, `keterangan`, `jumlah_pemasukan`, `cashbox`) "
-                    + "VALUES ('"+IDPemasukan+"','"+tanggal+"','"+txt_keterangan.getText()+"','"+txt_nominal.getText()+"','Default')";
-            String sql = "INSERT INTO `tb_pemasukan`(`id_pemasukan`, `tgl_pemasukan`, `id_pengguna`, `keterangan`, `jumlah_pemasukan`, `cashbox`) "
-                + "VALUES ('"+IDPemasukan+"','"+tanggal+"','"+IDPengguna+"','"+txt_keterangan.getText()+"','"+txt_nominal.getText()+"','Default')";
+            String sqla = "INSERT INTO `tb_pengeluaran`(`id_pengeluaran`, `tgl_pengeluaran`, `keterangan`, `jumlah_pengeluaran`, `cashbox`) "
+                    + "VALUES ('"+IDPengeluaran+"','"+tanggal+"','"+txt_keterangan.getText()+"','"+txt_nominal.getText()+"','Default')";
+            String sql = "INSERT INTO `tb_pengeluaran`(`id_pengeluaran`, `tgl_pengeluaran`, `id_pengguna`, `keterangan`, `jumlah_pengeluaran`, `cashbox`) "
+                + "VALUES ('"+IDPengeluaran+"','"+tanggal+"','"+IDPengguna+"','"+txt_keterangan.getText()+"','"+txt_nominal.getText()+"','Default')";
             java.sql.Connection con = (Connection)konekdb.GetConnection();
             java.sql.Statement st = con.createStatement();
             st.execute(sql);
@@ -184,9 +195,15 @@ user usr = new user();
         }
     }//GEN-LAST:event_button1ActionPerformed
 
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_button2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Swing.Button button1;
+    private Swing.Button button2;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

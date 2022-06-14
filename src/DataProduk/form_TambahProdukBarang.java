@@ -128,7 +128,7 @@ Connection con;
 
     private void btn_simpanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_simpanMouseClicked
         // TODO add your handling code here:
-        
+        form_DataProduk dp = new form_DataProduk();
         String kp, np, sp, hb, hj;
         int b,j;
         kp = txt_kodeProduk.getText().toString();
@@ -160,14 +160,14 @@ Connection con;
                 pst.execute();
                 pst1.execute();
                 JOptionPane.showMessageDialog(this, "Berhasil Tersimpan!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
-                form_DataProduk.loadTableProduk();
+                dp.loadTableProduk();
                 txt_kodeProduk.setText("");
                 txt_namaProduk.setText("");
                 txt_satuanProduk.setText("");
                 txt_hargaBeli.setText("");
                 txt_hargaJual.setText("");
+                dp.loadTableProduk();
                 this.dispose();
-                form_DataProduk.loadTableProduk();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
             }
@@ -176,7 +176,7 @@ Connection con;
      } else {
             JOptionPane.showMessageDialog(null, "Harga jual harus lebih besar dari harga beli");
     }
-        form_DataProduk.loadTableProduk();
+        dp.loadTableProduk();
     }//GEN-LAST:event_btn_simpanMouseClicked
 
     private void btn_batalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_batalMouseClicked

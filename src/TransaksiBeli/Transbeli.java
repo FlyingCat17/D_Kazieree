@@ -306,7 +306,7 @@ public class Transbeli extends javax.swing.JInternalFrame {
 //            txt_stok.setText("");
         } else {
             try {
-                String sql = "SELECT tb_produk.id_produk, tb_produk.nama_produk, tb_produk.harga_jual, tb_stokbarang.stok_produk "
+                String sql = "SELECT tb_produk.id_produk, tb_produk.nama_produk, tb_produk.harga_beli, tb_stokbarang.stok_produk "
                         + "FROM tb_produk LEFT JOIN tb_stokbarang ON tb_produk.id_produk = tb_stokbarang.id_produk WHERE tb_produk.id_produk like '%" + txt_KodeProduk.getText() + "%'";
                 java.sql.Connection conn = (Connection) konekdb.GetConnection();
                 java.sql.Statement stm = conn.createStatement();
@@ -314,7 +314,7 @@ public class Transbeli extends javax.swing.JInternalFrame {
                 if (res.next()) {
                     if (txt_KodeProduk.getText().equals(res.getString("id_produk"))) {
                         txt_namaProduk.setText(res.getString("nama_produk"));
-                        txt_hargaSatuan.setText(res.getString("harga_jual"));
+                        txt_hargaSatuan.setText(res.getString("harga_beli"));
                         txt_Jumlah.requestFocus();
                         txt_Jumlah.setEditable(true);
 
@@ -369,6 +369,8 @@ public class Transbeli extends javax.swing.JInternalFrame {
 
                 //Hapus top
                 txt_KodeProduk.setText("");
+                
+                        
                 txt_namaProduk.setText("");
                 txt_hargaSatuan.setText("");
                 txt_Jumlah.setText("");

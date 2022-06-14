@@ -112,6 +112,20 @@ DataProduk.form_DataProduk vm = new DataProduk.form_DataProduk();
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void loadDatajasa(){
+        try {
+            String jasa = "SELECT * FROM tb_produk WHERE id_produk = '"+txt_kodeProdukJasa.getText()+"';";
+            java.sql.Connection con = (Connection)konekdb.GetConnection();
+            java.sql.Statement st = con.createStatement();
+            java.sql.ResultSet rs = st.executeQuery(jasa);
+            while (rs.next()) {                
+                txt_namaJasa.setText(rs.getString("nama_produk"));
+                txt_hargaJasa.setText(rs.getString("harga_jual"));
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
     private void jLabel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseDragged
         // TODO add your handling code here:
         int ex = evt.getXOnScreen();
@@ -148,7 +162,8 @@ DataProduk.form_DataProduk vm = new DataProduk.form_DataProduk();
                     PreparedStatement pst = con.prepareStatement(update);
                 pst.execute();
                 JOptionPane.showMessageDialog(this, "Berhasil Tersimpan!");
-                form_DataProduk.loadTableProduk();
+                form_DataProduk dp = new form_DataProduk();
+                dp.loadTableProduk();
                 this.dispose();
                 txt_kodeProdukJasa.setText("");
                 txt_namaJasa.setText("");

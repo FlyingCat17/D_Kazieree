@@ -7,12 +7,9 @@ package Login;
 
 import Main.user;
 import db.konekdb;
-import java.awt.Font;
-import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
-import java.sql.PreparedStatement;
 import java.sql.Statement;
 
 /**
@@ -43,7 +40,7 @@ public class LoginPageNew extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(sql);
             if (rs.next()) {
                 usr.setNama(rs.getString("username"));
-                usr.setHak_akses("hak_akses");
+                usr.setHak_akses(rs.getString("hak_akses"));
                 usr.setId_pengguna("id_pengguna");
                 usr.setId_pengguna(rs.getString("id_pengguna"));
                 if (rs.getString("hak_akses").equals("ADMIN")) {
@@ -56,15 +53,14 @@ public class LoginPageNew extends javax.swing.JFrame {
                     Main.MainFrameKaryawan mn = new Main.MainFrameKaryawan();
                     mn.setVisible(true);
                     this.dispose();
-                }else {
-                    JOptionPane.showMessageDialog(this, ". Masuk!!", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
                 }
+            } else {
+                JOptionPane.showMessageDialog(this, "Username atau Password yang anda masukkan Salah!");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Username Atau Katasandi Salah!!");
+            JOptionPane.showMessageDialog(this, "Username Atau Katasandi Salah!!");
         }
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

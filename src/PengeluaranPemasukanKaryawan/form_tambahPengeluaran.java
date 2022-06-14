@@ -1,6 +1,7 @@
 package PengeluaranPemasukanKaryawan;
 
 
+import Main.user;
 import db.konekdb;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -23,6 +24,8 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  */
 public class form_tambahPengeluaran extends javax.swing.JInternalFrame {
 String IDPengeluaran = null;
+String IDPengguna = null;
+user usr = new user();
     /**
      * Creates new form Beranda
      */
@@ -36,6 +39,8 @@ String IDPengeluaran = null;
         jDateChooser1.setDateFormatString("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
         jDateChooser1.setDate(cal.getTime());
+        IDPengguna = usr.getId_pengguna();
+        System.out.println("ID PENGGUNA : " + IDPengguna);
     }
 
     
@@ -159,8 +164,10 @@ String IDPengeluaran = null;
         System.out.println("INSERT INTO `tb_pengeluaran`(`id_pengeluaran`, `tgl_pengeluaran`, `keterangan`, `jumlah_pengeluaran`, `cashbox`) "
                     + "VALUES ('"+IDPengeluaran+"','"+tanggal+"','"+txt_keterangan.getText()+"','"+txt_nominal.getText()+"','Default')");
         try {
-            String sql = "INSERT INTO `tb_pengeluaran`(`id_pengeluaran`, `tgl_pengeluaran`, `keterangan`, `jumlah_pengeluaran`, `cashbox`) "
-                    + "VALUES ('"+IDPengeluaran+"','"+tanggal+"','"+txt_keterangan.getText()+"','"+txt_nominal.getText()+"','Default')";
+            //String sql = "INSERT INTO `tb_pengeluaran`(`id_pengeluaran`, `tgl_pengeluaran`, `keterangan`, `jumlah_pengeluaran`, `cashbox`) "
+                 //   + "VALUES ('"+IDPengeluaran+"','"+tanggal+"','"+txt_keterangan.getText()+"','"+txt_nominal.getText()+"','Default')";
+            String sql = "INSERT INTO `tb_pengeluaran`(`id_pengeluaran`, `tgl_pengeluaran`, `id_pengguna`, `keterangan`, `jumlah_pengeluaran`, `cashbox`) "
+                    + "VALUES ('" + IDPengeluaran + "','" + tanggal + "','" + IDPengguna + "','" + txt_keterangan.getText() + "','" + txt_nominal.getText() + "','Default')";
             java.sql.Connection con = (Connection)konekdb.GetConnection();
             java.sql.Statement st = con.createStatement();
             st.execute(sql);

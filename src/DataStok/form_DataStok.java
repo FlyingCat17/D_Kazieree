@@ -1,9 +1,7 @@
 package DataStok;
 
 
-import Beranda.*;
-import static DataProduk.form_DataProduk.TabelProduk;
-import static DataProduk.form_DataProduk.loadTableProduk;
+
 import db.konekdb;
 import java.sql.Connection;
 import javax.swing.JOptionPane;

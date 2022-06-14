@@ -1,13 +1,11 @@
 package DataProduk;
 
 
-import Beranda.*;
-import static DataProduk.formUbahJasa.txt_kodeProdukJasa;
+import Main.user;
 import java.sql.Connection;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import db.konekdb;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,12 +18,14 @@ import javax.swing.JOptionPane;
  * @author LenataHoma
  */
 public class form_DataProduk extends javax.swing.JInternalFrame {
-Main.MainFrame no = new Main.MainFrame();
-String kategor_jasa = null;
-String id_produk = null;
-String nama = null;
-String hargabeli = null;
-String hargajual = null;
+
+    user usr = new user();
+    Main.MainFrame no = new Main.MainFrame();
+    String kategor_jasa = null;
+    String id_produk = null;
+    String nama = null;
+    String hakAkses = null;
+    String id_produkbarangg;
     /**
      * Creates new form Beranda
      */
@@ -35,6 +35,7 @@ String hargajual = null;
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI gui = (BasicInternalFrameUI)this.getUI();
         gui.setNorthPane(null);
+        hakAkses = usr.getHak_akses();
     }
 
     /**
@@ -167,12 +168,17 @@ String hargajual = null;
         getContentPane().add(tb_produk, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 177, 860, 470));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DataProduk/form_dataProduk.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel1MouseEntered(evt);
+            }
+        });
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 680));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static void loadTableProduk(){
+    public void loadTableProduk(){
     DefaultTableModel tbl = new DefaultTableModel();
             TabelProduk.setBorder(null);
            // tb_produk.setBorder(null);
@@ -222,9 +228,8 @@ String hargajual = null;
 //        DataProdukBarang.formTambahProdukBarang brg = new DataProdukBarang.formTambahProdukBarang(this, true);
 //        brg.setVisible(true);
 //        txt_searchProduk.setEnabled(false);
-        form_TambahProdukBarang mn = new form_TambahProdukBarang(no, true);
-        loadTableProduk();
-        mn.setVisible(true);
+        form_TambahProdukBarang nn = new form_TambahProdukBarang(no, true);
+        nn.setVisible(true);
         loadTableProduk();
 
     }//GEN-LAST:event_btn_tambahProdukMouseClicked
@@ -234,6 +239,7 @@ String hargajual = null;
 
         form_TambahJasa nn = new form_TambahJasa(no, true);
         nn.setVisible(true);
+        loadTableProduk();
         //        TabelProduk.setVisible(false);
         //        jScrollPane1.setVisible(false);
         //        panel_tambahProdukJasa.setVisible(true);
@@ -245,34 +251,35 @@ String hargajual = null;
 
     private void btn_ubahProdukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ubahProdukMouseClicked
         // TODO add your handling code here:
-        if(kategor_jasa==null){
+        
+        System.out.println(hakAkses);
+        if (hakAkses.equals("KARYAWAN")) {
+            JOptionPane.showMessageDialog(this, "Tidak dapat mengubah data Produk");
+        } else if(kategor_jasa==null){
             JOptionPane.showMessageDialog(this, "Harap Pilih data Produk!");
         } else if(kategor_jasa.equals("jasa")){
 //            DataProdukJasa.formUbahJasa tj = new DataProdukJasa.formUbahJasa(this, true);
             DataProduk.formUbahJasa jj = new DataProduk.formUbahJasa(no, true);
-            jj.txt_kodeProdukJasa.setText(getIdProduk());
-            jj.txt_namaJasa.setText(getnama2());
-            jj.txt_hargaJasa.setText(getjual());
+            jj.txt_kodeProdukJasa.setText(getIdProduk2());
+            jj.loadDatajasa();
+//            jj.txt_hargaJasa.setText(getjual());
+
             jj.setVisible(true);
             loadTableProduk();
 //            tj.txt_kodeProdukJasa.setText(getId_produk());
 //            tj.setVisible(true);
 
             System.out.println("btn ubah : " + getIdProduk());
-        } else {
+        } else{
 
-//            DataProdukBarang.formUbahProdukBarang ub = new DataProdukBarang.formUbahProdukBarang(this, true);
-////            ub.txt_kodeProdukBarang.setText(getId_produk());
-//            ub.setVisible(true);
+//           
             DataProduk.formUbahProdukBarang ub = new DataProduk.formUbahProdukBarang(no, true);
-            ub.txt_kodeProdukBarang.setText(getIdProduk());
-            ub.txt_namaProduk.setText(getnama2());
-            ub.txt_satuanProduk.setText(getCatJasa());
-            ub.txt_hargaBeli.setText(getbeli());
-            ub.txt_hargaJual.setText(getjual());
+//            ub.txt_hargaBeli.setText(getbeli());
+            ub.txt_kodeProdukBarang.setText(getIdProduk2());
+            System.out.println("aaas"+getIdProduk2());
+            ub.loadDataBarang();
             ub.setVisible(true);
-
-            System.out.println("btn ubah = "+ getIdProduk());
+            loadTableProduk();
         }
     }//GEN-LAST:event_btn_ubahProdukMouseClicked
     public void setKategorinull(String catJasa){
@@ -284,34 +291,38 @@ String hargajual = null;
     public void setIdProdukJasanul(String nama2){
         this.nama = nama2;
         
-    }public void setIdProdukJasanull2(String beli){
-        this.hargabeli = beli;
-        
-    }public void setIdProdukJasanull3(String jual){
-        this.hargajual = jual;
     }
+//    public void setIdProdukJasanull2(String beli){
+//        this.hargabeli = beli;
+//        
+//    }public void setIdProdukJasanull3(String jual){
+//        this.hargajual = jual;
+//    }
     private void btn_hapusProdukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_hapusProdukMouseClicked
         // TODO add your handling code here:
-        if (id_produk==null) {
+        if (hakAkses.equals("KARYAWAN")) {
+            JOptionPane.showMessageDialog(this, "Tidak dapat menghapus data Produk");
+        } else if (id_produk==null) {
             JOptionPane.showMessageDialog(this, "Harap Pilih data Produk!");
         } else if(kategor_jasa.equals("jasa")){
             try {
             int jawab = JOptionPane.showConfirmDialog(this, "Yakin ingin Menghapus Produk Jasa ini?");
-            switch (jawab){
-                case JOptionPane.YES_OPTION:
-                    String sql = "DELETE from tb_produk where id_produk='" +id_produk+ "'";
-                    java.sql.Connection conn = (Connection) konekdb.GetConnection();
-                    java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-                    pst.execute();
-                    JOptionPane.showMessageDialog(this, "Data Berhasil di Hapus", "DELETE", JOptionPane.INFORMATION_MESSAGE);
-                    loadTableProduk();
-                    break;
-            case JOptionPane.NO_OPTION:
-                    break;
+                switch (jawab) {
+                    case JOptionPane.YES_OPTION:
+                        String sql = "DELETE from tb_produk where id_produk ='" + id_produk + "'";
+                        java.sql.Connection conn = (Connection) konekdb.GetConnection();
+                        java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+                        pst.execute();
+                        JOptionPane.showMessageDialog(this, "Data Berhasil di Hapus", "DELETE", JOptionPane.INFORMATION_MESSAGE);
+                        loadTableProduk();
+                        break;
+                    case JOptionPane.NO_OPTION:
+                        break;
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Data Gagal di Hapus");
+                System.err.println(e.getMessage());
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Data Gagal di Hapus");
-        }
         } else {
 //            DataProdukBarang.notif_warningHapusProdukBarang pb = new DataProdukBarang.notif_warningHapusProdukBarang(this, true);
 //            pb.setVisible(true);
@@ -331,38 +342,33 @@ String hargajual = null;
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Data Gagal di Hapus");
-        }
-        }
+            System.err.println(e.getMessage());
+        }}
+        loadTableProduk();
     }//GEN-LAST:event_btn_hapusProdukMouseClicked
 
-    public String getIdProduk(){
-        return id_produk;
-    }
+    
     public String getCatJasa(){
         return kategor_jasa;
     }
-    public String getnama2(){
-        return nama;
-    }
-    public String getbeli(){
-        return hargabeli;
-    } 
-    public String getjual(){
-        return hargajual;
-    }
+    
+//    public String getbeli(){
+//        return hargabeli;
+//    } 
+//    public String getjual(){
+//        return hargajual;
+//    }
     private void TabelProdukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelProdukMouseClicked
         // TODO add your handling code here:
-        int baris= TabelProduk.rowAtPoint(evt.getPoint());
-        kategor_jasa = TabelProduk.getValueAt(baris, 2).toString();
-        id_produk = TabelProduk.getValueAt(baris, 0).toString();
-        nama = TabelProduk.getValueAt(baris, 1).toString();
-        hargabeli = TabelProduk.getValueAt(baris, 3).toString();
-        hargajual = TabelProduk.getValueAt(baris, 4).toString();
+       int i = TabelProduk.rowAtPoint(evt.getPoint());
+        id_produk = TabelProduk.getValueAt(i, 0).toString();
+        id_produkbarangg = TabelProduk.getValueAt(i, 0).toString();
+        kategor_jasa = TabelProduk.getValueAt(i, 2).toString();
         System.out.println("ID PRODUK = "+id_produk);
         System.out.println("Nama PRODUK = "+nama);
         System.out.println("Kategori "+ kategor_jasa);
-        System.out.println("Harga Beli "+ hargabeli);
-        System.out.println("Harga Jual "+ hargajual);
+//        System.out.println("Harga Beli "+ hargabeli);
+//        System.out.println("Harga Jual "+ hargajual);
 //        lbl_id.setText(id_produk);
         //        int i = TabelProduk.getSelectedRow();
         //        TableModel tm = TabelProduk.getModel();
@@ -370,7 +376,12 @@ String hargajual = null;
         //        id_produk= tm.getValueAt(i, 0).toString();
         //        mn.txt_kodeProdukJasa.setText(id_produk);
     }//GEN-LAST:event_TabelProdukMouseClicked
-
+    public String getIdProduk() {
+        return id_produk;
+    }
+    public String getIdProduk2(){
+        return id_produkbarangg;
+    }
     private void txt_searchProdukKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchProdukKeyReleased
         // TODO add your handling code here:
         String c = txt_searchProduk.getText();
@@ -404,14 +415,18 @@ String hargajual = null;
         }
     }//GEN-LAST:event_txt_searchProdukKeyReleased
 
+    private void jLabel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel1MouseEntered
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JTable TabelProduk;
+    public javax.swing.JTable TabelProduk;
     private javax.swing.JLabel bgt_serachBox;
     private javax.swing.JLabel btn_hapusProduk;
     private javax.swing.JLabel btn_tamabahJasaProduk;
     private javax.swing.JLabel btn_tambahProduk;
-    public static javax.swing.JLabel btn_ubahProduk;
+    public javax.swing.JLabel btn_ubahProduk;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane tb_produk;
     private javax.swing.JTextField txt_searchProduk;

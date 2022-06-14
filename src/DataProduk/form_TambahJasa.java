@@ -126,6 +126,7 @@ Connection con;
 
     private void btn_simpanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_simpanMouseClicked
         // TODO add your handling code here:
+        form_DataProduk dp = new form_DataProduk();
                 String kp, np, sp;
                 kp = txt_kodeProduk.getText().toString();
                 np = txt_namaJasa.getText().toString();
@@ -144,7 +145,7 @@ Connection con;
                 pst = con.prepareStatement(addProdukBarang);
                 pst.execute();
                 JOptionPane.showMessageDialog(this, "Berhasil Tersimpan!");
-                form_DataProduk.loadTableProduk();
+                dp.loadTableProduk();
                 this.dispose();
                 txt_kodeProduk.setText("");
                 txt_namaJasa.setText("");
