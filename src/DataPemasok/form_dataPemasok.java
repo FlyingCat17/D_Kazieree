@@ -30,6 +30,7 @@ public class form_dataPemasok extends javax.swing.JInternalFrame {
     ResultSet rs;
     String id_pemasok = null;
     String hakAkses = null;
+    
     /**
      * Creates new form Beranda
      */
