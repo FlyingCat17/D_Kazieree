@@ -237,6 +237,7 @@ public class form_TambahKaryawan extends javax.swing.JDialog {
                 txt_noTelp.setText("");
                 txt_kataSandi.setText("");
                 txt_konfirmasiKataSandi.setText("");
+                this.dispose();
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }

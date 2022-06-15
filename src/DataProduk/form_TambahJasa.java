@@ -11,6 +11,7 @@ import db.konekdb;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.Random;
 
 /**
  *
@@ -28,8 +29,20 @@ Connection con;
         initComponents();
         this.setBackground(new Color(0,0,0,0));  //Make the frame Transparent
         this.setLocationRelativeTo(null);
+        user_id();
     }
-
+    public void user_id() {
+        String SALTCHARS = "1234567890";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < 4) {
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        String saltStr = salt.toString();
+        String id_kar = "JASA";
+        txt_kodeProduk.setText(id_kar+saltStr);
+     }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -67,6 +80,7 @@ Connection con;
         txt_namaJasa.setOpaque(false);
         getContentPane().add(txt_namaJasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 200, 360, 40));
 
+        txt_kodeProduk.setEditable(false);
         txt_kodeProduk.setFont(new java.awt.Font("Quicksand Medium", 0, 16)); // NOI18N
         txt_kodeProduk.setBorder(null);
         txt_kodeProduk.setOpaque(false);
@@ -144,6 +158,7 @@ Connection con;
                 con = (Connection) konekdb.GetConnection();
                 pst = con.prepareStatement(addProdukBarang);
                 pst.execute();
+                user_id();
                 JOptionPane.showMessageDialog(this, "Berhasil Tersimpan!");
                 dp.loadTableProduk();
                 this.dispose();

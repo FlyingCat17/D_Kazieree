@@ -262,7 +262,7 @@ String id_produk = null;
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JTable TabelStok;
+    public javax.swing.JTable TabelStok;
     private javax.swing.JLabel bgt_serachBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
