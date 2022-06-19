@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
+import org.codehaus.groovy.runtime.DefaultGroovyMethods;
 
 /**
  *
@@ -86,6 +87,14 @@ Connection con;
         txt_kodeProduk.setFont(new java.awt.Font("Quicksand Medium", 0, 16)); // NOI18N
         txt_kodeProduk.setBorder(null);
         txt_kodeProduk.setOpaque(false);
+        txt_kodeProduk.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_kodeProdukKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_kodeProdukKeyTyped(evt);
+            }
+        });
         getContentPane().add(txt_kodeProduk, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 145, 370, 40));
 
         btn_simpan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -231,6 +240,15 @@ Connection con;
             evt.consume();
         }
     }//GEN-LAST:event_txt_hargaJualKeyTyped
+
+    private void txt_kodeProdukKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_kodeProdukKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_kodeProdukKeyTyped
+
+    private void txt_kodeProdukKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_kodeProdukKeyReleased
+        // TODO add your handling code here:
+        txt_kodeProduk.setText(txt_kodeProduk.getText().toUpperCase());
+    }//GEN-LAST:event_txt_kodeProdukKeyReleased
 
     /**
      * @param args the command line arguments
