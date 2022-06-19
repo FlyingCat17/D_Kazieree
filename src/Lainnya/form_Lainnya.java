@@ -2,7 +2,8 @@ package Lainnya;
 
 
 
-import PengeluaranPemasukanAdmin.form_tambahPemasukanAdmin;
+import PengeluaranPemasukanAdmin.form_DataPemasukanAdmin;
+import PengeluaranPemasukanAdmin.form_DataPengeluaranAdmin;
 import PengeluaranPemasukanAdmin.form_tambahPengeluaranAdmin;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
@@ -121,12 +122,12 @@ Main.MainFrame n = new Main.MainFrame();
 
     private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
         // TODO add your handling code here:
-        this.getDesktopPane().add(new form_tambahPemasukanAdmin()).setVisible(true);
+        this.getDesktopPane().add(new form_DataPemasukanAdmin()).setVisible(true);
     }//GEN-LAST:event_button4ActionPerformed
 
     private void button5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button5ActionPerformed
         // TODO add your handling code here:
-        this.getDesktopPane().add(new form_tambahPengeluaranAdmin()).setVisible(true);
+        this.getDesktopPane().add(new form_DataPengeluaranAdmin()).setVisible(true);
     }//GEN-LAST:event_button5ActionPerformed
 
 

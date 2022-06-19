@@ -28,7 +28,7 @@ public class form_dataPemasok extends javax.swing.JInternalFrame {
     PreparedStatement pst;
     Statement st;
     ResultSet rs;
-    String id_pemasok = null;
+    private String id_pemasok = null;
     String hakAkses = null;
     /**
      * Creates new form Beranda
@@ -247,6 +247,7 @@ public class form_dataPemasok extends javax.swing.JInternalFrame {
     public String getIdPemasok() {
         return id_pemasok;
     }
+    
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
         if (evt.getButton() == MouseEvent.BUTTON1) {

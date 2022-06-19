@@ -3,6 +3,7 @@ package PengeluaranPemasukanAdmin;
 
 import Main.user;
 import db.konekdb;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.text.DateFormat;
@@ -144,6 +145,11 @@ user usr = new user();
 
         txt_nominal.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
         txt_nominal.setLabelText("Nominal");
+        txt_nominal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_nominalKeyTyped(evt);
+            }
+        });
         jPanel1.add(txt_nominal, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 380, 410, 50));
 
         txt_keterangan.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
@@ -191,6 +197,10 @@ user usr = new user();
             txt_keterangan.setText("");
             txt_nominal.setText("");
             generateIDPemasukan();
+            form_DataPemasukanAdmin n = new form_DataPemasukanAdmin();
+            n.loadTablePemasukan();
+            this.dispose();
+            n.loadTablePemasukan(); 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ada Masalah dalam Menyimpan");
             System.err.println(e.getMessage());
@@ -201,6 +211,17 @@ user usr = new user();
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_button2ActionPerformed
+
+    private void txt_nominalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nominalKeyTyped
+        // TODO add your handling code here:
+        char k = evt.getKeyChar();
+        if (!(Character.isDigit(k) || k == KeyEvent.VK_BACK_SPACE || k == KeyEvent.VK_DELETE)) {
+            evt.consume();
+        }
+        if (txt_nominal.getText().length()>=12){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_nominalKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
