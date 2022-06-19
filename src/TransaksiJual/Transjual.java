@@ -1151,8 +1151,14 @@ private DefaultTableModel mod, mod2, mod3;
     }//GEN-LAST:event_button3ActionPerformed
 
     private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
-        // TODO add your handling code here:
-        bayar();
+         // TODO add your handling code here:
+        int nominal1 = Integer.parseInt(txt_nominal.getText());
+        int afterdiskon = Integer.parseInt(txt_totalAfterDiskon.getText());
+        if (nominal1 < afterdiskon) {
+            JOptionPane.showMessageDialog(this, "Nominal Tidak boleh kurang dari Total Harga");
+        } else {
+            bayar();
+        }
     }//GEN-LAST:event_button4ActionPerformed
 
     private void btn_transaksiBaruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_transaksiBaruActionPerformed
