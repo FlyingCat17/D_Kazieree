@@ -7,6 +7,7 @@ package Main;
 
 import Login.LoginPage;
 import java.awt.Color;
+import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -22,6 +23,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
+        setIcon();
         dpanee.removeAll();
         Beranda.form_Beranda home = new Beranda.form_Beranda();
         dpanee.add(home);
@@ -360,7 +362,9 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
     }
-
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("llogo app.png")));
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btn_Lainnya;
     private javax.swing.JLabel btn_TransaBeli;
@@ -378,3 +382,4 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel sidebarr;
     // End of variables declaration//GEN-END:variables
 }
+

@@ -8,6 +8,7 @@ package Main;
 import Login.LoginPage;
 import Login.LoginPageNew;
 import java.awt.Color;
+import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -24,6 +25,7 @@ public class MainFrameKaryawan extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         dpanee.removeAll();
+        setIcon();
         Beranda.form_Beranda home = new Beranda.form_Beranda();
         dpanee.add(home);
         home.setVisible(true);
@@ -305,6 +307,9 @@ public class MainFrameKaryawan extends javax.swing.JFrame {
         });
     }
 
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("llogo app.png")));
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btn_TransaBeli;
     private javax.swing.JLabel btn_beranda;

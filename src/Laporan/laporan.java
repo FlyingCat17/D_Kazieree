@@ -63,6 +63,7 @@ String IdTransaksi = null;
         panel_Harian.setVisible(true);
         panel_Bulanan.setVisible(false);
         loadDataHariIni();
+        loadSaldo();
         System.out.println(formatTahun1 + formatBulan1);
     }
 //    
@@ -141,6 +142,20 @@ String IdTransaksi = null;
         }
     }
 
+    public void loadSaldo(){
+        try {
+            String sql = "SELECT tb_saldo.jumlah_saldo FROM tb_saldo";
+            java.sql.Connection con = (Connection)konekdb.GetConnection();
+            java.sql.Statement st = con.createStatement();
+            java.sql.ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                txt_saldo.setText("Rp"+rs.getString("jumlah_saldo"));
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            txt_saldo.setText("-");
+        }
+    }
     public void loadDataperTanggal() {
 
         DefaultTableModel transjual = new DefaultTableModel();
@@ -307,13 +322,13 @@ String IdTransaksi = null;
                 txt_PendapatanBulanan.setText("Rp" + rs.getString(2));
             }
             if (rs1.next()) {
-                txt_labaHarian1.setText("Rp" + rs1.getString(2));
+                txt_labaBulanan.setText("Rp" + rs1.getString(2));
             }
             if (rs2.next()) {
-                txt_pemasukanLainLainperTanggal1.setText("Rp" + rs2.getString(2));
+                txt_pemasukanLainLainperBulan.setText("Rp" + rs2.getString(2));
             }
             if (rs3.next()) {
-                txt_pengeluaranmLainLainperTanggal1.setText("Rp" + rs3.getString(2));
+                txt_pengeluaranmLainLainperBulan.setText("Rp" + rs3.getString(2));
             }
             while (rs4.next()) {
                 TBPeringkatProduk.addRow(new Object[]{
@@ -391,6 +406,7 @@ String IdTransaksi = null;
             
         } catch (Exception e) {
             System.err.println("ERROR"+e.getMessage());
+            txt_PendapatanBulanan.setText("Rp0");
         }
         // LabaBulanChoose
         try {
@@ -406,11 +422,11 @@ String IdTransaksi = null;
             java.sql.Statement st1 = connn.createStatement();
             java.sql.ResultSet rs1 = st1.executeQuery(LabaBulanIni);
             if (rs1.next()) {
-                txt_labaHarian1.setText("Rp" + rs1.getString(2));
+                txt_labaBulanan.setText("Rp" + rs1.getString(2));
             }
         } catch (Exception e) {
             System.err.println("ERRORLABA BULAN INI + "+e.getMessage());
-            txt_labaHarian1.setText("Rp0");
+            txt_labaBulanan.setText("Rp0");
         }
         // PemasukanBulanChoose
         try {
@@ -422,11 +438,11 @@ String IdTransaksi = null;
              java.sql.Statement st2 = connn.createStatement();
              java.sql.ResultSet rs2 = st2.executeQuery(PemasukanBulanIni);
              if (rs2.next()) {
-                txt_pemasukanLainLainperTanggal1.setText("Rp" + rs2.getString(2));
+                txt_pemasukanLainLainperBulan.setText("Rp" + rs2.getString(2));
             }
         } catch (Exception e) {
             System.err.println("ERRORPEMASUKAN"+e.getMessage());
-            txt_pemasukanLainLainperTanggal1.setText("Rp0");
+            txt_pemasukanLainLainperBulan.setText("Rp0");
         }
         //PengeluaranBulanChoose
         try {
@@ -437,11 +453,11 @@ String IdTransaksi = null;
             java.sql.Statement st3 = connn.createStatement();
             java.sql.ResultSet res3 = st3.executeQuery(PengeluaranBulanIni);
             if (res3.next()) {
-                txt_pengeluaranmLainLainperTanggal1.setText("Rp" + res3.getString(2));
+                txt_pengeluaranmLainLainperBulan.setText("Rp" + res3.getString(2));
             }
         } catch (Exception e) {
             System.err.println("ERRORPENGELUARANBULANTERPILIH"+e.getMessage());
-            txt_pengeluaranmLainLainperTanggal1.setText("Rp0");
+            txt_pengeluaranmLainLainperBulan.setText("Rp0");
         }
         //PeringkatBulanaProduk
         try {
@@ -466,6 +482,7 @@ String IdTransaksi = null;
             }
         } catch (Exception e) {
             System.err.println("ERRORPERINGKATPRODUKBULANTERPILIH"+e.getMessage());
+            
         }
         //PeringkatPemasokBulanChoose
         try {
@@ -571,6 +588,10 @@ String IdTransaksi = null;
         jLabel9 = new javax.swing.JLabel();
         txt_labaHarian = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        panel_pendapatanHarian2 = new Swing.PanelRound();
+        jLabel12 = new javax.swing.JLabel();
+        txt_saldo = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
         panel_pendapatanHarian = new Swing.PanelRound();
         jLabel6 = new javax.swing.JLabel();
         txt_PendapatanHarian = new javax.swing.JLabel();
@@ -620,15 +641,15 @@ String IdTransaksi = null;
         jLabel10 = new javax.swing.JLabel();
         panel_pendapatanHarian7 = new Swing.PanelRound();
         jLabel13 = new javax.swing.JLabel();
-        txt_labaHarian1 = new javax.swing.JLabel();
+        txt_labaBulanan = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         panel_pendapatanHarian8 = new Swing.PanelRound();
         jLabel20 = new javax.swing.JLabel();
-        txt_pemasukanLainLainperTanggal1 = new javax.swing.JLabel();
+        txt_pemasukanLainLainperBulan = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         panel_pendapatanHarian9 = new Swing.PanelRound();
         jLabel23 = new javax.swing.JLabel();
-        txt_pengeluaranmLainLainperTanggal1 = new javax.swing.JLabel();
+        txt_pengeluaranmLainLainperBulan = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         button4 = new Swing.Button();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
@@ -751,7 +772,7 @@ String IdTransaksi = null;
         jLabel19.setText("Catatan Transaksi Pembelian");
         panel_pendapatanHarian5.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 270, 30));
 
-        panel_Harian.add(panel_pendapatanHarian5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 600, 720, 290));
+        panel_Harian.add(panel_pendapatanHarian5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 720, 720, 290));
 
         panel_pendapatanHarian4.setBackground(new java.awt.Color(255, 255, 255));
         panel_pendapatanHarian4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(253, 144, 39), new java.awt.Color(253, 144, 39), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
@@ -804,7 +825,7 @@ String IdTransaksi = null;
 
         panel_pendapatanHarian4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 660, 200));
 
-        panel_Harian.add(panel_pendapatanHarian4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, 720, 290));
+        panel_Harian.add(panel_pendapatanHarian4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 400, 720, 290));
 
         panel_pendapatanHarian1.setBackground(new java.awt.Color(255, 255, 255));
         panel_pendapatanHarian1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(105, 68, 255), new java.awt.Color(105, 68, 255), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
@@ -827,6 +848,28 @@ String IdTransaksi = null;
         panel_pendapatanHarian1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 100, 30));
 
         panel_Harian.add(panel_pendapatanHarian1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 120, 340, 110));
+
+        panel_pendapatanHarian2.setBackground(new java.awt.Color(255, 255, 255));
+        panel_pendapatanHarian2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 140, 29), new java.awt.Color(255, 140, 29), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
+        panel_pendapatanHarian2.setRoundBottomLeft(10);
+        panel_pendapatanHarian2.setRoundBottomRight(10);
+        panel_pendapatanHarian2.setRoundTopLeft(10);
+        panel_pendapatanHarian2.setRoundTopRight(10);
+        panel_pendapatanHarian2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Laporan/iconMoney.png"))); // NOI18N
+        panel_pendapatanHarian2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 110));
+
+        txt_saldo.setFont(new java.awt.Font("Quicksand", 1, 24)); // NOI18N
+        txt_saldo.setText("Rp0");
+        panel_pendapatanHarian2.add(txt_saldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 140, 30));
+
+        jLabel14.setFont(new java.awt.Font("Quicksand", 1, 15)); // NOI18N
+        jLabel14.setText("Saldo Saat Ini");
+        panel_pendapatanHarian2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 100, 30));
+
+        panel_Harian.add(panel_pendapatanHarian2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 340, 110));
 
         panel_pendapatanHarian.setBackground(new java.awt.Color(255, 255, 255));
         panel_pendapatanHarian.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 140, 29), new java.awt.Color(255, 140, 29), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
@@ -1085,7 +1128,7 @@ String IdTransaksi = null;
 
         txt_PendapatanBulanan.setFont(new java.awt.Font("Quicksand", 1, 24)); // NOI18N
         txt_PendapatanBulanan.setText("Rp0");
-        panel_pendapatanHarian6.add(txt_PendapatanBulanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 140, 30));
+        panel_pendapatanHarian6.add(txt_PendapatanBulanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 180, 30));
 
         jLabel10.setFont(new java.awt.Font("Quicksand", 1, 15)); // NOI18N
         jLabel10.setText("Pendapatan Bulanan");
@@ -1105,9 +1148,9 @@ String IdTransaksi = null;
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Laporan/iconMoneypurple.png"))); // NOI18N
         panel_pendapatanHarian7.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 110));
 
-        txt_labaHarian1.setFont(new java.awt.Font("Quicksand", 1, 24)); // NOI18N
-        txt_labaHarian1.setText("Rp0");
-        panel_pendapatanHarian7.add(txt_labaHarian1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 140, 30));
+        txt_labaBulanan.setFont(new java.awt.Font("Quicksand", 1, 24)); // NOI18N
+        txt_labaBulanan.setText("Rp0");
+        panel_pendapatanHarian7.add(txt_labaBulanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 180, 30));
 
         jLabel16.setFont(new java.awt.Font("Quicksand", 1, 15)); // NOI18N
         jLabel16.setText("Laba Bulanan");
@@ -1127,9 +1170,9 @@ String IdTransaksi = null;
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Laporan/iconMoneygreen.png"))); // NOI18N
         panel_pendapatanHarian8.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 110));
 
-        txt_pemasukanLainLainperTanggal1.setFont(new java.awt.Font("Quicksand", 1, 24)); // NOI18N
-        txt_pemasukanLainLainperTanggal1.setText("Rp0");
-        panel_pendapatanHarian8.add(txt_pemasukanLainLainperTanggal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 140, 30));
+        txt_pemasukanLainLainperBulan.setFont(new java.awt.Font("Quicksand", 1, 24)); // NOI18N
+        txt_pemasukanLainLainperBulan.setText("Rp0");
+        panel_pendapatanHarian8.add(txt_pemasukanLainLainperBulan, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 190, 30));
 
         jLabel22.setFont(new java.awt.Font("Quicksand", 1, 15)); // NOI18N
         jLabel22.setText("Pemasukan Lain-Lain");
@@ -1149,9 +1192,9 @@ String IdTransaksi = null;
         jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Laporan/iconMoneyred.png"))); // NOI18N
         panel_pendapatanHarian9.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 110));
 
-        txt_pengeluaranmLainLainperTanggal1.setFont(new java.awt.Font("Quicksand", 1, 24)); // NOI18N
-        txt_pengeluaranmLainLainperTanggal1.setText("Rp0");
-        panel_pendapatanHarian9.add(txt_pengeluaranmLainLainperTanggal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 140, 30));
+        txt_pengeluaranmLainLainperBulan.setFont(new java.awt.Font("Quicksand", 1, 24)); // NOI18N
+        txt_pengeluaranmLainLainperBulan.setText("Rp0");
+        panel_pendapatanHarian9.add(txt_pengeluaranmLainLainperBulan, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 180, 30));
 
         jLabel24.setFont(new java.awt.Font("Quicksand", 1, 15)); // NOI18N
         jLabel24.setText("Pengeluaran");
@@ -1202,6 +1245,7 @@ String IdTransaksi = null;
         panel_Harian.setVisible(true);
         panel_Bulanan.setVisible(false);
         loadDataHariIni();
+        loadSaldo();
     }//GEN-LAST:event_button1ActionPerformed
 
     private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
@@ -1251,7 +1295,9 @@ String IdTransaksi = null;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -1287,6 +1333,7 @@ String IdTransaksi = null;
     private Swing.PanelRound panel_catatanPenjualanaBulanan;
     private Swing.PanelRound panel_pendapatanHarian;
     private Swing.PanelRound panel_pendapatanHarian1;
+    private Swing.PanelRound panel_pendapatanHarian2;
     private Swing.PanelRound panel_pendapatanHarian4;
     private Swing.PanelRound panel_pendapatanHarian5;
     private Swing.PanelRound panel_pendapatanHarian6;
@@ -1304,9 +1351,10 @@ String IdTransaksi = null;
     private javax.swing.JLabel txt_PendapatanBulanan;
     private javax.swing.JLabel txt_PendapatanHarian;
     private javax.swing.JLabel txt_TanggalHariIni;
+    private javax.swing.JLabel txt_labaBulanan;
     private javax.swing.JLabel txt_labaHarian;
-    private javax.swing.JLabel txt_labaHarian1;
-    private javax.swing.JLabel txt_pemasukanLainLainperTanggal1;
-    private javax.swing.JLabel txt_pengeluaranmLainLainperTanggal1;
+    private javax.swing.JLabel txt_pemasukanLainLainperBulan;
+    private javax.swing.JLabel txt_pengeluaranmLainLainperBulan;
+    private javax.swing.JLabel txt_saldo;
     // End of variables declaration//GEN-END:variables
 }

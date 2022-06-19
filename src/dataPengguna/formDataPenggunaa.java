@@ -81,7 +81,6 @@ public class formDataPenggunaa extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         tb_pengguna = new javax.swing.JScrollPane();
         TabelPengguna = new javax.swing.JTable(){
 
@@ -107,11 +106,6 @@ public class formDataPenggunaa extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 50, 40));
-
-        jTextField1.setFont(new java.awt.Font("Quicksand Medium", 0, 14)); // NOI18N
-        jTextField1.setBorder(null);
-        jTextField1.setOpaque(false);
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 270, 30));
 
         tb_pengguna.setBorder(null);
 
@@ -166,7 +160,7 @@ public class formDataPenggunaa extends javax.swing.JInternalFrame {
                 filterAksesActionPerformed(evt);
             }
         });
-        getContentPane().add(filterAkses, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 110, 140, 30));
+        getContentPane().add(filterAkses, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 520, 30));
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dataPengguna/btn_Tambah.png"))); // NOI18N
@@ -198,7 +192,7 @@ public class formDataPenggunaa extends javax.swing.JInternalFrame {
         });
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 103, 110, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dataPengguna/formDataPengguna (1).png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dataPengguna/formDataPengguna (2).png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 700));
 
         pack();
@@ -433,7 +427,6 @@ public class formDataPenggunaa extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JScrollPane tb_pengguna;
     // End of variables declaration//GEN-END:variables
 }

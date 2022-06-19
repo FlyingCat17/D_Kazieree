@@ -7,6 +7,7 @@ package Login;
 
 import Main.user;
 import db.konekdb;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
@@ -26,6 +27,7 @@ public class LoginPageNew extends javax.swing.JFrame {
     public LoginPageNew() {
         initComponents();
         this.setLocationRelativeTo(null);
+        setIcon();
         Main.MainFrame nm = new Main.MainFrame();
         nm.setVisible(false);
         jPanel1.setVisible(false);
@@ -330,6 +332,9 @@ public class LoginPageNew extends javax.swing.JFrame {
         });
     }
 
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("llogo app.png")));
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Swing.PasswordField KataSandiPengguna;
     private Swing.TextField UsernamePengguna;
